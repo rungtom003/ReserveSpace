@@ -1,12 +1,12 @@
 <?php
-$servername = "45.144.164.52:13306";
+$servername = "45.144.164.52";
 $username = "root";
-$password = "Rung_tom003";
-$database = "reserve_space";
+$password = "12345678";
+$db = "reserve_space";
 $port = "13306";
 
 // Create connection
-$conn = mysqli_connect($servername, $username, $password,);
+$conn = mysqli_connect($servername, $username, $password,$db,$port);
 
 // Check connection
 if (!$conn) {
