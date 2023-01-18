@@ -15,7 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
             $resp->data = $row;
         }
         else{
-            $resp->set_message("ไม่พบผู้ใช้");
+            $resp->set_message("not found");
 
         }
         $resp->set_status("success");
