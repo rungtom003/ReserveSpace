@@ -14,8 +14,10 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
             $row = $result->fetch_assoc();
             $resp->data = $row;
         }
+        else{
+            $resp->set_message("ไม่พบผู้ใช้");
 
-        $resp->set_message("connection database success.");
+        }
         $resp->set_status("success");
     } else {
         $resp->set_message("connection database fail.");
