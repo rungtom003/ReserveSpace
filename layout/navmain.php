@@ -1,7 +1,7 @@
 <!-- start: Navbar -->
 <nav class="px-3 py-2 bg-white rounded shadow">
     <i class="ri-menu-line sidebar-toggle me-3 d-block d-md-none"></i>
-    <h5 class="fw-bold mb-0 me-auto">Blank</h5>
+    <h5 class="fw-bold mb-0 me-auto" style="font-family: kanit-Regular;"><?=$titleHead?></h5>
     <div class="dropdown me-3 d-none d-sm-block">
         <div class="cursor-pointer dropdown-toggle navbar-link" data-bs-toggle="dropdown" aria-expanded="false">
             <i class="ri-notification-line"></i>
@@ -25,9 +25,8 @@
             <img class="navbar-profile-image" src="https://images.unsplash.com/flagged/photo-1570612861542-284f4c12e75f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8cGVyc29ufGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60" alt="Image">
         </div>
         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-            <li><a class="dropdown-item" href="#">Action</a></li>
-            <li><a class="dropdown-item" href="#">Another action</a></li>
-            <li><a class="dropdown-item" href="#">Something else here</a></li>
+            <li><a class="dropdown-item" style="font-family: kanit-Regular;" href="#">ข้อมูลส่วนตัว</a></li>
+            <li><a class="dropdown-item" style="font-family: kanit-Regular;" href="/ReserveSpace/backend/Service/logout_api.php">ออกจากระบบ</a></li>
         </ul>
     </div>
 </nav>
