@@ -7,3 +7,16 @@ Body :
     u_Password: ""
 }
 ================================= BEGIN Login ======================================
+
+================================= BEGIN Signup ======================================
+URL : http://localhost/ReserveSpace/backend/Service/signup_api.php
+Method : POST
+Body : 
+{
+    ur_Id: "",
+    u_FirstName: "",
+    u_LastName: "",
+    u_Username: "",
+    u_Password: "",
+}
+================================= BEGIN Signup ======================================
