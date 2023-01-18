@@ -1,22 +1,45 @@
+<?php
+    session_start();
+    $user = (isset($_SESSION['user'])) ? unserialize($_SESSION['user']) : null;
+?>
 <!doctype html>
 <html lang="en">
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Bootstrap demo</title>
-    <link href="./src/assets/bootstrap-5.3.0/css/bootstrap.min.css" rel="stylesheet">
-    <link href="./src/assets/sweetalert2-11.7.0/sweetalert2.min.css" rel="stylesheet">
-    <link href="./src/css/main.css" rel="stylesheet">
-
+    <title>Index</title>
+    <?php include("./layout/css.php"); ?>
 </head>
 
 <body style="font-family: kanit-Regular;">
-    <h1>asdfasdfasdfasdf</h1>
-    <script src="./src/assets/bootstrap-5.3.0/js/bootstrap.bundle.min.js"></script>
-    <script src="./src/assets/sweetalert2-11.7.0/sweetalert2.min.js"></script>
-    <script src="./src/assets/jquery-3.6.3/jquery-3.6.3.min.js"></script>
-    <script src="./src/js/main.js"></script>
+    <?php include("./layout/head.php"); ?>
+        <!-- start: Main -->
+        <main class="bg-light">
+        <div class="p-2">
+        <?php include("./layout/navmain.php"); ?>
+            <!-- start: Content -->
+            <div class="py-1">
+                <!-- start: Graph -->
+                <div class="row g-3 mt-2">
+                    <div class="col-12">
+                        <div class="card border-0 shadow-sm h-100">
+                            <div class="card-header bg-white">
+                                Sales
+                            </div>
+                            <div class="card-body">
+                                <h1>foihjdlhdlgjhsdl</h1>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- end: Graph -->
+            </div>
+            <!-- end: Content -->
+        </div>
+    </main>
+    <!-- end: Main -->
+    <?php include("./layout/script.php"); ?>
     <script>
     </script>
 </body>
