@@ -59,7 +59,7 @@
               footer: 'ยังไม่มีบัญชีผู้ใช้?&nbsp; <a href=""> สร้างบัญชี</a>'
             })
           } else {
-            window.location.href = "/ReserveSpace/home.php"
+            window.location.href = "/ReserveSpace/index.php"
           }
         }
 
