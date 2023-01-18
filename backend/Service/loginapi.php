@@ -8,17 +8,26 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         $username = $_POST["u_Username"];
         $password = $_POST["u_Password"];
 
-        $sql = "SELECT * FROM reserve_space.tb_user where u_Username = '" . $username . "' and u_Password = '" . $password . "';";
+        $sql = "SELECT * FROM reserve_space.tb_user where u_Username = '" . $username . "';";
         $result = $conn->query($sql);
         if ($result->num_rows > 0) {
             $row = $result->fetch_assoc();
-            $resp->data = $row;
+            if(hash_equals(hash("sha256",$password),$row["u_Password"]) == true)
+            {
+                $resp->set_status("success");
+                $resp->data = $row;
+            }
+            else
+            {
+                $resp->set_status("fail");
+                $resp->set_message("รหัสผ่านไม่ถูกต้อง ");
+            }
+            
         }
         else{
-            $resp->set_message("not found");
-
+            $resp->set_status("fail");
+            $resp->set_message("ไม่มีชื่อผู้ใช้");
         }
-        $resp->set_status("success");
     } else {
         $resp->set_message("connection database fail.");
         $resp->set_status("fail");
