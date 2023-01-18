@@ -1,0 +1,9 @@
+================================= BEGIN Login ======================================
+URL : http://localhost/ReserveSpace/backend/Service/loginapi.php
+Method : POST
+Body : 
+{
+    u_Username: "",
+    u_Password: ""
+}
+================================= BEGIN Login ======================================
