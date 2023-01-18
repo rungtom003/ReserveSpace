@@ -7,12 +7,12 @@
   <title>Bootstrap demo</title>
   <link href="./src/assets/bootstrap-5.3.0/css/bootstrap.min.css" rel="stylesheet">
   <link href="./src/assets/sweetalert2-11.7.0/sweetalert2.min.css" rel="stylesheet">
-  <link href="./src/css/main.style" rel="stylesheet">
+  <link href="./src/css/main.css" rel="stylesheet">
   <link href="./src/css/sign-in.css" rel="stylesheet">
 </head>
 
 
-<body class="text-center">
+<body class="text-center" style="font-family: kanit-Regular;">
 
   <main class="form-signin w-100 m-auto">
     <form>
@@ -51,11 +51,11 @@
         dataType: "json",
         success: function(data) {
           let message = data.message;
-          if (message == "not found") {
+          if (data.status == "fail") {
             Swal.fire({
               icon: 'error',
-              title: 'ไม่พบผู้ใช้งาน',
-              text: 'โปรดตรวจสอบชื่อผู้ใช้และรหัสผ่านอีกครั้ง',
+              title: 'เเจ้งเตือน',
+              text: message,
               footer: 'ยังไม่มีบัญชีผู้ใช้?&nbsp; <a href=""> สร้างบัญชี</a>'
             })
           } else {
