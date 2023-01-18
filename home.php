@@ -1,6 +1,7 @@
 <?php
     session_start();
     $user = (isset($_SESSION['user'])) ? unserialize($_SESSION['user']) : null;
+    $titleHead = "Home";
 ?>
 <!doctype html>
 <html lang="en">
