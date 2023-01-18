@@ -1,6 +1,8 @@
 <?php
 include "../class/resp.php";
 include "connectdb.php";
+// Start the session
+session_start();
 
 $resp = new Resp();
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
@@ -8,7 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         $username = $_POST["u_Username"];
         $password = $_POST["u_Password"];
 
-        $sql = "SELECT * FROM reserve_space.tb_user where u_Username = '" . $username . "';";
+        $sql = "SELECT * FROM reserve_space.tb_user where u_Username = '" . $username . "' and u_Approve = '1';";
         $result = $conn->query($sql);
         if ($result->num_rows > 0) {
             $row = $result->fetch_assoc();
@@ -16,6 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
             {
                 $resp->set_status("success");
                 $resp->data = $row;
+                $_SESSION["user"] = serialize($row);
             }
             else
             {
