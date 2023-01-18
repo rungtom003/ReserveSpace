@@ -10,23 +10,38 @@
   </head>
   <body>
 
-  <div class="card text-center">
-  <div class="card-header">
-    Featured
-  </div>
-  <div class="card-body">
-    <h5 class="card-title">Special title treatment</h5>
-    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-    <a href="#" class="btn btn-primary">Go somewhere</a>
-  </div>
-  <div class="card-footer text-muted">
-    2 days ago
+<div class="d-flex justify-content-center vh-100 vw-100 align-items-center">
+  <div class="container-fluid text-center">
+    <div class="d-flex justify-content-center align-items-center">
+      <div class="col-6">
+        <form>
+          <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Email address</label>
+            <input type="email" class="form-control" id="exampleInputEmail1" >
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">Password</label>
+            <input type="password" class="form-control" id="exampleInputPassword1">
+          </div>
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+      </div>
+    </div>
+    
+
+        
+    
+
   </div>
 </div>
 
+    
+
+    
+
 
     <script src="./src/assets/bootstrap-5.3.0/js/bootstrap.bundle.min.js"></script>
-    <script src="./src/assets/jquery-3.6.3/jquery-3.6.3.min.map"></script>
+    <script src="./src/assets/jquery-3.6.3/jquery-3.6.3.min.js"></script>
     <script src="./src/js/main.js"></script>
     
   </body>
