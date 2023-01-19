@@ -1,6 +1,9 @@
 <?php
     session_start();
     $user = (isset($_SESSION['user'])) ? unserialize($_SESSION['user']) : null;
+    if($user == null){
+        header('location: /ReserveSpace/login.php');
+    }
     $titleHead = "Home";
 ?>
 <!doctype html>
