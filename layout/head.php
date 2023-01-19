@@ -5,7 +5,7 @@
         <i class="sidebar-toggle ri-arrow-left-circle-line ms-auto fs-5 d-none d-md-block"></i>
     </div>
     <ul class="sidebar-menu p-3 m-0 mb-0">
-        <li class="sidebar-menu-item active">
+        <li class="sidebar-menu-item <?=isset($active_index)?$active_index:""?>">
             <a href="/ReserveSpace/index.php">
                 <i class="ri-dashboard-line sidebar-menu-item-icon"></i>
                 จองพื้นที่ขาย
@@ -13,7 +13,7 @@
         </li>
         <?php if($user["ur_Id"] == "R002"){ ?>
         <li class="sidebar-menu-divider mt-3 mb-1 text-uppercase">Admin</li>
-        <li class="sidebar-menu-item">
+        <li class="sidebar-menu-item <?=isset($active_signup)?$active_signup:""?>">
             <a href="/ReserveSpace/signup.php">
                 <i class="ri-user-add-line sidebar-menu-item-icon"></i>
                 เพิ่มชื่อผู้ใช้

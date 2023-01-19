@@ -1,7 +1,11 @@
 <?php
 session_start();
 $user = (isset($_SESSION['user'])) ? unserialize($_SESSION['user']) : null;
+if($user == null){
+    header('location: /ReserveSpace/login.php');
+}
 $titleHead = "เพิ่มผู้ใช้งาน";
+$active_signup = "active";
 ?>
 <!doctype html>
 <html lang="en">

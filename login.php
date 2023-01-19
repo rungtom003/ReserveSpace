@@ -1,10 +1,17 @@
+<?php
+session_start();
+$user = (isset($_SESSION['user'])) ? unserialize($_SESSION['user']) : null;
+if($user != null){
+    header('location: /ReserveSpace/index.php');
+}
+?>
 <!doctype html>
 <html lang="en">
 
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Bootstrap demo</title>
+  <title>Login</title>
   <link href="./src/assets/bootstrap-5.3.0/css/bootstrap.min.css" rel="stylesheet">
   <link href="./src/assets/sweetalert2-11.7.0/sweetalert2.min.css" rel="stylesheet">
   <link href="./src/css/main.css" rel="stylesheet">
