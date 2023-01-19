@@ -11,12 +11,30 @@
                 จองพื้นที่ขาย
             </a>
         </li>
+        <li class="sidebar-menu-item <?=isset($active_reserveData)?$active_reserveData:""?>">
+            <a href="/ReserveSpace/reserveData.php">
+                <i class="ri-file-mark-line sidebar-menu-item-icon"></i>
+                ข้อมูลการจอง
+            </a>
+        </li>
         <?php if($user["ur_Id"] == "R002"){ ?>
         <li class="sidebar-menu-divider mt-3 mb-1 text-uppercase">Admin</li>
         <li class="sidebar-menu-item <?=isset($active_signup)?$active_signup:""?>">
             <a href="/ReserveSpace/signup.php">
                 <i class="ri-user-add-line sidebar-menu-item-icon"></i>
                 เพิ่มชื่อผู้ใช้
+            </a>
+        </li>
+        <li class="sidebar-menu-item <?=isset($active_approve)?$active_approve:""?>">
+            <a href="/ReserveSpace/approveUser.php">
+                <i class="ri-shield-check-line sidebar-menu-item-icon"></i>
+                Approve User
+            </a>
+        </li>
+        <li class="sidebar-menu-item <?=isset($active_reserveOrder)?$active_reserveOrder:""?>">
+            <a href="/ReserveSpace/reserveOrder.php">
+                <i class="ri-file-list-3-line sidebar-menu-item-icon"></i>
+                รายการจอง
             </a>
         </li>
         <?php } ?>

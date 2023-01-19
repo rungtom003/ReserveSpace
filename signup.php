@@ -4,6 +4,12 @@ $user = (isset($_SESSION['user'])) ? unserialize($_SESSION['user']) : null;
 if($user == null){
     header('location: /ReserveSpace/login.php');
 }
+
+if($user["ur_Id"] == "R001")
+{
+    header('location: /ReserveSpace/noaccess.php');
+}
+
 $titleHead = "เพิ่มผู้ใช้งาน";
 $active_signup = "active";
 ?>
