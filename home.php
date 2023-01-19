@@ -1,11 +1,7 @@
 <?php
     session_start();
     $user = (isset($_SESSION['user'])) ? unserialize($_SESSION['user']) : null;
-    if($user == null){
-        header('location: /ReserveSpace/login.php');
-    }
-
-    $titleHead = "จองพื้นที่ขาย";
+    $titleHead = "Home";
 ?>
 <!doctype html>
 <html lang="en">
@@ -13,7 +9,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title><?=$titleHead?></title>
+    <title>Index</title>
     <?php include("./layout/css.php"); ?>
 </head>
 
