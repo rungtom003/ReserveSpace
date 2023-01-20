@@ -1,12 +1,11 @@
 <?php
 session_start();
 $user = (isset($_SESSION['user'])) ? unserialize($_SESSION['user']) : null;
-if($user == null){
+if ($user == null) {
     header('location: /ReserveSpace/login.php');
 }
 
-if($user["ur_Id"] == "R001")
-{
+if ($user["ur_Id"] == "R001") {
     header('location: /ReserveSpace/noaccess.php');
 }
 
@@ -58,12 +57,12 @@ $active_signup = "active";
                                     </div>
                                     <div class="col-md">
                                         <label class="form-label">ชื่อ</label>
-                                        <input type="text" class="form-control" placeholder="Full name" id="u_FullName">
+                                        <input type="text" class="form-control" placeholder="Full name" id="u_FullName" required>
                                         <!-- <div class="form-text">Enter your Full name</div> -->
                                     </div>
                                     <div class="col-md">
                                         <label class="form-label">นามสกุล</label>
-                                        <input type="text" class="form-control" placeholder="Last name" id="u_Last">
+                                        <input type="text" class="form-control" placeholder="Last name" id="u_Last" required>
                                         <!-- <div  class="form-text">Enter your Last name</div> -->
                                     </div>
                                 </div>
@@ -71,14 +70,14 @@ $active_signup = "active";
                                 <div class="row g-2 p-2">
                                     <div class="col-md">
                                         <label class="form-label">ชื่อผู้ใช้</label>
-                                        <input type="Username" class="form-control" placeholder="Username" id="u_Username">
+                                        <input type="Username" class="form-control" placeholder="Username" id="u_Username" required>
                                         <!-- <div class="form-text">Enter your Full name</div> -->
                                     </div>
                                 </div>
                                 <div class="row g-2 p-2">
                                     <div class="col-md">
                                         <label class="form-label">รหัสผ่าน</label>
-                                        <input type="Password" class="form-control" placeholder="Password" id="u_Password">
+                                        <input type="Password" class="form-control" placeholder="Password" id="u_Password" required>
 
                                     </div>
                                 </div>
@@ -101,7 +100,7 @@ $active_signup = "active";
                                     </div>
                                     <div class="col-md">
                                         <label class="form-label">เลขบัตรประจำตัวประชาชน</label>
-                                        <input type="text" class="form-control" placeholder="" id="u_CarNumber">
+                                        <input type="text" class="form-control" placeholder="" id="u_CarNumber" required>
                                         <!-- <div class="form-text">Enter your Full name</div> -->
                                     </div>
                                     <div class="col-md">
@@ -158,6 +157,10 @@ $active_signup = "active";
                                         </div>
                                     </div>
                                 </div>
+                                <div class="mb-3">
+                                    <label for="formFile" class="form-label">อัพโหลดรูป</label>
+                                    <input class="form-control" type="file" id="formFile">
+                                </div>
                                 <button type="submit" class="btn btn-primary" id="btn_signup">สร้างบัญชี</button>
                             </form>
                         </div>
@@ -172,6 +175,7 @@ $active_signup = "active";
     <?php include("./layout/script.php"); ?>
     <script>
         function signup() {
+            const file = document.getElementById("formFile").files[0];
             let ur_Id = "";
             let u_FirstName = $('#u_FullName').val();
             let u_LastName = $('#u_Last').val();
@@ -183,7 +187,7 @@ $active_signup = "active";
             let u_Phone = $('#u_Phone').val();
             let u_Prefix = $('#Prefix').val();
             let u_Birthday = $('#u_Birthday').val();
-            let u_Img = "";
+            let u_Img = file;
             let u_Address = $('#u_Address').val();
             let u_Road = $('#u_Road').val();
             let u_SubDistrict = $('#u_SubDistrict').val();
@@ -218,6 +222,25 @@ $active_signup = "active";
                 u_Province: u_Province
             }
 
+            const formData = new FormData();
+            formData.append("ur_Id", data.ur_Id);
+            formData.append("u_FirstName", data.u_FirstName);
+            formData.append("u_LastName", data.u_LastName);
+            formData.append("u_Username", data.u_Username);
+            formData.append("u_Password", data.u_Password);
+            formData.append("u_CardNumber", data.u_CardNumber);
+            formData.append("u_OfficerId", data.u_OfficerId);
+            formData.append("u_Position", data.u_Position);
+            formData.append("u_Phone", data.u_Phone);
+            formData.append("u_Prefix", data.u_Prefix);
+            formData.append("u_Birthday", data.u_Birthday);
+            formData.append("u_Address", data.u_Address);
+            formData.append("u_Road", data.u_Road);
+            formData.append("u_SubDistrict", data.u_SubDistrict);
+            formData.append("u_District", data.u_District);
+            formData.append("u_Province", data.u_Province);
+            formData.append("u_Img", data.u_Img);
+
             if (ur_Id == "" || u_Username == "" || u_Password == "" || u_CardNumber == "") {
                 Swal.fire({
                     icon: 'warning',
@@ -229,8 +252,10 @@ $active_signup = "active";
                 $.ajax({
                     url: "/ReserveSpace/backend/Service/signup_api.php",
                     type: "POST",
-                    data: data,
+                    data: formData,
                     dataType: "json",
+                    contentType: false,
+                    processData: false,
                     success: function(res) {
                         let message = res.message;
 
