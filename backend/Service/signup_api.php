@@ -2,10 +2,21 @@
 include "../class/resp.php";
 include "connectdb.php";
 
+function uniqidReal($lenght = 13) {
+    if (function_exists("random_bytes")) {
+        $bytes = random_bytes(ceil($lenght / 2));
+    } elseif (function_exists("openssl_random_pseudo_bytes")) {
+        $bytes = openssl_random_pseudo_bytes(ceil($lenght / 2));
+    } else {
+        throw new Exception("no cryptographically secure random function available");
+    }
+    return substr(bin2hex($bytes), 0, $lenght);
+}
+
 $resp = new Resp();
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
     if ($connect_status == "success") {
-        
+
         $ur_Id = $_POST["ur_Id"];
         $u_FirstName = $_POST["u_FirstName"];
         $u_LastName = $_POST["u_LastName"];
@@ -17,43 +28,55 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         $u_Phone = $_POST["u_Phone"];
         $u_Prefix = $_POST["u_Prefix"];
         $u_Birthday = $_POST["u_Birthday"];
-        $u_Img = $_POST["u_Img"];
+        $u_Img = null;//$_POST["u_Img"];
         $u_Address = $_POST["u_Address"];
         $u_Road = $_POST["u_Road"];
         $u_SubDistrict = $_POST["u_SubDistrict"];
         $u_District = $_POST["u_District"];
-        $u_Province = $_POST["u_Province"];  
+        $u_Province = $_POST["u_Province"];
 
-        if($u_Birthday == ""){
+        if ($u_Birthday == "") {
             $u_Birthday = "NULL";
+        } else {
+            $u_Birthday = "'" . $u_Birthday . "'";
         }
-        else
-        {
-            $u_Birthday = "'".$u_Birthday."'";
+
+        isset($_FILES['u_Img']) ? $file = $_FILES['u_Img'] : $file = null;
+        $file_name_custom = null;
+
+
+        if (isset($file) && $file != null) {
+            
+            if (filesize($file["tmp_name"]) > 0) {
+                $file_name_custom = "[" . uniqidReal() . "]" . $file["name"];
+                move_uploaded_file(
+                    $file["tmp_name"],
+                    "../../src/img/upload/" . $file_name_custom
+                );
+                $u_Img = $file_name_custom;
+            }
         }
-        
+
         $u_Password_hash = hash("sha256", $u_Password);
-        $sql = "INSERT INTO `reserve_space`.`tb_user` (`ur_Id`, `u_FirstName`, `u_LastName`, `u_Username`, `u_Password`, `u_CardNumber`,"; 
+        $sql = "INSERT INTO `reserve_space`.`tb_user` (`ur_Id`, `u_FirstName`, `u_LastName`, `u_Username`, `u_Password`, `u_CardNumber`,";
         $sql .= " `u_OfficerId`, `u_Position`, `u_Phone`, `u_Prefix`, `u_Birthday`, `u_Img`, `u_Address`, ";
         $sql .= " `u_Road`,`u_SubDistrict`, `u_District`, `u_Province` ) ";
-        $sql .= "VALUES ('".$ur_Id."', '".$u_FirstName."', '".$u_LastName."', '".$u_Username."', '".$u_Password_hash."', '".$u_CardNumber."', ";
-        $sql .= " '".$u_OfficerId."', '".$u_Position."', '".$u_Phone."', '".$u_Prefix."', ".$u_Birthday.", '".$u_Img."', '".$u_Address."', ";
-        $sql .=" '".$u_Road."', '".$u_SubDistrict."', '".$u_District."', '".$u_Province."' );";
+        $sql .= "VALUES ('" . $ur_Id . "', '" . $u_FirstName . "', '" . $u_LastName . "', '" . $u_Username . "', '" . $u_Password_hash . "', '" . $u_CardNumber . "', ";
+        $sql .= " '" . $u_OfficerId . "', '" . $u_Position . "', '" . $u_Phone . "', '" . $u_Prefix . "', " . $u_Birthday . ", '" . $u_Img . "', '" . $u_Address . "', ";
+        $sql .= " '" . $u_Road . "', '" . $u_SubDistrict . "', '" . $u_District . "', '" . $u_Province . "' );";
 
-        $sqlCheckUser ="SELECT * FROM reserve_space.tb_user where u_Username = '" . $u_Username . "';";
-        $sqlCheckCardNumber ="SELECT * FROM reserve_space.tb_user where u_CardNumber = '".$u_CardNumber."';";
+        $sqlCheckUser = "SELECT * FROM reserve_space.tb_user where u_Username = '" . $u_Username . "';";
+        $sqlCheckCardNumber = "SELECT * FROM reserve_space.tb_user where u_CardNumber = '" . $u_CardNumber . "';";
         $resultUser = $conn->query($sqlCheckUser);
         $result = $conn->query($sqlCheckCardNumber);
-        
+
         if ($resultUser->num_rows > 0) {
             $resp->set_message("ชื่อผู้ใช้นี้ มีผู้ใช้งานแล้ว");
             $resp->set_status("Duplicate user");
-            
-        }else if($result->num_rows > 0){
+        } else if ($result->num_rows > 0) {
             $resp->set_message("เลขบัตรประจำตัวประชาชนนี้ มีผู้ใช้งานแล้ว");
             $resp->set_status("Duplicate card number");
-        }
-        else{
+        } else {
             if ($conn->query($sql) === TRUE) {
                 $resp->set_message("บันทึกข้อมูลสำเร็จ");
                 $resp->set_status("success");
@@ -62,7 +85,6 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                 $resp->set_status("fail");
             }
         }
-
     } else {
         $resp->set_message("connection database fail.");
         $resp->set_status("fail");

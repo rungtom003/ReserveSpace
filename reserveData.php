@@ -24,8 +24,36 @@ $active_reserveData = "active";
         <div class="p-2">
             <?php include("./layout/navmain.php"); ?>
             <!-- start: Content -->
-            <div class="py-1">
-                
+            <div class="py-1" style="font-family: kanit-Regular;">
+                <div class="my-2 d-flex flex-column align-items-center">
+                    <div class="card text-bg-success mb-3 w-75">
+                        <div class="card-body">
+                            <h5 class="card-title text-center">หมายเลขพื้นที่ 01</h5>
+                            <hr class="border border-primary border-3 opacity-75">
+                            <ul class="list-group">
+                                <li class="list-group-item"><span>ชื่อผู้จอง : สมชาย วงดี</span></li>
+                                <li class="list-group-item"><span>รายละเอียดการจอง : สมชาย วงดี</span></li>
+                                <li class="list-group-item"><span>หมายเหตุ : สมชาย วงดี</span></li>
+                                <li class="list-group-item"><span>วันเวลาจอง : 2023-01-01 12:00:00</span></li>
+                                <li class="list-group-item"><span>สถานะการจอง : <span class="text-success">สำเร็จ</span></span></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="card text-bg-warning mb-3 w-75">
+                        <div class="card-body">
+                            <h5 class="card-title text-center">หมายเลขพื้นที่ 02</h5>
+                            <hr class="border border-primary border-3 opacity-75">
+                            <ul class="list-group">
+                                <li class="list-group-item"><span>ชื่อผู้จอง : สมชาย วงดี</span></li>
+                                <li class="list-group-item"><span>รายละเอียดการจอง : สมชาย วงดี</span></li>
+                                <li class="list-group-item"><span>หมายเหตุ : สมชาย วงดี</span></li>
+                                <li class="list-group-item"><span>วันเวลาจอง : 2023-01-01 12:00:00</span></li>
+                                <li class="list-group-item"><span>สถานะการจอง : <span class="text-warning">รอดำเนินการ</span></span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
             </div>
             <!-- end: Content -->
         </div>
