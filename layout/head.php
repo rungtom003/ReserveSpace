@@ -11,10 +11,22 @@
                 จองพื้นที่ขาย
             </a>
         </li>
+        <li class="sidebar-menu-item <?=isset($active_real)?$active_real:""?>">
+            <a href="/ReserveSpace/real.php">
+                <i class="ri-image-line sidebar-menu-item-icon"></i>
+                รูปพื้นที่จริง
+            </a>
+        </li>
         <li class="sidebar-menu-item <?=isset($active_reserveData)?$active_reserveData:""?>">
             <a href="/ReserveSpace/reserveData.php">
                 <i class="ri-file-mark-line sidebar-menu-item-icon"></i>
                 ข้อมูลการจอง
+            </a>
+        </li>
+        <li class="sidebar-menu-item <?=isset($active_persionData)?$active_persionData:""?>">
+            <a href="/ReserveSpace/persionData.php">
+                <i class="ri-file-user-line sidebar-menu-item-icon"></i>
+                ข้อมูลส่วนตัว
             </a>
         </li>
         <?php if($user["ur_Id"] == "R002"){ ?>
