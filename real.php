@@ -5,7 +5,7 @@ if ($user == null) {
     header('location: /ReserveSpace/login.php');
 }
 $titleHead = "รูปพื้นที่จริง";
-$active_index = "active";
+$active_real = "active";
 ?>
 <!doctype html>
 <html lang="en">
