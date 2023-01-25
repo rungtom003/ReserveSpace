@@ -1,11 +1,16 @@
 <?php
 session_start();
-$user = (isset($_SESSION['user'])) ? unserialize($_SESSION['user']) : null;
-if ($user == null) {
-    header('location: /ReserveSpace/login.php');
-}
-$titleHead = "ข้อมูลส่วนตัว";
-$active_persionData = "active";
+// $user = (isset($_SESSION['user'])) ? unserialize($_SESSION['user']) : null;
+// if ($user == null) {
+//     header('location: /ReserveSpace/login.php');
+// }
+
+// if ($user["ur_Id"] == "R001") {
+//     header('location: /ReserveSpace/noaccess.php');
+// }
+
+$titleHead = "เพิ่มผู้ใช้งาน";
+$active_signup = "active";
 ?>
 <!doctype html>
 <html lang="en">
@@ -13,39 +18,27 @@ $active_persionData = "active";
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title><?= $$titleHead ?></title>
+    <title>Index</title>
     <?php include("./layout/css.php"); ?>
 </head>
 
-<body style="font-family: kanit-Regular;">
-    <?php include("./layout/head.php"); ?>
+<body>
     <!-- start: Main -->
-    <main class="bg-light">
-        <div class="p-2">
-            <?php include("./layout/navmain.php"); ?>
-            <!-- start: Content -->
-            <div class="py-1">
+    <div class="p-2">
+            <div class="py-2">
+                <!-- start: Content -->
                 <div class="d-flex justify-content-center">
-                    <div class="card w-75">
+                    <div class="card w-50">
                         <div class="card-header">
                             Featured
                         </div>
                         <div class="card-body">
                             <form>
-                                <?php if($user["ur_Id"] != "R001"){ ?>
-                                <div class="row g-2 p-2">
-                                    <div class="col-md-3">
-                                        <label class="form-label">รหัสเจ้าหน้าที่</label>
-                                        <input type="text" class="form-control" placeholder="ID" id="u_OfficerId" value="<?= $user["u_OfficerId"] ?>">
-                                        <!-- <div class="form-text">Enter your Full name</div> -->
-                                    </div>
-                                </div>
-                                <?php } ?>
                                 <div class="row g-2 p-2">
                                     <div class="col-md-2">
                                         <label class="form-label">คำนำหน้า</label>
                                         <select class="form-select" aria-label="Default select example" id="Prefix">
-                                            <option selected value="<?= $user["u_Prefix"] ?>"><?= $user["u_Prefix"] ?></option>
+                                            <option selected value="">เลือก</option>
                                             <option value="นาย">นาย</option>
                                             <option value="นาง">นาง</option>
                                             <option value="นางสาว">นางสาว</option>
@@ -54,12 +47,12 @@ $active_persionData = "active";
                                     </div>
                                     <div class="col-md">
                                         <label class="form-label">ชื่อ</label>
-                                        <input type="text" class="form-control" placeholder="Full name" id="u_FullName" value="<?= $user["u_FirstName"] ?>">
+                                        <input type="text" class="form-control" placeholder="Full name" id="u_FullName" required>
                                         <!-- <div class="form-text">Enter your Full name</div> -->
                                     </div>
                                     <div class="col-md">
                                         <label class="form-label">นามสกุล</label>
-                                        <input type="text" class="form-control" placeholder="Last name" id="u_Last" value="<?= $user["u_LastName"] ?>">
+                                        <input type="text" class="form-control" placeholder="Last name" id="u_Last" required>
                                         <!-- <div  class="form-text">Enter your Last name</div> -->
                                     </div>
                                 </div>
@@ -67,46 +60,33 @@ $active_persionData = "active";
                                 <div class="row g-2 p-2">
                                     <div class="col-md">
                                         <label class="form-label">ชื่อผู้ใช้</label>
-                                        <input type="Username" class="form-control" placeholder="Username" id="u_Username" value="<?= $user["u_Username"] ?>" readonly>
+                                        <input type="Username" class="form-control" placeholder="Username" id="u_Username" required>
                                         <!-- <div class="form-text">Enter your Full name</div> -->
                                     </div>
                                 </div>
-                                <div class="g-2 p-2">
-                                    <?php if ($user["ur_Id"] == "R002") {
-                                    ?>
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="RadioAdmin" value="R002" checked>
-                                            <label class="form-check-label" for="RadioAdmin">Admin</label>
-                                        </div>
-                                    <?php
-                                    } else {
-                                    ?>
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="RadioUser" value="R001" checked>
-                                            <label class="form-check-label" for="RadioUser">User</label>
-                                        </div>
+                                <div class="row g-2 p-2">
+                                    <div class="col-md">
+                                        <label class="form-label">รหัสผ่าน</label>
+                                        <input type="Password" class="form-control" placeholder="Password" id="u_Password" required>
 
-                                    <?php
-                                    }
-                                    ?>
+                                    </div>
+                                </div>
+                                <div class="g-2 p-2">
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="inlineRadioOptions" checked id="RadioUser" value="R001">
+                                        <label class="form-check-label" for="RadioUser">User</label>
+                                    </div>
                                 </div>
 
                                 <div class="row g-2 p-2">
-                                <?php if($user["ur_Id"] != "R001"){ ?>
-                                    <div class="col-md">
-                                        <label class="form-label">ตำแหน่ง</label>
-                                        <input type="text" class="form-control" placeholder="" id="u_Position" value="<?= $user["u_Position"] ?>">
-                                        <!-- <div  class="form-text">Enter your Last name</div> -->
-                                    </div>
-                                    <?php } ?>
                                     <div class="col-md">
                                         <label class="form-label">เลขบัตรประจำตัวประชาชน</label>
-                                        <input type="text" class="form-control" placeholder="" id="u_CardNumber" value="<?= $user["u_CardNumber"] ?>" readonly>
+                                        <input type="text" class="form-control" placeholder="" id="u_CarNumber" required>
                                         <!-- <div class="form-text">Enter your Full name</div> -->
                                     </div>
                                     <div class="col-md">
                                         <label class="form-label">วัน/เดือน/ปีเกิด</label>
-                                        <input type="date" class="form-control" placeholder="" id="u_Birthday" value="<?= $user["u_Birthday"] ?>">
+                                        <input type="date" class="form-control" placeholder="" id="u_Birthday">
                                         <!-- <div  class="form-text">Enter your Last name</div> -->
                                     </div>
                                 </div>
@@ -115,21 +95,21 @@ $active_persionData = "active";
                                     <div class="col-md">
                                         <div class="col-md">
                                             <label class="form-label">บ้านเลขที่/หมู่</label>
-                                            <input type="text" class="form-control" placeholder="" id="u_Address" value="<?= $user["u_Address"] ?>">
+                                            <input type="text" class="form-control" placeholder="" id="u_Address">
                                             <!-- <div  class="form-text">Enter your Last name</div> -->
                                         </div>
                                     </div>
                                     <div class="col-md">
                                         <div class="col-md">
                                             <label class="form-label">ถนน</label>
-                                            <input type="text" class="form-control" placeholder="" id="u_Road" value="<?= $user["u_Road"] ?>">
+                                            <input type="text" class="form-control" placeholder="" id="u_Road">
                                             <!-- <div  class="form-text">Enter your Last name</div> -->
                                         </div>
                                     </div>
                                     <div class="col-md">
                                         <div class="col-md">
                                             <label class="form-label">ตำบล</label>
-                                            <input type="text" class="form-control" placeholder="" id="u_SubDistrict" value="<?= $user["u_SubDistrict"] ?>">
+                                            <input type="text" class="form-control" placeholder="" id="u_SubDistrict">
                                             <!-- <div  class="form-text">Enter your Last name</div> -->
                                         </div>
                                     </div>
@@ -139,49 +119,55 @@ $active_persionData = "active";
                                     <div class="col-md">
                                         <div class="col-md">
                                             <label class="form-label">อำเภอ</label>
-                                            <input type="text" class="form-control" placeholder="" id="u_District" value="<?= $user["u_District"] ?>">
+                                            <input type="text" class="form-control" placeholder="" id="u_District">
                                             <!-- <div  class="form-text">Enter your Last name</div> -->
                                         </div>
                                     </div>
                                     <div class="col-md">
                                         <div class="col-md">
                                             <label class="form-label">จังหวัด</label>
-                                            <input type="text" class="form-control" placeholder="" id="u_Province" value="<?= $user["u_Province"] ?>">
+                                            <input type="text" class="form-control" placeholder="" id="u_Province">
                                             <!-- <div  class="form-text">Enter your Last name</div> -->
                                         </div>
                                     </div>
                                     <div class="col-md">
                                         <div class="col-md">
                                             <label class="form-label">เบอร์โทรศัพท์</label>
-                                            <input type="text" class="form-control" placeholder="" id="u_Phone" value="<?= $user["u_Phone"] ?>">
+                                            <input type="text" class="form-control" placeholder="" id="u_Phone">
                                             <!-- <div  class="form-text">Enter your Last name</div> -->
                                         </div>
                                     </div>
                                 </div>
-                                <button type="submit" class="btn btn-primary" id="btn_update">บันทึก</button>
+                                <div class="mb-3">
+                                    <label for="formFile" class="form-label">อัพโหลดรูป</label>
+                                    <input class="form-control" type="file" id="formFile">
+                                </div>
+                                <button type="submit" class="btn btn-primary" id="btn_signup">สร้างบัญชี</button>
                             </form>
                         </div>
                     </div>
 
                 </div>
+                <!-- end: Content -->
             </div>
-            <!-- end: Content -->
         </div>
-    </main>
     <!-- end: Main -->
     <?php include("./layout/script.php"); ?>
     <script>
-        function UpdatePersionData() {
+        function signup() {
+            const file = document.getElementById("formFile").files[0];
+            let ur_Id = $('#RadioUser').val();;
             let u_FirstName = $('#u_FullName').val();
             let u_LastName = $('#u_Last').val();
             let u_Username = $('#u_Username').val();
-            let u_CardNumber = $('#u_CardNumber').val();
-            let u_OfficerId = $('#u_OfficerId').val();
-            let u_Position = $('#u_Position').val();
+            let u_Password = $('#u_Password').val();
+            let u_CardNumber = $('#u_CarNumber').val();
+            let u_OfficerId = "-";
+            let u_Position = "-";
             let u_Phone = $('#u_Phone').val();
             let u_Prefix = $('#Prefix').val();
             let u_Birthday = $('#u_Birthday').val();
-            let u_Img = "";
+            let u_Img = file;
             let u_Address = $('#u_Address').val();
             let u_Road = $('#u_Road').val();
             let u_SubDistrict = $('#u_SubDistrict').val();
@@ -189,9 +175,11 @@ $active_persionData = "active";
             let u_Province = $('#u_Province').val();
 
             let data = {
+                ur_Id: ur_Id,
                 u_FirstName: u_FirstName,
                 u_LastName: u_LastName,
                 u_Username: u_Username,
+                u_Password: u_Password,
                 u_CardNumber: u_CardNumber,
                 u_OfficerId: u_OfficerId,
                 u_Position: u_Position,
@@ -206,42 +194,87 @@ $active_persionData = "active";
                 u_Province: u_Province
             }
 
-            $.ajax({
-                url: "/ReserveSpace/backend/Service/persionData_api.php",
-                type: "POST",
-                data: data,
-                dataType: "json",
-                success: function(res) {
-                    let message = res.message;
-                    if (res.status == "success") {
-                        Swal.fire({
-                            icon: 'success',
-                            title: message,
-                            showConfirmButton: false,
-                            timer: 1500
-                        }).then((result) => {
-                            window.location.reload();
-                        })
+            const formData = new FormData();
+            formData.append("ur_Id", data.ur_Id);
+            formData.append("u_FirstName", data.u_FirstName);
+            formData.append("u_LastName", data.u_LastName);
+            formData.append("u_Username", data.u_Username);
+            formData.append("u_Password", data.u_Password);
+            formData.append("u_CardNumber", data.u_CardNumber);
+            formData.append("u_OfficerId", data.u_OfficerId);
+            formData.append("u_Position", data.u_Position);
+            formData.append("u_Phone", data.u_Phone);
+            formData.append("u_Prefix", data.u_Prefix);
+            formData.append("u_Birthday", data.u_Birthday);
+            formData.append("u_Address", data.u_Address);
+            formData.append("u_Road", data.u_Road);
+            formData.append("u_SubDistrict", data.u_SubDistrict);
+            formData.append("u_District", data.u_District);
+            formData.append("u_Province", data.u_Province);
+            formData.append("u_Img", data.u_Img);
 
-                    } else {
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'เเจ้งเตือน',
-                            text: message
-                        })
+            if (ur_Id == "" || u_Username == "" || u_Password == "" || u_CardNumber == "") {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'เเจ้งเตือน',
+                    text: "กรอกข้อมูลไม่ครบ"
+                })
+
+            } else {
+                $.ajax({
+                    url: "/ReserveSpace/backend/Service/signup_api.php",
+                    type: "POST",
+                    data: formData,
+                    dataType: "json",
+                    contentType: false,
+                    processData: false,
+                    success: function(res) {
+                        let message = res.message;
+
+                        if (res.status == "success") {
+                            Swal.fire({
+                                icon: 'success',
+                                title: message,
+                                showConfirmButton: true,
+                                timer: 1500
+                            }).then((result) => {
+                                window.location.href = "/ReserveSpace/login.php"
+                            })
+                            
+
+                        } else if (res.status == "Duplicate user") {
+                            Swal.fire({
+                                icon: 'warning',
+                                title: 'เเจ้งเตือน',
+                                text: message
+                            })
+
+                        } else if (res.status == "Duplicate card number") {
+                            Swal.fire({
+                                icon: 'warning',
+                                title: 'เเจ้งเตือน',
+                                text: message
+                            })
+
+                        } else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'เเจ้งเตือน',
+                                text: message
+                            })
+                        }
                     }
+                });
+
+            }
 
 
-                }
-
-            })
         }
 
-        $('#btn_update').click(function(event) {
+        $('#btn_signup').click(function(even) {
             event.preventDefault();
-            UpdatePersionData();
+            signup();
         })
-        
     </script>
 </body>
 

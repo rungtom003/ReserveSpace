@@ -35,7 +35,7 @@ if($user != null){
         <label for="floatingPassword">รหัสผ่าน</label>
       </div>
       <button class="w-100 btn btn-lg btn-primary" type="submit" id="btn_Login">เข้าสู่ระบบ</button>
-      <p class="mt-3 text-muted">ยังไม่มีบัญชีผู้ใช้?&nbsp; <a href=""> สร้างบัญชี</a></p>
+      <p class="mt-3 text-muted">ยังไม่มีบัญชีผู้ใช้?&nbsp; <a href="userSignup.php"> สร้างบัญชี</a></p>
     </form>
   </main>
 
@@ -63,7 +63,7 @@ if($user != null){
               icon: 'error',
               title: 'เเจ้งเตือน',
               text: message,
-              footer: 'ยังไม่มีบัญชีผู้ใช้?&nbsp; <a href=""> สร้างบัญชี</a>'
+              footer: 'ยังไม่มีบัญชีผู้ใช้?&nbsp; <a href="userSignup.php"> สร้างบัญชี</a>'
             })
           } else {
             window.location.href = "/ReserveSpace/index.php"
