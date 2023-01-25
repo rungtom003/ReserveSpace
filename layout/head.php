@@ -52,7 +52,7 @@
         <li class="sidebar-menu-item <?=isset($active_area)?$active_area:""?>">
             <a href="/ReserveSpace/area.php">
                 <i class="ri-file-list-3-line sidebar-menu-item-icon"></i>
-                ล็อก
+                บล็อก
             </a>
         </li>
         <?php } ?>
