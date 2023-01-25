@@ -249,47 +249,47 @@ $active_signup = "active";
                 })
 
             } else {
-                $.ajax({
-                    url: "/ReserveSpace/backend/Service/signup_api.php",
-                    type: "POST",
-                    data: formData,
-                    dataType: "json",
-                    contentType: false,
-                    processData: false,
-                    success: function(res) {
-                        let message = res.message;
+                // $.ajax({
+                //     url: "/ReserveSpace/backend/Service/signup_api.php",
+                //     type: "POST",
+                //     data: formData,
+                //     dataType: "json",
+                //     contentType: false,
+                //     processData: false,
+                //     success: function(res) {
+                //         let message = res.message;
 
-                        if (res.status == "success") {
-                            Swal.fire({
-                                icon: 'success',
-                                title: message,
-                                showConfirmButton: false,
-                                timer: 1500
-                            })
+                //         if (res.status == "success") {
+                //             Swal.fire({
+                //                 icon: 'success',
+                //                 title: message,
+                //                 showConfirmButton: false,
+                //                 timer: 1500
+                //             })
 
-                        } else if (res.status == "Duplicate user") {
-                            Swal.fire({
-                                icon: 'warning',
-                                title: 'เเจ้งเตือน',
-                                text: message
-                            })
+                //         } else if (res.status == "Duplicate user") {
+                //             Swal.fire({
+                //                 icon: 'warning',
+                //                 title: 'เเจ้งเตือน',
+                //                 text: message
+                //             })
 
-                        } else if (res.status == "Duplicate card number") {
-                            Swal.fire({
-                                icon: 'warning',
-                                title: 'เเจ้งเตือน',
-                                text: message
-                            })
+                //         } else if (res.status == "Duplicate card number") {
+                //             Swal.fire({
+                //                 icon: 'warning',
+                //                 title: 'เเจ้งเตือน',
+                //                 text: message
+                //             })
 
-                        } else {
-                            Swal.fire({
-                                icon: 'error',
-                                title: 'เเจ้งเตือน',
-                                text: message
-                            })
-                        }
-                    }
-                });
+                //         } else {
+                //             Swal.fire({
+                //                 icon: 'error',
+                //                 title: 'เเจ้งเตือน',
+                //                 text: message
+                //             })
+                //         }
+                //     }
+                // });
 
             }
 
