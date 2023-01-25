@@ -7,14 +7,12 @@ $resp = new Resp();
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
     if ($connect_status == "success") {
 
-        $rd_Id = $_POST["rd_Id"];
-        $a_Id = $_POST["a_Id"];
+        $u_Id = $_POST["u_Id"];
 
-        $sql = "UPDATE `reserve_space`.`tb_area` SET `a_ReserveStatus` = '0' WHERE (`a_Id` = '".$a_Id."');";
-        $sql .= "UPDATE `reserve_space`.`tb_reserveDetail` SET `rd_Status` = '2' WHERE (`rd_Id` = '".$rd_Id."');";
+        $sql = "UPDATE `reserve_space`.`tb_user` SET `u_Approve` = '1' WHERE (`u_Id` = '".$u_Id."');";
 
         if ($conn->multi_query($sql) === TRUE) {
-            $resp->set_message("ยกเลิกจองพื้นที่สำเร็จ.");
+            $resp->set_message("อนุมัติผู้ใช้สำเร็จ.");
             $resp->set_status("success");
         } else {
             $resp->set_message("มีข้อผิดพลาดเกิดขึ้น.");

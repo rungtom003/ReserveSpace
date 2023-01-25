@@ -40,61 +40,117 @@ $active_approve = "active";
     <!-- end: Main -->
     <?php include("./layout/script.php"); ?>
     <script>
-        $.ajax({
-            url: "/ReserveSpace/backend/Service/usersList_api.php",
-            type: "GET",
-            dataType: "json",
-            success: function(res) {
-                LoadTable(res.data);
-            }
-        });
-
-        const LoadTable = (data) => {
-            $('#table-users').DataTable({
-                data: data,
-                dom: 'Bfrtip',
-                buttons: ['copy', 'csv', 'excel', 'colvis'],
-                responsive: true,
-                language: {
-                    url: './src/assets/DataTables/LanguageTable/th.json'
-                },
-                columnDefs: [{
-                        targets: 0,
-                        title: "ชื่อ",
-                        data: "u_FirstName",
-                    },
-                    {
-                        targets: 1,
-                        title: "สกุล",
-                        data: "u_LastName",
-                    },
-                    {
-                        targets: 2,
-                        title: "สิทธิ์",
-                        data: "ur_Id",
-                        render: function(data, type, row, meta) {
-                            let role = data === "R001" ? "User" : "Admin"
-                            return role;
-                        }
-                    },
-                    {
-                        targets: 3,
-                        title: "Username",
-                        data: "u_Username",
-                    },
-                    {
-                        targets: 4,
-                        title: "เลขบัตรประชาชน",
-                        data: "u_CardNumber",
-                    },
-                    {
-                        targets: 5,
-                        title: "Approve",
-                        data: "u_Approve",
-                    }
-                ]
+        function loadUser() {
+            $.ajax({
+                url: "/ReserveSpace/backend/Service/usersList_api.php",
+                type: "GET",
+                dataType: "json",
+                success: function(res) {
+                    //console.log(res);
+                    LoadTable(res.data);
+                }
             });
+
+            const LoadTable = (data) => {
+                $('#table-users').DataTable({
+                    data: data,
+                    dom: 'Bfrtip',
+                    buttons: ['copy', 'csv', 'excel', 'colvis'],
+                    responsive: true,
+                    language: {
+                        url: './src/assets/DataTables/LanguageTable/th.json'
+                    },
+                    columnDefs: [{
+                            targets: 0,
+                            title: "ชื่อ",
+                            data: "u_FirstName",
+                        },
+                        {
+                            targets: 1,
+                            title: "สกุล",
+                            data: "u_LastName",
+                        },
+                        {
+                            targets: 2,
+                            title: "สิทธิ์",
+                            data: "ur_Id",
+                            render: function(data, type, row, meta) {
+                                let role = data === "R001" ? "User" : "Admin"
+                                return role;
+                            }
+                        },
+                        {
+                            targets: 3,
+                            title: "Username",
+                            data: "u_Username",
+                        },
+                        {
+                            targets: 4,
+                            title: "เลขบัตรประชาชน",
+                            data: "u_CardNumber",
+                        },
+                        {
+                            targets: 5,
+                            title: "Approve",
+                            data: "u_Approve",
+                        },
+                        {
+                            targets: 6,
+                            title: "#",
+                            data: null,
+                            defaultContent: "",
+                            render: function(data, type, row, meta) {
+                                return `<div class="d-grid gap-2 d-md-block" >
+                                        <button class="btn btn-primary" type="button" id="btn_Approve" >อนุมัติ</button>
+                                    </div>`;
+                            }
+                        }
+                    ]
+                });
+            }
+
         }
+
+        loadUser();
+
+        //Btn Approve
+        $("body").on("click", "#table-users #btn_Approve", function() {
+            var row = $(this).closest("tr");
+            let data = $('#table-users').DataTable().row(row).data();
+            let u_Id = data.u_Id;
+
+            $.ajax({
+                url: "/ReserveSpace/backend/Service/approveUser_api.php",
+                type: "POST",
+                data: {
+                    u_Id: u_Id
+                },
+                dataType: "json",
+                success: function(res) {
+                    let message = res.message;
+                    let status = res.status;
+
+                    if (status == "success") {
+                        Swal.fire({
+                            icon: 'success',
+                            title: message,
+                            showConfirmButton: true,
+                            timer: 1500
+                        }).then((result) => {
+                            $('#table-users').DataTable().destroy();
+                            loadUser();
+                        })
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'เเจ้งเตือน',
+                            text: message
+                        })
+                    }
+                }
+            });
+
+        });
     </script>
 </body>
 

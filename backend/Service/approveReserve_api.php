@@ -14,7 +14,6 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         $sql .= "UPDATE `reserve_space`.`tb_reserveDetail` SET `rd_Status` = '1' WHERE (`rd_Id` = '".$rd_Id."');";
 
         if ($conn->multi_query($sql) === TRUE) {
-            unset($_SESSION["order"]);
             $resp->set_message("อนุมัติจองพื้นที่สำเร็จ.");
             $resp->set_status("success");
         } else {
