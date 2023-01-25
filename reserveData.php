@@ -46,7 +46,6 @@ $active_reserveData = "active";
             success: function(res) {
                 let txtContent = "";
                 const dataarr = res.data;
-                console.log(dataarr);
                 $.each(dataarr, function(key, val) {
                     if (val.a_ReserveStatus === "2" && val.rd_Status === "0") {
                         txtContent += `<div class="card text-bg-warning mb-3 w-75">

@@ -28,59 +28,15 @@ $active_signup = "active";
     <main class="bg-light">
         <div class="p-2">
             <?php include("./layout/navmain.php"); ?>
-            <div class="py-2">
+            <div class="py-2" style="font-family: kanit-Regular;">
                 <!-- start: Content -->
                 <div class="d-flex justify-content-center">
                     <div class="card w-75">
                         <div class="card-header">
-                            Featured
+                            เพิ่มผู้เข้าใช้งาน
                         </div>
                         <div class="card-body">
-                            <form>
-                                <div class="row g-2 p-2">
-                                    <div class="col-md-3">
-                                        <label class="form-label">รหัสเจ้าหน้าที่</label>
-                                        <input type="text" class="form-control" placeholder="ID" id="u_OfficerId">
-                                        <!-- <div class="form-text">Enter your Full name</div> -->
-                                    </div>
-                                </div>
-                                <div class="row g-2 p-2">
-                                    <div class="col-md-2">
-                                        <label class="form-label">คำนำหน้า</label>
-                                        <select class="form-select" aria-label="Default select example" id="Prefix">
-                                            <option selected value="">เลือก</option>
-                                            <option value="นาย">นาย</option>
-                                            <option value="นาง">นาง</option>
-                                            <option value="นางสาว">นางสาว</option>
-                                        </select>
-                                        <!-- <div class="form-text">Enter your Full name</div> -->
-                                    </div>
-                                    <div class="col-md">
-                                        <label class="form-label">ชื่อ</label>
-                                        <input type="text" class="form-control" placeholder="Full name" id="u_FullName" required>
-                                        <!-- <div class="form-text">Enter your Full name</div> -->
-                                    </div>
-                                    <div class="col-md">
-                                        <label class="form-label">นามสกุล</label>
-                                        <input type="text" class="form-control" placeholder="Last name" id="u_Last" required>
-                                        <!-- <div  class="form-text">Enter your Last name</div> -->
-                                    </div>
-                                </div>
-
-                                <div class="row g-2 p-2">
-                                    <div class="col-md">
-                                        <label class="form-label">ชื่อผู้ใช้</label>
-                                        <input type="Username" class="form-control" placeholder="Username" id="u_Username" required>
-                                        <!-- <div class="form-text">Enter your Full name</div> -->
-                                    </div>
-                                </div>
-                                <div class="row g-2 p-2">
-                                    <div class="col-md">
-                                        <label class="form-label">รหัสผ่าน</label>
-                                        <input type="Password" class="form-control" placeholder="Password" id="u_Password" required>
-
-                                    </div>
-                                </div>
+                            <form class="needs-validation" novalidate>
                                 <div class="g-2 p-2">
                                     <div class="form-check form-check-inline">
                                         <input class="form-check-input" type="radio" name="inlineRadioOptions" id="RadioAdmin" value="R002">
@@ -91,77 +47,150 @@ $active_signup = "active";
                                         <label class="form-check-label" for="RadioUser">User</label>
                                     </div>
                                 </div>
-
-                                <div class="row g-2 p-2">
-                                    <div class="col-md">
-                                        <label class="form-label">ตำแหน่ง</label>
-                                        <input type="text" class="form-control" placeholder="" id="u_Position">
-                                        <!-- <div  class="form-text">Enter your Last name</div> -->
+                                <div class="row g-2 p-2" id="u_OfficerId-content" hidden>
+                                    <div class="col-md-3">
+                                        <label class="form-label">รหัสเจ้าหน้าที่</label>
+                                        <input type="text" class="form-control" placeholder="ID" id="u_OfficerId">
+                                        <div class="invalid-feedback">
+                                            กรุณากรอก รหัสเจ้าหน้าที่
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row g-2 p-2" id="fullname-content" hidden>
+                                    <div class="col-md-2">
+                                        <label class="form-label">คำนำหน้า</label>
+                                        <select class="form-select" id="Prefix" required>
+                                            <option selected disabled value="">เลือก</option>
+                                            <option value="นาย">นาย</option>
+                                            <option value="นาง">นาง</option>
+                                            <option value="นางสาว">นางสาว</option>
+                                        </select>
+                                        <div class="invalid-feedback">
+                                            เลิอก คำนำหน้า
+                                        </div>
                                     </div>
                                     <div class="col-md">
-                                        <label class="form-label">เลขบัตรประจำตัวประชาชน</label>
-                                        <input type="text" class="form-control" placeholder="" id="u_CarNumber" required>
-                                        <!-- <div class="form-text">Enter your Full name</div> -->
+                                        <label class="form-label">ชื่อ</label>
+                                        <input type="text" class="form-control" placeholder="Full name" id="u_FullName">
+                                        <div class="invalid-feedback">
+                                            กรุณากรอก ชื่อ
+                                        </div>
                                     </div>
                                     <div class="col-md">
-                                        <label class="form-label">วัน/เดือน/ปีเกิด</label>
-                                        <input type="date" class="form-control" placeholder="" id="u_Birthday">
-                                        <!-- <div  class="form-text">Enter your Last name</div> -->
+                                        <label class="form-label">นามสกุล</label>
+                                        <input type="text" class="form-control" placeholder="Last name" id="u_Last">
+                                        <div class="invalid-feedback">
+                                            กรุณากรอก นามสกุล
+                                        </div>
                                     </div>
                                 </div>
 
+                                <div class="row g-2 p-2" id="username-content" hidden>
+                                    <div class="col-md">
+                                        <label class="form-label">ชื่อผู้ใช้</label>
+                                        <input type="Username" class="form-control" placeholder="Username" id="u_Username">
+                                        <div class="invalid-feedback">
+                                            กรุณากรอก ชื่อผู้ใช้
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row g-2 p-2" id="password-content" hidden>
+                                    <div class="col-md">
+                                        <label class="form-label">รหัสผ่าน</label>
+                                        <input type="Password" class="form-control" placeholder="Password" id="u_Password">
+                                        <div class="invalid-feedback">
+                                            กรุณากรอก รหัสผ่าน
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="row g-2 p-2">
+                                    <div class="col-md" id="position-content" hidden>
+                                        <label class="form-label">ตำแหน่ง</label>
+                                        <input type="text" class="form-control" placeholder="" id="u_Position">
+                                        <div class="invalid-feedback">
+                                            กรุณากรอก ตำแหน่ง
+                                        </div>
+                                    </div>
+                                    <div class="col-md" id="idcard-content" hidden>
+                                        <label class="form-label">เลขบัตรประจำตัวประชาชน</label>
+                                        <input type="text" class="form-control" placeholder="" id="u_CarNumber">
+                                        <div class="invalid-feedback">
+                                            กรุณากรอก เลขบัตรประจำตัวประชาชน
+                                        </div>
+                                    </div>
+                                    <div class="col-md" id="u_Birthday-content" hidden>
+                                        <label class="form-label">วัน/เดือน/ปีเกิด</label>
+                                        <input type="date" class="form-control" placeholder="" id="u_Birthday">
+                                        <div class="invalid-feedback">
+                                            กรุณากรอก วัน/เดือน/ปีเกิด
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row g-2 p-2" id="address-content1" hidden>
                                     <div class="col-md">
                                         <div class="col-md">
                                             <label class="form-label">บ้านเลขที่/หมู่</label>
                                             <input type="text" class="form-control" placeholder="" id="u_Address">
-                                            <!-- <div  class="form-text">Enter your Last name</div> -->
+                                            <div class="invalid-feedback">
+                                                กรุณากรอก ที่อยู่
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="col-md">
                                         <div class="col-md">
                                             <label class="form-label">ถนน</label>
                                             <input type="text" class="form-control" placeholder="" id="u_Road">
-                                            <!-- <div  class="form-text">Enter your Last name</div> -->
+                                            <div class="invalid-feedback">
+                                                กรุณากรอก ถนน
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="col-md">
                                         <div class="col-md">
                                             <label class="form-label">ตำบล</label>
                                             <input type="text" class="form-control" placeholder="" id="u_SubDistrict">
-                                            <!-- <div  class="form-text">Enter your Last name</div> -->
+                                            <div class="invalid-feedback">
+                                                กรุณากรอก ตำบล
+                                            </div>
                                         </div>
                                     </div>
 
                                 </div>
-                                <div class="row g-2 p-2">
+                                <div class="row g-2 p-2" id="address-content2" hidden>
                                     <div class="col-md">
                                         <div class="col-md">
                                             <label class="form-label">อำเภอ</label>
                                             <input type="text" class="form-control" placeholder="" id="u_District">
-                                            <!-- <div  class="form-text">Enter your Last name</div> -->
+                                            <div class="invalid-feedback">
+                                                กรุณากรอก อำเภอ
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="col-md">
                                         <div class="col-md">
                                             <label class="form-label">จังหวัด</label>
                                             <input type="text" class="form-control" placeholder="" id="u_Province">
-                                            <!-- <div  class="form-text">Enter your Last name</div> -->
+                                            <div class="invalid-feedback">
+                                                กรุณากรอก จังหวัด
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="col-md">
                                         <div class="col-md">
                                             <label class="form-label">เบอร์โทรศัพท์</label>
                                             <input type="text" class="form-control" placeholder="" id="u_Phone">
-                                            <!-- <div  class="form-text">Enter your Last name</div> -->
+                                            <div class="invalid-feedback">
+                                                กรุณากรอก เบอร์โทรศัพท์
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="mb-3">
+                                <div class="mb-3" id="upload-content" hidden>
                                     <label for="formFile" class="form-label">อัพโหลดรูป</label>
                                     <input class="form-control" type="file" id="formFile">
                                 </div>
-                                <button type="submit" class="btn btn-primary" id="btn_signup">สร้างบัญชี</button>
+                                <button type="submit" class="btn btn-primary" id="btn_signup" hidden>สร้างบัญชี</button>
                             </form>
                         </div>
                     </div>
@@ -174,6 +203,112 @@ $active_signup = "active";
     <!-- end: Main -->
     <?php include("./layout/script.php"); ?>
     <script>
+        function checkRole() {
+            if ($("#RadioAdmin").prop('checked') === false && $("#RadioUser").prop('checked') === false) {
+                $("#btn_signup").prop('hidden', true);
+
+                $("#u_OfficerId-content").prop('hidden', true);
+                $("#fullname-content").prop('hidden', true);
+                $("#username-content").prop('hidden', true);
+                $("#password-content").prop('hidden', true);
+                $("#position-content").prop('hidden', true);
+                $("#idcard-content").prop('hidden', true);
+                $("#u_Birthday-content").prop('hidden', true);
+                $("#address-content1").prop('hidden', true);
+                $("#address-content2").prop('hidden', true);
+                $("#upload-content").prop('hidden', true);
+
+            } else if ($("#RadioAdmin").prop('checked') === true && $("#RadioUser").prop('checked') === false) {
+                $("#btn_signup").prop('hidden', false);
+
+                $("#u_OfficerId-content").prop('hidden', false);
+                $("#fullname-content").prop('hidden', false);
+                $("#username-content").prop('hidden', false);
+                $("#password-content").prop('hidden', false);
+                $("#position-content").prop('hidden', false);
+                $("#idcard-content").prop('hidden', false);
+                $("#u_Birthday-content").prop('hidden', false);
+                $("#address-content1").prop('hidden', false);
+                $("#address-content2").prop('hidden', false);
+                $("#upload-content").prop('hidden', false);
+
+
+                $("#u_OfficerId").prop("required", true);
+                $("#u_FullName").prop("required", true);
+                $("#u_Last").prop("required", true);
+                $("#u_Username").prop("required", true);
+                $("#u_Password").prop("required", true);
+                $("#u_Position").prop("required", true);
+                $("#u_CarNumber").prop("required", true);
+                $("#u_Birthday").prop("required", true);
+                $("#u_Address").prop("required", true);
+                $("#u_Road").prop("required", true);
+                $("#u_SubDistrict").prop("required", true);
+                $("#u_District").prop("required", true);
+                $("#u_Province").prop("required", true);
+                $("#u_Phone").prop("required", true);
+
+                $("#u_OfficerId").prop("value", "");
+                $("#u_FullName").prop("value", "");
+                $("#u_Last").prop("value", "");
+                $("#u_Username").prop("value", "");
+                $("#u_Password").prop("value", "");
+                $("#u_Position").prop("value", "");
+                $("#u_CarNumber").prop("value", "");
+                $("#u_Birthday").prop("value", "");
+                $("#u_Address").prop("value", "");
+                $("#u_Road").prop("value", "");
+                $("#u_SubDistrict").prop("value", "");
+                $("#u_District").prop("value", "");
+                $("#u_Province").prop("value", "");
+                $("#u_Phone").prop("value", "");
+
+            } else {
+                $("#btn_signup").prop('hidden', false);
+
+                $("#u_OfficerId-content").prop('hidden', true);
+                $("#fullname-content").prop('hidden', false);
+                $("#username-content").prop('hidden', false);
+                $("#password-content").prop('hidden', false);
+                $("#position-content").prop('hidden', true);
+                $("#idcard-content").prop('hidden', false);
+                $("#u_Birthday-content").prop('hidden', false);
+                $("#address-content1").prop('hidden', false);
+                $("#address-content2").prop('hidden', false);
+                $("#upload-content").prop('hidden', false);
+
+                $("#u_OfficerId").prop("required", false);
+                $("#u_FullName").prop("required", true);
+                $("#u_Last").prop("required", true);
+                $("#u_Username").prop("required", true);
+                $("#u_Password").prop("required", true);
+                $("#u_Position").prop("required", false);
+                $("#u_CarNumber").prop("required", true);
+                $("#u_Birthday").prop("required", true);
+                $("#u_Address").prop("required", true);
+                $("#u_Road").prop("required", true);
+                $("#u_SubDistrict").prop("required", true);
+                $("#u_District").prop("required", true);
+                $("#u_Province").prop("required", true);
+                $("#u_Phone").prop("required", true);
+
+                $("#u_OfficerId").prop("value", "");
+                $("#u_FullName").prop("value", "");
+                $("#u_Last").prop("value", "");
+                $("#u_Username").prop("value", "");
+                $("#u_Password").prop("value", "");
+                $("#u_Position").prop("value", "");
+                $("#u_CarNumber").prop("value", "");
+                $("#u_Birthday").prop("value", "");
+                $("#u_Address").prop("value", "");
+                $("#u_Road").prop("value", "");
+                $("#u_SubDistrict").prop("value", "");
+                $("#u_District").prop("value", "");
+                $("#u_Province").prop("value", "");
+                $("#u_Phone").prop("value", "");
+            }
+        }
+
         function signup() {
             const file = document.getElementById("formFile").files[0];
             let ur_Id = "";
@@ -241,86 +376,72 @@ $active_signup = "active";
             formData.append("u_Province", data.u_Province);
             formData.append("u_Img", data.u_Img);
 
-            if (ur_Id == "" || u_Username == "" || u_Password == "" || u_CardNumber == "") {
-                Swal.fire({
-                    icon: 'warning',
-                    title: 'เเจ้งเตือน',
-                    text: "กรอกข้อมูลไม่ครบ"
-                })
+            $.ajax({
+                url: "/ReserveSpace/backend/Service/signup_api.php",
+                type: "POST",
+                data: formData,
+                dataType: "json",
+                contentType: false,
+                processData: false,
+                success: function(res) {
+                    let message = res.message;
 
-            } else {
-                // $.ajax({
-                //     url: "/ReserveSpace/backend/Service/signup_api.php",
-                //     type: "POST",
-                //     data: formData,
-                //     dataType: "json",
-                //     contentType: false,
-                //     processData: false,
-                //     success: function(res) {
-                //         let message = res.message;
+                    if (res.status == "success") {
+                        Swal.fire({
+                            icon: 'success',
+                            title: message,
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
 
-                //         if (res.status == "success") {
-                //             Swal.fire({
-                //                 icon: 'success',
-                //                 title: message,
-                //                 showConfirmButton: false,
-                //                 timer: 1500
-                //             })
+                    } else if (res.status == "Duplicate user") {
+                        Swal.fire({
+                            icon: 'warning',
+                            title: 'เเจ้งเตือน',
+                            text: message
+                        })
 
-                //         } else if (res.status == "Duplicate user") {
-                //             Swal.fire({
-                //                 icon: 'warning',
-                //                 title: 'เเจ้งเตือน',
-                //                 text: message
-                //             })
+                    } else if (res.status == "Duplicate card number") {
+                        Swal.fire({
+                            icon: 'warning',
+                            title: 'เเจ้งเตือน',
+                            text: message
+                        })
 
-                //         } else if (res.status == "Duplicate card number") {
-                //             Swal.fire({
-                //                 icon: 'warning',
-                //                 title: 'เเจ้งเตือน',
-                //                 text: message
-                //             })
-
-                //         } else {
-                //             Swal.fire({
-                //                 icon: 'error',
-                //                 title: 'เเจ้งเตือน',
-                //                 text: message
-                //             })
-                //         }
-                //     }
-                // });
-
-            }
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'เเจ้งเตือน',
+                            text: message
+                        })
+                    }
+                }
+            });
 
 
         }
 
         $('#RadioAdmin').change(function() {
-            $('#u_OfficerId').prop('readonly', false).attr('placeholder', 'ID').val("");
-            $('#u_Position').prop('readonly', false);
-            $('#u_Birthday').prop('readonly', true);
-            $('#u_Address').prop('readonly', true).val("-");
-            $('#u_Road').prop('readonly', true).val("-");
-            $('#u_SubDistrict').prop('readonly', true).val("-");
-            $('#u_District').prop('readonly', true).val("-");
-            $('#u_Province').prop('readonly', true).val("-");
+            checkRole();
         })
 
         $('#RadioUser').change(function() {
-            $('#u_OfficerId').prop('readonly', true).val("-");
-            $('#u_Position').prop('readonly', true).val("-");
-            $('#u_Birthday').prop('readonly', false);
-            $('#u_Address').prop('readonly', false).val("");
-            $('#u_Road').prop('readonly', false).val("");
-            $('#u_SubDistrict').prop('readonly', false).val("");
-            $('#u_District').prop('readonly', false).val("");
-            $('#u_Province').prop('readonly', false).val("");
+            checkRole();
         })
 
-        $('#btn_signup').click(function(even) {
-            event.preventDefault();
-            signup();
+        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        const forms = document.querySelectorAll('.needs-validation')
+
+        // Loop over them and prevent submission
+        Array.from(forms).forEach(form => {
+            form.addEventListener('submit', event => {
+                event.preventDefault()
+                event.stopPropagation()
+                if (form.checkValidity()) {
+                    signup();
+                }
+                form.classList.add('was-validated')
+            }, false)
         })
     </script>
 </body>

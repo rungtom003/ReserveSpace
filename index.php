@@ -61,6 +61,21 @@ $active_index = "active";
         div.reserve-box-red:hover {
             background-color: #EC7063;
         }
+
+        div.reserve-box-primary {
+            width: 80px;
+            height: 80px;
+            background: #3498DB;
+            border-radius: 10px;
+            margin: 5px;
+            cursor: pointer;
+            font-family: kanit-Regular;
+            transition: background-color 0.5s
+        }
+
+        div.reserve-box-primary:hover {
+            background-color: #85C1E9;
+        }
     </style>
 </head>
 
@@ -90,6 +105,9 @@ $active_index = "active";
                             </div>
                             <div class="d-flex justify-content-center align-items-center reserve-box-yellow">
                                 <span class="text-light text-center">รอดำเนินการ</span>
+                            </div>
+                            <div class="d-flex justify-content-center align-items-center reserve-box-primary">
+                                <span class="text-light text-center">รายการที่เลือก</span>
                             </div>
                         </div>
                     </div>
@@ -288,7 +306,7 @@ $active_index = "active";
                     let order_obj = order.find(i => i.a_Id === val.a_Id);
                     if (val.a_ReserveStatus === "0") {
                         if (order_obj !== undefined) {
-                            txt_content += `<div class="d-flex justify-content-center align-items-center reserve-box-yellow">
+                            txt_content += `<div class="d-flex justify-content-center align-items-center reserve-box-primary">
                                             <span class="text-light">${val.a_Name}</span>
                                         </div>`;
                         } else {
@@ -332,7 +350,6 @@ $active_index = "active";
         $("#add-cart").click(function(e) {
             e.preventDefault();
             const type_product = $("#type-product").val();
-            console.log(type_product)
             const data = {
                 pt_Id: $("#type-product").val(),
                 a_Id: $("#a_Id").val(),

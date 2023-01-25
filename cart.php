@@ -67,10 +67,10 @@ $active_index = "active";
                                 </ul>
                             </div>
                         </div>
-                        <?php if($count_order > 0){ ?>
-                        <div class="d-flex justify-content-center">
-                            <button class="btn btn-primary" id="save-reserve">จอง</button>
-                        </div>
+                        <?php if ($count_order > 0) { ?>
+                            <div class="d-flex justify-content-center">
+                                <button class="btn btn-primary" id="save-reserve" onclick="saveReserve()">จอง</button>
+                            </div>
                         <?php } ?>
                     </div>
                 </div>
@@ -92,7 +92,8 @@ $active_index = "active";
             });
             $("#item-order").html(txt_content);
         }
-        document.getElementById("save-reserve").addEventListener('click', () => {
+
+        const saveReserve = () => {
             Swal.fire({
                 title: 'ยืนยันการจอง?',
                 text: "คุณต้องการยืนยันการจองหรือไม่",
@@ -110,17 +111,17 @@ $active_index = "active";
                         dataType: "json",
                         success: function(res) {
                             window.location.reload();
-                            Swal.fire(
-                                'จองสำเร็จ',
-                                `${res.message}`,
-                                'success'
-                            )
+                            // Swal.fire(
+                            //     'จองสำเร็จ',
+                            //     `${res.message}`,
+                            //     'success'
+                            // )
                         }
                     });
 
                 }
-            })
-        });
+            });
+        }
 
         const deleteSession = (elm) => {
             const a_Id = elm.value;
