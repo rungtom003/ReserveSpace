@@ -30,11 +30,44 @@ $active_area = "active";
             <div class="py-1" style="font-family: kanit-Regular;">
                 <div class="card">
                     <div class="card-body">
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <button class="btn btn-primary me-md-2" type="button" data-bs-toggle="modal" data-bs-target="#addAreakModal">เพิ่มบล็อค</button>
+                        </div>
                         <table id="table-area" class="table table-striped w-100"></table>
                     </div>
                 </div>
             </div>
             <!-- end: Content -->
+        </div>
+        <div class="modal fade" id="addAreakModal" tabindex="-1" aria-labelledby="addAreakModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="addAreakModalLabel">เพิ่มบล็อค</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="mb-3">
+                                <label for="selectZoneName" class="col-form-label">โซน:</label>
+                                <select class="form-select" aria-label="Default select example" id="selectZoneName">
+                                    <option selected value="">เลือกโซน</option>
+                                    <option value="นาย">นาย</option>
+                                    <option value="นาง">นาง</option>
+                                    <option value="นางสาว">นางสาว</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="inputAreaName" class="col-form-label">บล็อค:</label>
+                                <input class="form-control" id="inputAreaName"></input>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" id ="btn_Add">บันทึก</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </main>
     <!-- end: Main -->
@@ -110,7 +143,62 @@ $active_area = "active";
 
         }
 
+        function loadZone() {
+            $.ajax({
+                url: "/ReserveSpace/backend/Service/zone_api.php",
+                type: "POST",
+                dataType: "json",
+                success: function(res) {
+                    let length = res.data.length;
+                    
+                    $('#selectZoneName').empty()
+                    for (let i = 0; i < length; i++) {
+                        $('#selectZoneName').append(`<option value="${res.data[i].z_Id}">${res.data[i].z_Name}</option>`);
+                    }
+                }
+            });
+        }
+
         loadArea();
+        loadZone();
+
+        //Btn_Add
+        $('#btn_Add').click(function(event) {
+            event.preventDefault();
+            let z_Id = $('#selectZoneName').val();
+            let a_Name = $('#inputAreaName').val();
+            //console.log(`Zone ID: ${z_Id}, Area Name: ${a_Name}`);
+            $.ajax({
+                url: "/ReserveSpace/backend/Service/areaAdd_api.php",
+                type: "POST",
+                data: {z_Id:z_Id, a_Name:a_Name},
+                dataType: "json",
+                success: function(res) {
+                    let message = res.message;
+                    let status = res.status;
+                    if (status == "success") {
+                            Swal.fire({
+                                icon: 'success',
+                                title: message,
+                                showConfirmButton: true,
+                                timer: 1500
+                            }).then((result) => {
+                                $('#table-area').DataTable().destroy();
+                                loadArea();
+                                $('#addAreakModal').modal('hide');
+                            })
+
+
+                        } else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'เเจ้งเตือน',
+                                text: message
+                            })
+                        }
+                }
+            });
+        })
 
         //Btn Edit
         $("body").on("click", "#table-area #btn_Edit", function() {
@@ -167,39 +255,50 @@ $active_area = "active";
             let a_Id = data.a_Id;
             let a_Name = row.find("#inputA_Name").val();
 
-            $.ajax({
-                url: "/ReserveSpace/backend/Service/areaUpdate_api.php",
-                type: "POST",
-                data: {
-                    a_Id: a_Id,
-                    a_Name: a_Name
-                },
-                dataType: "json",
-                success: function(res) {
-                    let message = res.message;
-                    let status = res.status;
+            if (a_Name == "") {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'เเจ้งเตือน',
+                    text: 'ไม่มีข้อมูลที่จะแก้ไข'
+                })
+            } else {
+                $.ajax({
+                    url: "/ReserveSpace/backend/Service/areaUpdate_api.php",
+                    type: "POST",
+                    data: {
+                        a_Id: a_Id,
+                        a_Name: a_Name
+                    },
+                    dataType: "json",
+                    success: function(res) {
+                        let message = res.message;
+                        let status = res.status;
 
-                    if (status == "success") {
-                        Swal.fire({
-                            icon: 'success',
-                            title: message,
-                            showConfirmButton: true,
-                            timer: 1500
-                        }).then((result) => {
-                            $('#table-area').DataTable().destroy();
-                            loadArea();
-                        })
+                        if (status == "success") {
+                            Swal.fire({
+                                icon: 'success',
+                                title: message,
+                                showConfirmButton: true,
+                                timer: 1500
+                            }).then((result) => {
+                                $('#table-area').DataTable().destroy();
+                                loadArea();
+                            })
 
 
-                    } else {
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'เเจ้งเตือน',
-                            text: message
-                        })
+                        } else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'เเจ้งเตือน',
+                                text: message
+                            })
+                        }
                     }
-                }
-            });
+                });
+
+            }
+
+
 
         });
 
@@ -256,7 +355,7 @@ $active_area = "active";
                             }
                         }
                     });
-                    
+
                 }
             })
 
