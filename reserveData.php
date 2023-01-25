@@ -25,34 +25,8 @@ $active_reserveData = "active";
             <?php include("./layout/navmain.php"); ?>
             <!-- start: Content -->
             <div class="py-1" style="font-family: kanit-Regular;">
-                <div class="my-2 d-flex flex-column align-items-center">
-                    <div class="card text-bg-success mb-3 w-75">
-                        <div class="card-body">
-                            <h5 class="card-title text-center">หมายเลขพื้นที่ 01</h5>
-                            <hr class="border border-primary border-3 opacity-75">
-                            <ul class="list-group">
-                                <li class="list-group-item"><span>ชื่อผู้จอง : สมชาย วงดี</span></li>
-                                <li class="list-group-item"><span>รายละเอียดการจอง : สมชาย วงดี</span></li>
-                                <li class="list-group-item"><span>หมายเหตุ : สมชาย วงดี</span></li>
-                                <li class="list-group-item"><span>วันเวลาจอง : 2023-01-01 12:00:00</span></li>
-                                <li class="list-group-item"><span>สถานะการจอง : <span class="text-success">สำเร็จ</span></span></li>
-                            </ul>
-                        </div>
-                    </div>
+                <div class="my-2 d-flex flex-column align-items-center" id="data-reserve-content">
 
-                    <div class="card text-bg-warning mb-3 w-75">
-                        <div class="card-body">
-                            <h5 class="card-title text-center">หมายเลขพื้นที่ 02</h5>
-                            <hr class="border border-primary border-3 opacity-75">
-                            <ul class="list-group">
-                                <li class="list-group-item"><span>ชื่อผู้จอง : สมชาย วงดี</span></li>
-                                <li class="list-group-item"><span>รายละเอียดการจอง : สมชาย วงดี</span></li>
-                                <li class="list-group-item"><span>หมายเหตุ : สมชาย วงดี</span></li>
-                                <li class="list-group-item"><span>วันเวลาจอง : 2023-01-01 12:00:00</span></li>
-                                <li class="list-group-item"><span>สถานะการจอง : <span class="text-warning">รอดำเนินการ</span></span></li>
-                            </ul>
-                        </div>
-                    </div>
                 </div>
             </div>
             <!-- end: Content -->
@@ -61,6 +35,115 @@ $active_reserveData = "active";
     <!-- end: Main -->
     <?php include("./layout/script.php"); ?>
     <script>
+        const u_Id = "<?= $user["u_Id"] ?>";
+        $.ajax({
+            url: "/ReserveSpace/backend/Service/reserveUser.php",
+            type: "POST",
+            dataType: "json",
+            data: {
+                u_Id: u_Id
+            },
+            success: function(res) {
+                let txtContent = "";
+                const dataarr = res.data;
+                console.log(dataarr);
+                $.each(dataarr, function(key, val) {
+                    if (val.a_ReserveStatus === "2" && val.rd_Status === "0") {
+                        txtContent += `<div class="card text-bg-warning mb-3 w-75">
+                        <div class="card-body">
+                            <h5 class="card-title text-center">ล็อค ${val.a_Name}</h5>
+                            <hr class="border border-primary border-3 opacity-75">
+                            <ul class="list-group">
+                                <li class="list-group-item"><span>ชื่อผู้จอง : ${val.u_FirstName} ${val.u_LastName}</span></li>
+                                <li class="list-group-item"><span>ล็อค : ${val.a_Name}</span></li>
+                                <li class="list-group-item"><span>โซน : ${val.z_Name}</span></li>
+                                <li class="list-group-item"><span>รายละเอียดการจอง : ${val.rd_Detail===null?"":val.rd_Detail}</span></li>
+                                <li class="list-group-item"><span>หมายเหตุ : ${val.rd_Note===null?"":val.rd_Note}</span></li>
+                                <li class="list-group-item"><span>วันเวลาจอง : ${val.rd_DateTime}</span></li>
+                                <li class="list-group-item"><span>สถานะการจอง : <span class="text-warning">รอดำเนินการ</span></span></li>
+                                <li class="list-group-item"><span>ยกเลิก : <button class="btn btn-danger" id="cancel-order" value='${JSON.stringify(val)}' onclick="cancelOrder(this)">ยกเลิกจอง</button></li>
+                                
+                            </ul>
+                        </div>
+                    </div>`;
+                    } else if (val.a_ReserveStatus === "1" && val.rd_Status === "1") {
+                        txtContent += `<div class="card text-bg-success mb-3 w-75">
+                        <div class="card-body">
+                            <h5 class="card-title text-center">ล็อค ${val.a_Name}</h5>
+                            <hr class="border border-primary border-3 opacity-75">
+                            <ul class="list-group">
+                                <li class="list-group-item"><span>ชื่อผู้จอง : ${val.u_FirstName} ${val.u_LastName}</span></li>
+                                <li class="list-group-item"><span>ล็อค : ${val.a_Name}</span></li>
+                                <li class="list-group-item"><span>โซน : ${val.z_Name}</span></li>
+                                <li class="list-group-item"><span>รายละเอียดการจอง : ${val.rd_Detail===null?"":val.rd_Detail}</span></li>
+                                <li class="list-group-item"><span>หมายเหตุ : ${val.rd_Note===null?"":val.rd_Note}</span></li>
+                                <li class="list-group-item"><span>วันเวลาจอง : ${val.rd_DateTime}</span></li>
+                                <li class="list-group-item"><span>สถานะการจอง : <span class="text-success">สำเร็จ</span></span></li>
+                            </ul>
+                        </div>
+                    </div>`;
+                    } else {
+                        txtContent += `<div class="card text-bg-danger mb-3 w-75">
+                        <div class="card-body">
+                            <h5 class="card-title text-center">ล็อค ${val.a_Name}</h5>
+                            <hr class="border border-primary border-3 opacity-75">
+                            <ul class="list-group">
+                                <li class="list-group-item"><span>ชื่อผู้จอง : ${val.u_FirstName} ${val.u_LastName}</span></li>
+                                <li class="list-group-item"><span>ล็อค : ${val.a_Name}</span></li>
+                                <li class="list-group-item"><span>โซน : ${val.z_Name}</span></li>
+                                <li class="list-group-item"><span>รายละเอียดการจอง : ${val.rd_Detail===null?"":val.rd_Detail}</span></li>
+                                <li class="list-group-item"><span>หมายเหตุ : ${val.rd_Note===null?"":val.rd_Note}</span></li>
+                                <li class="list-group-item"><span>วันเวลาจอง : ${val.rd_DateTime}</span></li>
+                                <li class="list-group-item"><span>สถานะการจอง : <span class="text-danger">ยกเลิกการจอง</span></span></li>
+                            </ul>
+                        </div>
+                    </div>`;
+                    }
+
+                });
+                $("#data-reserve-content").html(txtContent);
+            }
+        })
+
+        const cancelOrder = (elm) => {
+            const obj_json = elm.value;
+            const obj = JSON.parse(obj_json);
+
+            Swal.fire({
+                title: 'ยืนยัน?',
+                text: "คุณต้องการยกเลิกหรือไม่",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'ใช่',
+                cancelButtonText: 'ไม่'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: "/ReserveSpace/backend/Service/cancelReserve.php",
+                        type: "POST",
+                        dataType: "json",
+                        data: {
+                            rd_Id: obj.rd_Id,
+                            a_Id: obj.a_Id
+                        },
+                        success: function(res) {
+                            if (res.status === "success") {
+                                window.location.reload();
+                            } else {
+                                Swal.fire(
+                                    'เกิดข้อผิดพลาด',
+                                    `${res.message}`,
+                                    'warning'
+                                )
+                            }
+                        }
+                    });
+
+                }
+            });
+        }
     </script>
 </body>
 

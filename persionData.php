@@ -32,6 +32,7 @@ $active_persionData = "active";
                         </div>
                         <div class="card-body">
                             <form>
+                                <?php if($user["ur_Id"] != "R001"){ ?>
                                 <div class="row g-2 p-2">
                                     <div class="col-md-3">
                                         <label class="form-label">รหัสเจ้าหน้าที่</label>
@@ -39,6 +40,7 @@ $active_persionData = "active";
                                         <!-- <div class="form-text">Enter your Full name</div> -->
                                     </div>
                                 </div>
+                                <?php } ?>
                                 <div class="row g-2 p-2">
                                     <div class="col-md-2">
                                         <label class="form-label">คำนำหน้า</label>
@@ -90,11 +92,13 @@ $active_persionData = "active";
                                 </div>
 
                                 <div class="row g-2 p-2">
+                                <?php if($user["ur_Id"] != "R001"){ ?>
                                     <div class="col-md">
                                         <label class="form-label">ตำแหน่ง</label>
                                         <input type="text" class="form-control" placeholder="" id="u_Position" value="<?= $user["u_Position"] ?>">
                                         <!-- <div  class="form-text">Enter your Last name</div> -->
                                     </div>
+                                    <?php } ?>
                                     <div class="col-md">
                                         <label class="form-label">เลขบัตรประจำตัวประชาชน</label>
                                         <input type="text" class="form-control" placeholder="" id="u_CardNumber" value="<?= $user["u_CardNumber"] ?>" readonly>
