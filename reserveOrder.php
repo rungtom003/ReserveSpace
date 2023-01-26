@@ -28,9 +28,9 @@ $active_reserveOrder = "active";
             <?php include("./layout/navmain.php"); ?>
             <!-- start: Content -->
             <div class="py-1">
-            <div class="card">
+                <div class="card">
                     <div class="card-body">
-                        <table id="table-Order" class="table table-striped w-100"></table>
+                        <table id="table-Order" class="table table-striped w-100 text-nowrap"></table>
                     </div>
                 </div>
             </div>
@@ -40,7 +40,7 @@ $active_reserveOrder = "active";
     <!-- end: Main -->
     <?php include("./layout/script.php"); ?>
     <script>
-        function loadOrder(){
+        function loadOrder() {
             $.ajax({
                 url: "/ReserveSpace/backend/Service/reserveList_api.php",
                 type: "GET",
@@ -69,7 +69,7 @@ $active_reserveOrder = "active";
                             targets: 1,
                             title: "โซน",
                             data: "z_Name",
-                            
+
                         },
                         {
                             targets: 2,
@@ -98,24 +98,49 @@ $active_reserveOrder = "active";
                         },
                         {
                             targets: 7,
-                            title: "RD Status",
-                            data: "rd_Status",
+                            title: "สถานะ",
+                            data: null,
+                            defaultContent: "",
+                            render: function(data, type, row, meta) {
+                                let txtHTML = "";
+                                if (row.rd_Status === "2") {
+                                    txtHTML = "<span class='text-danger'>ยกเลิก</span>";
+                                } else if (row.rd_Status === "1") {
+                                    txtHTML = "<span class='text-success'>จองสำเร็จ</span>";
+                                } else if (row.rd_Status === "0") {
+                                    txtHTML = "<span class='text-warning'>รอดำเนินการ</span>";
+                                } else {
+                                    txtHTML = "";
+                                }
+                                return txtHTML;
+                            }
                         },
                         {
                             targets: 8,
-                            title: "ReserveStatus",
-                            data: "a_ReserveStatus",
-                        },
-                        {
-                            targets: 9,
                             title: "#",
                             data: null,
                             defaultContent: "",
                             render: function(data, type, row, meta) {
-                                return `<div class="d-grid gap-2 d-md-block" >
-                                        <button class="btn btn-primary" type="button" id="btn_Approve" >อนุมัติ</button>
-                                        <button class="btn btn-danger" type="button" id="btn_Cancel" >ยกเลิก</button>
-                                    </div>`;
+                                const obj = {
+                                    rd_Id: row.rd_Id,
+                                    a_Id: row.a_Id
+                                }
+                                let txtHTML = "";
+                                if (row.rd_Status === "2") {
+                                    txtHTML = "";
+                                } else if (row.rd_Status === "1") {
+                                    txtHTML = `<div class="d-grid gap-2 d-md-block" >
+                                                <button class="btn btn-danger" type="button" id="btn_Cancel" onclick="fcCancel(this)" value='${JSON.stringify(obj)}'>ยกเลิก</button>
+                                            </div>`;
+                                } else if (row.rd_Status === "0") {
+                                    txtHTML = `<div class="d-grid gap-2 d-md-block" >
+                                                <button class="btn btn-primary" type="button" id="btn_Approve" onclick="fcApprove(this)" value='${JSON.stringify(obj)}'>อนุมัติ</button>
+                                                <button class="btn btn-danger" type="button" id="btn_Cancel" onclick="fcCancel(this)" value='${JSON.stringify(obj)}'>ยกเลิก</button>
+                                            </div>`;
+                                } else {
+                                    txtHTML = "";
+                                }
+                                return txtHTML;
                             }
                         }
                     ]
@@ -124,87 +149,112 @@ $active_reserveOrder = "active";
         }
         loadOrder();
 
-        //Btn Approve
-        $("body").on("click", "#table-Order #btn_Approve", function() {
-            var row = $(this).closest("tr");
-            let data = $('#table-Order').DataTable().row(row).data();
-            let rd_Id = data.rd_Id;
-            let a_Id = data.a_Id;
+        const fcCancel = (elm) => {
 
-            $.ajax({
-                    url: "/ReserveSpace/backend/Service/approveReserve_api.php",
-                    type: "POST",
-                    data: {
-                        rd_Id: rd_Id,
-                        a_Id: a_Id
-                    },
-                    dataType: "json",
-                    success: function(res) {
-                        let message = res.message;
-                        let status = res.status;
+            const obj_json = elm.value;
+            const obj = JSON.parse(obj_json);
 
-                        if (status == "success") {
-                            Swal.fire({
-                                icon: 'success',
-                                title: message,
-                                showConfirmButton: true,
-                                timer: 1500
-                            }).then((result) => {
-                                $('#table-Order').DataTable().destroy();
-                                loadOrder();
-                            })
-                        } else {
-                            Swal.fire({
-                                icon: 'error',
-                                title: 'เเจ้งเตือน',
-                                text: message
-                            })
+            let rd_Id = obj.rd_Id;
+            let a_Id = obj.a_Id;
+
+            Swal.fire({
+                title: 'ยืนยันการยกเลิก?',
+                text: "คุณต้องการยืนยันการยกเลิกหรือไม่",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'ใช่',
+                cancelButtonText: 'ไม่'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: "/ReserveSpace/backend/Service/cancelReserve.php",
+                        type: "POST",
+                        data: {
+                            rd_Id: rd_Id,
+                            a_Id: a_Id
+                        },
+                        dataType: "json",
+                        success: function(res) {
+                            let message = res.message;
+                            let status = res.status;
+
+                            if (status == "success") {
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: message,
+                                    showConfirmButton: true,
+                                    timer: 1500
+                                }).then((result) => {
+                                    $('#table-Order').DataTable().destroy();
+                                    loadOrder();
+                                })
+                            } else {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'เเจ้งเตือน',
+                                    text: message
+                                })
+                            }
                         }
-                    }
-                });
+                    });
+                }
+            });
+        }
 
-        });
+        const fcApprove = (elm) =>{
+            const obj_json = elm.value;
+            const obj = JSON.parse(obj_json);
 
-        //Btn Cancel
-        $("body").on("click", "#table-Order #btn_Cancel", function() {
-            var row = $(this).closest("tr");
-            let data = $('#table-Order').DataTable().row(row).data();
-            let rd_Id = data.rd_Id;
-            let a_Id = data.a_Id;
-            
-            $.ajax({
-                    url: "/ReserveSpace/backend/Service/cancelReserve.php",
-                    type: "POST",
-                    data: {
-                        rd_Id: rd_Id,
-                        a_Id: a_Id
-                    },
-                    dataType: "json",
-                    success: function(res) {
-                        let message = res.message;
-                        let status = res.status;
+            let rd_Id = obj.rd_Id;
+            let a_Id = obj.a_Id;
 
-                        if (status == "success") {
-                            Swal.fire({
-                                icon: 'success',
-                                title: message,
-                                showConfirmButton: true,
-                                timer: 1500
-                            }).then((result) => {
-                                $('#table-Order').DataTable().destroy();
-                                loadOrder();
-                            })
-                        } else {
-                            Swal.fire({
-                                icon: 'error',
-                                title: 'เเจ้งเตือน',
-                                text: message
-                            })
+            Swal.fire({
+                title: 'ยืนยันอนุมัติ?',
+                text: "คุณต้องการยืนยันการอนุมัติหรือไม่",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'ใช่',
+                cancelButtonText: 'ไม่'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: "/ReserveSpace/backend/Service/approveReserve_api.php",
+                        type: "POST",
+                        data: {
+                            rd_Id: rd_Id,
+                            a_Id: a_Id
+                        },
+                        dataType: "json",
+                        success: function(res) {
+                            let message = res.message;
+                            let status = res.status;
+
+                            if (status == "success") {
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: message,
+                                    showConfirmButton: true,
+                                    timer: 1500
+                                }).then((result) => {
+                                    $('#table-Order').DataTable().destroy();
+                                    loadOrder();
+                                })
+                            } else {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'เเจ้งเตือน',
+                                    text: message
+                                })
+                            }
                         }
-                    }
-                });
-
-        });
+                    });
+                }
+            });
+        }
 
     </script>
 </body>

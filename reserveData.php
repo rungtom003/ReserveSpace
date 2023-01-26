@@ -47,7 +47,7 @@ $active_reserveData = "active";
                 let txtContent = "";
                 const dataarr = res.data;
                 $.each(dataarr, function(key, val) {
-                    if (val.a_ReserveStatus === "2" && val.rd_Status === "0") {
+                    if (val.rd_Status === "0") {
                         txtContent += `<div class="card text-bg-warning mb-3 w-75">
                         <div class="card-body">
                             <h5 class="card-title text-center">ล็อค ${val.a_Name}</h5>
@@ -65,7 +65,7 @@ $active_reserveData = "active";
                             </ul>
                         </div>
                     </div>`;
-                    } else if (val.a_ReserveStatus === "1" && val.rd_Status === "1") {
+                    } else if (val.rd_Status === "1") {
                         txtContent += `<div class="card text-bg-success mb-3 w-75">
                         <div class="card-body">
                             <h5 class="card-title text-center">ล็อค ${val.a_Name}</h5>

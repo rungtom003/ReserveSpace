@@ -110,12 +110,24 @@ $active_index = "active";
                         type: "POST",
                         dataType: "json",
                         success: function(res) {
-                            window.location.reload();
-                            // Swal.fire(
-                            //     'จองสำเร็จ',
-                            //     `${res.message}`,
-                            //     'success'
-                            // )
+                            console.log(res)
+                            if (res.status === "success") {
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: res.message,
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                }).then((result) => {
+                                    window.location.reload();
+                                })
+                            } else {
+                                Swal.fire(
+                                    'จองไม่สำเร็จ',
+                                    `${res.message}`,
+                                    'warning'
+                                );
+                            }
+
                         }
                     });
 
