@@ -149,6 +149,7 @@ $active_signup = "active";
                                         <div class="invalid-feedback">
                                             กรุณากรอก จังหวัด
                                         </div>
+
                                     </div>
                                 </div>
                                 <div class="col-md">
