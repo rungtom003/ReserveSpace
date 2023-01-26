@@ -25,8 +25,9 @@ $active_persionData = "active";
             <?php include("./layout/navmain.php"); ?>
             <!-- start: Content -->
             <div class="py-1">
+                <div class="content d-flex flex-column flex-column-fluid">
                 <div class="d-flex justify-content-center">
-                    <div class="card w-75">
+                    <div class="card">
                         <div class="card-header">
                             Featured
                         </div>
@@ -164,6 +165,8 @@ $active_persionData = "active";
                     </div>
 
                 </div>
+                </div>
+
             </div>
             <!-- end: Content -->
         </div>

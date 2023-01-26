@@ -25,7 +25,14 @@ $active_reserveData = "active";
             <?php include("./layout/navmain.php"); ?>
             <!-- start: Content -->
             <div class="py-1" style="font-family: kanit-Regular;">
-                <div class="my-2 d-flex flex-column align-items-center" id="data-reserve-content">
+            <div class="content d-flex flex-column flex-column-fluid">
+                <div class="d-flex justify-content-center">
+                <div class="container col-md-12">
+
+                <div id="data-reserve-content">
+                </div>
+                </div>
+                </div>
 
                 </div>
             </div>
@@ -49,7 +56,7 @@ $active_reserveData = "active";
                 console.log(dataarr);
                 $.each(dataarr, function(key, val) {
                     if (val.a_ReserveStatus === "2" && val.rd_Status === "0") {
-                        txtContent += `<div class="card text-bg-warning mb-3 w-75">
+                        txtContent += `<div class="card text-bg-warning">
                         <div class="card-body">
                             <h5 class="card-title text-center">ล็อค ${val.a_Name}</h5>
                             <hr class="border border-primary border-3 opacity-75">
@@ -67,7 +74,7 @@ $active_reserveData = "active";
                         </div>
                     </div>`;
                     } else if (val.a_ReserveStatus === "1" && val.rd_Status === "1") {
-                        txtContent += `<div class="card text-bg-success mb-3 w-75">
+                        txtContent += `<div class="card text-bg-success">
                         <div class="card-body">
                             <h5 class="card-title text-center">ล็อค ${val.a_Name}</h5>
                             <hr class="border border-primary border-3 opacity-75">
@@ -83,7 +90,7 @@ $active_reserveData = "active";
                         </div>
                     </div>`;
                     } else {
-                        txtContent += `<div class="card text-bg-danger mb-3 w-75">
+                        txtContent += `<div class="card text-bg-danger">
                         <div class="card-body">
                             <h5 class="card-title text-center">ล็อค ${val.a_Name}</h5>
                             <hr class="border border-primary border-3 opacity-75">

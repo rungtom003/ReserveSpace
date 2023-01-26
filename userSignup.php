@@ -25,132 +25,156 @@ $active_signup = "active";
 <body>
     <!-- start: Main -->
     <div class="p-2">
-            <div class="py-2">
-                <!-- start: Content -->
+        <div class="py-2">
+            <div class="content d-flex flex-column flex-column-fluid">
                 <div class="d-flex justify-content-center">
-                    <div class="card w-50">
-                        <div class="card-header">
-                            Featured
+                    <!-- start: Content -->
+                    <div class="card">
+                            <div class="card-header">
+                                Featured
+                            </div>
+                            <div class="card-body">
+                                <form>
+                                    <div class="row g-2 p-2">
+                                        <div class="col-md-2">
+                                            <label class="form-label">คำนำหน้า</label>
+                                            <select class="form-select" aria-label="Default select example" id="Prefix">
+                                                <option selected value="">เลือก</option>
+                                                <option value="นาย">นาย</option>
+                                                <option value="นาง">นาง</option>
+                                                <option value="นางสาว">นางสาว</option>
+                                            </select>
+                                            <!-- <div class="form-text">Enter your Full name</div> -->
+                                        </div>
+                                        <div class="col-md">
+                                            <label class="form-label">ชื่อ</label>
+                                            <input type="text" class="form-control" placeholder="Full name" id="u_FullName" required>
+                                            <!-- <div class="form-text">Enter your Full name</div> -->
+                                        </div>
+                                        <div class="col-md">
+                                            <label class="form-label">นามสกุล</label>
+                                            <input type="text" class="form-control" placeholder="Last name" id="u_Last" required>
+                                            <!-- <div  class="form-text">Enter your Last name</div> -->
+                                        </div>
+                                    </div>
+
+                                    <div class="row g-2 p-2">
+                                        <div class="col-md">
+                                            <label class="form-label">ชื่อผู้ใช้</label>
+                                            <input type="Username" class="form-control" placeholder="Username" id="u_Username" required>
+                                            <!-- <div class="form-text">Enter your Full name</div> -->
+                                        </div>
+                                    </div>
+                                    <div class="row g-2 p-2">
+                                        <div class="col-md">
+                                            <label class="form-label">รหัสผ่าน</label>
+                                            <input type="Password" class="form-control" placeholder="Password" id="u_Password" required>
+
+                                        </div>
+                                    </div>
+                                    <div class="g-2 p-2">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="inlineRadioOptions" checked id="RadioUser" value="R001">
+                                            <label class="form-check-label" for="RadioUser">User</label>
+                                        </div>
+                                    </div>
+                                    <div class="row g-2 p-2">
+                                    <div class="col-md-3">
+                                            <label class="form-label">โซน</label>
+                                            <select class="form-select" aria-label="Default select example" id="">
+                                                <option selected value="">เลือก</option>
+                                                <option value=""></option>
+                                                <option value=""></option>
+                                                <option value=""></option>
+                                            </select>
+                                            <!-- <div class="form-text">Enter your Full name</div> -->
+                                        </div>
+                                        <div class="col-md">
+                                            <label class="form-label">ชื่อร้าน</label>
+                                            <input type="" class="form-control" placeholder="" id="" required>
+                                            <!-- <div class="form-text">Enter your Full name</div> -->
+                                        </div>
+                                    </div>
+                                    <div class="row g-2 p-2">
+                                        <div class="mb-3">
+                                            <label for="exampleFormControlTextarea1" class="form-label">รายละเอียดสินค้า</label>
+                                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                        </div>
+
+                                    </div>
+                                    <div class="row g-2 p-2">
+                                        <div class="col-md">
+                                            <label class="form-label">เลขบัตรประจำตัวประชาชน</label>
+                                            <input type="text" class="form-control" placeholder="" id="u_CarNumber" required>
+                                            <!-- <div class="form-text">Enter your Full name</div> -->
+                                        </div>
+                                        <div class="col-md">
+                                            <label class="form-label">วัน/เดือน/ปีเกิด</label>
+                                            <input type="date" class="form-control" placeholder="" id="u_Birthday">
+                                            <!-- <div  class="form-text">Enter your Last name</div> -->
+                                        </div>
+                                    </div>
+
+                                    <div class="row g-2 p-2">
+                                        <div class="col-md">
+                                            <div class="col-md">
+                                                <label class="form-label">บ้านเลขที่/หมู่</label>
+                                                <input type="text" class="form-control" placeholder="" id="u_Address">
+                                                <!-- <div  class="form-text">Enter your Last name</div> -->
+                                            </div>
+                                        </div>
+                                        <div class="col-md">
+                                            <div class="col-md">
+                                                <label class="form-label">ถนน</label>
+                                                <input type="text" class="form-control" placeholder="" id="u_Road">
+                                                <!-- <div  class="form-text">Enter your Last name</div> -->
+                                            </div>
+                                        </div>
+                                        <div class="col-md">
+                                            <div class="col-md">
+                                                <label class="form-label">ตำบล</label>
+                                                <input type="text" class="form-control" placeholder="" id="u_SubDistrict">
+                                                <!-- <div  class="form-text">Enter your Last name</div> -->
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="row g-2 p-2">
+                                        <div class="col-md">
+                                            <div class="col-md">
+                                                <label class="form-label">อำเภอ</label>
+                                                <input type="text" class="form-control" placeholder="" id="u_District">
+                                                <!-- <div  class="form-text">Enter your Last name</div> -->
+                                            </div>
+                                        </div>
+                                        <div class="col-md">
+                                            <div class="col-md">
+                                                <label class="form-label">จังหวัด</label>
+                                                <input type="text" class="form-control" placeholder="" id="u_Province">
+                                                <!-- <div  class="form-text">Enter your Last name</div> -->
+                                            </div>
+                                        </div>
+                                        <div class="col-md">
+                                            <div class="col-md">
+                                                <label class="form-label">เบอร์โทรศัพท์</label>
+                                                <input type="text" class="form-control" placeholder="" id="u_Phone">
+                                                <!-- <div  class="form-text">Enter your Last name</div> -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="formFile" class="form-label">อัพโหลดรูป</label>
+                                        <input class="form-control" type="file" id="formFile">
+                                    </div>
+                                    <button type="submit" class="btn btn-primary" id="btn_signup">สร้างบัญชี</button>
+                                </form>
+                            </div>
                         </div>
-                        <div class="card-body">
-                            <form>
-                                <div class="row g-2 p-2">
-                                    <div class="col-md-2">
-                                        <label class="form-label">คำนำหน้า</label>
-                                        <select class="form-select" aria-label="Default select example" id="Prefix">
-                                            <option selected value="">เลือก</option>
-                                            <option value="นาย">นาย</option>
-                                            <option value="นาง">นาง</option>
-                                            <option value="นางสาว">นางสาว</option>
-                                        </select>
-                                        <!-- <div class="form-text">Enter your Full name</div> -->
-                                    </div>
-                                    <div class="col-md">
-                                        <label class="form-label">ชื่อ</label>
-                                        <input type="text" class="form-control" placeholder="Full name" id="u_FullName" required>
-                                        <!-- <div class="form-text">Enter your Full name</div> -->
-                                    </div>
-                                    <div class="col-md">
-                                        <label class="form-label">นามสกุล</label>
-                                        <input type="text" class="form-control" placeholder="Last name" id="u_Last" required>
-                                        <!-- <div  class="form-text">Enter your Last name</div> -->
-                                    </div>
-                                </div>
-
-                                <div class="row g-2 p-2">
-                                    <div class="col-md">
-                                        <label class="form-label">ชื่อผู้ใช้</label>
-                                        <input type="Username" class="form-control" placeholder="Username" id="u_Username" required>
-                                        <!-- <div class="form-text">Enter your Full name</div> -->
-                                    </div>
-                                </div>
-                                <div class="row g-2 p-2">
-                                    <div class="col-md">
-                                        <label class="form-label">รหัสผ่าน</label>
-                                        <input type="Password" class="form-control" placeholder="Password" id="u_Password" required>
-
-                                    </div>
-                                </div>
-                                <div class="g-2 p-2">
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="inlineRadioOptions" checked id="RadioUser" value="R001">
-                                        <label class="form-check-label" for="RadioUser">User</label>
-                                    </div>
-                                </div>
-
-                                <div class="row g-2 p-2">
-                                    <div class="col-md">
-                                        <label class="form-label">เลขบัตรประจำตัวประชาชน</label>
-                                        <input type="text" class="form-control" placeholder="" id="u_CarNumber" required>
-                                        <!-- <div class="form-text">Enter your Full name</div> -->
-                                    </div>
-                                    <div class="col-md">
-                                        <label class="form-label">วัน/เดือน/ปีเกิด</label>
-                                        <input type="date" class="form-control" placeholder="" id="u_Birthday">
-                                        <!-- <div  class="form-text">Enter your Last name</div> -->
-                                    </div>
-                                </div>
-
-                                <div class="row g-2 p-2">
-                                    <div class="col-md">
-                                        <div class="col-md">
-                                            <label class="form-label">บ้านเลขที่/หมู่</label>
-                                            <input type="text" class="form-control" placeholder="" id="u_Address">
-                                            <!-- <div  class="form-text">Enter your Last name</div> -->
-                                        </div>
-                                    </div>
-                                    <div class="col-md">
-                                        <div class="col-md">
-                                            <label class="form-label">ถนน</label>
-                                            <input type="text" class="form-control" placeholder="" id="u_Road">
-                                            <!-- <div  class="form-text">Enter your Last name</div> -->
-                                        </div>
-                                    </div>
-                                    <div class="col-md">
-                                        <div class="col-md">
-                                            <label class="form-label">ตำบล</label>
-                                            <input type="text" class="form-control" placeholder="" id="u_SubDistrict">
-                                            <!-- <div  class="form-text">Enter your Last name</div> -->
-                                        </div>
-                                    </div>
-
-                                </div>
-                                <div class="row g-2 p-2">
-                                    <div class="col-md">
-                                        <div class="col-md">
-                                            <label class="form-label">อำเภอ</label>
-                                            <input type="text" class="form-control" placeholder="" id="u_District">
-                                            <!-- <div  class="form-text">Enter your Last name</div> -->
-                                        </div>
-                                    </div>
-                                    <div class="col-md">
-                                        <div class="col-md">
-                                            <label class="form-label">จังหวัด</label>
-                                            <input type="text" class="form-control" placeholder="" id="u_Province">
-                                            <!-- <div  class="form-text">Enter your Last name</div> -->
-                                        </div>
-                                    </div>
-                                    <div class="col-md">
-                                        <div class="col-md">
-                                            <label class="form-label">เบอร์โทรศัพท์</label>
-                                            <input type="text" class="form-control" placeholder="" id="u_Phone">
-                                            <!-- <div  class="form-text">Enter your Last name</div> -->
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="formFile" class="form-label">อัพโหลดรูป</label>
-                                    <input class="form-control" type="file" id="formFile">
-                                </div>
-                                <button type="submit" class="btn btn-primary" id="btn_signup">สร้างบัญชี</button>
-                            </form>
-                        </div>
-                    </div>
-
+                    <!-- end: Content -->
                 </div>
-                <!-- end: Content -->
             </div>
         </div>
+    </div>
     <!-- end: Main -->
     <?php include("./layout/script.php"); ?>
     <script>
@@ -240,7 +264,7 @@ $active_signup = "active";
                             }).then((result) => {
                                 window.location.href = "/ReserveSpace/login.php"
                             })
-                            
+
 
                         } else if (res.status == "Duplicate user") {
                             Swal.fire({
