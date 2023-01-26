@@ -10,11 +10,11 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         $r_Id = $_POST["r_Id"];
         $a_Id = $_POST["a_Id"];
 
-        $sql = "UPDATE `reserve_space`.`tb_area` SET `a_ReserveStatus` = '0' WHERE (`a_Id` = '".$a_Id."');";
-        $sql .= "UPDATE `reserve_space`.`tb_reserve` SET `r_Status` = '0' WHERE (`r_Id` = '".$r_Id."');";
+        $sql = "UPDATE `reserve_space`.`tb_area` SET `a_ReserveStatus` = '2' WHERE (`a_Id` = '".$a_Id."');";
+        $sql .= "UPDATE `reserve_space`.`tb_reserve` SET `r_Status` = '2' WHERE (`r_Id` = '".$r_Id."');";
 
         if ($conn->multi_query($sql) === TRUE) {
-            $resp->set_message("ยกเลิกจองพื้นที่สำเร็จ.");
+            $resp->set_message("อัพเดทเป็นล็อคประจำสำเร็จ.");
             $resp->set_status("success");
         } else {
             $resp->set_message("มีข้อผิดพลาดเกิดขึ้น.");

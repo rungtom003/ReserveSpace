@@ -5,31 +5,24 @@ include "connectdb.php";
 $resp = new Resp();
 $dataarea = array();
 $data_type_product = array();
-if ($_SERVER['REQUEST_METHOD'] == "GET") {
+if ($_SERVER['REQUEST_METHOD'] == "POST") {
     if ($connect_status == "success") {
-        $sql = "SELECT a.a_Id,b.z_Name,a.a_Name,a.a_ReserveStatus FROM reserve_space.tb_area as a inner join reserve_space.tb_zone as b on a.z_Id = b.z_Id;";
+        $z_Id = $_POST["z_Id"];
+        $a_Name = $_POST["a_Name"];
+
+        $sql = "SELECT b.z_Id,a.a_Id,b.z_Name,a.a_Name,a.a_ReserveStatus FROM reserve_space.tb_area as a inner join reserve_space.tb_zone as b on a.z_Id = b.z_Id where b.z_Id = '".$z_Id."' and a.a_Name LIKE '%".$a_Name."%';";
         $result = $conn->query($sql);
         if ($result->num_rows > 0) {
             while($row = $result->fetch_assoc()) {
                 array_push($dataarea,$row);
             }
-
-            $sql2 = "SELECT * FROM reserve_space.tb_ProductType;";
-            $result2 = $conn->query($sql2);
-            if($result2->num_rows > 0)
-            {
-                while($row2 = $result2->fetch_assoc()) {
-                    array_push($data_type_product,$row2);
-                }
-            }
-
-            $dataarr = array('area'=>$dataarea,'product_type'=>$data_type_product);
-            $resp->data = $dataarr;
+            $resp->data = $dataarea;
             $resp->set_status("seccess");
         }
         else{
             $resp->set_status("fail");
         }
+
     } else {
         $resp->set_message("connection database fail.");
         $resp->set_status("fail");

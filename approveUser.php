@@ -93,6 +93,18 @@ $active_approve = "active";
                             targets: 5,
                             title: "Approve",
                             data: "u_Approve",
+                            render: function(data, type, row, meta) {
+                                let txtHTML = "";
+                                if(data === "0")
+                                {
+                                    txtHTML = "<span class='text-danger'>ยังไม่อนุมัติ</span>";
+                                }
+                                else
+                                {
+                                    txtHTML = "<span class='text-success'>อนุมัติเเล้ว</span>";
+                                }
+                                return txtHTML;
+                            }
                         },
                         {
                             targets: 6,
@@ -100,8 +112,9 @@ $active_approve = "active";
                             data: null,
                             defaultContent: "",
                             render: function(data, type, row, meta) {
+                                const u_Id = row.u_Id;
                                 return `<div class="d-grid gap-2 d-md-block" >
-                                        <button class="btn btn-primary" type="button" id="btn_Approve" >อนุมัติ</button>
+                                        <button class="btn btn-primary" type="button" id="btn_Approve" onclick="fcApprove(this)" value="${u_Id}">อนุมัติ</button>
                                     </div>`;
                             }
                         }
@@ -114,10 +127,46 @@ $active_approve = "active";
         loadUser();
 
         //Btn Approve
-        $("body").on("click", "#table-users #btn_Approve", function() {
-            var row = $(this).closest("tr");
-            let data = $('#table-users').DataTable().row(row).data();
-            let u_Id = data.u_Id;
+        // $("body").on("click", "#table-users #btn_Approve", function() {
+        //     var row = $(this).closest("tr");
+        //     let data = $('#table-users').DataTable().row(row).data();
+        //     let u_Id = data.u_Id;
+
+        //     $.ajax({
+        //         url: "/ReserveSpace/backend/Service/approveUser_api.php",
+        //         type: "POST",
+        //         data: {
+        //             u_Id: u_Id
+        //         },
+        //         dataType: "json",
+        //         success: function(res) {
+        //             let message = res.message;
+        //             let status = res.status;
+
+        //             if (status == "success") {
+        //                 Swal.fire({
+        //                     icon: 'success',
+        //                     title: message,
+        //                     showConfirmButton: true,
+        //                     timer: 1500
+        //                 }).then((result) => {
+        //                     $('#table-users').DataTable().destroy();
+        //                     loadUser();
+        //                 })
+        //             } else {
+        //                 Swal.fire({
+        //                     icon: 'error',
+        //                     title: 'เเจ้งเตือน',
+        //                     text: message
+        //                 })
+        //             }
+        //         }
+        //     });
+
+        // });
+
+        const fcApprove = (elm) =>{
+            let u_Id = elm.value;
 
             $.ajax({
                 url: "/ReserveSpace/backend/Service/approveUser_api.php",
@@ -149,8 +198,7 @@ $active_approve = "active";
                     }
                 }
             });
-
-        });
+        }
     </script>
 </body>
 

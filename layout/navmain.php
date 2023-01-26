@@ -1,9 +1,9 @@
 <?php
-$order = (isset($_SESSION['order'])) ? unserialize($_SESSION['order']) : null;
-$count_order = 0;
-if ($order != null) {
-    $count_order = count($order);
-}
+// $order = (isset($_SESSION['order'])) ? unserialize($_SESSION['order']) : null;
+// $count_order = 0;
+// if ($order != null) {
+//     $count_order = count($order);
+// }
 ?>
 <!-- start: Navbar -->
 <nav class="px-3 py-2 bg-white rounded shadow">
@@ -25,13 +25,13 @@ if ($order != null) {
                 </a>
             </div>
         </div> -->
-        <a type="button" class="btn btn-primary position-relative" href="/ReserveSpace/cart.php">
+        <!-- <a type="button" class="btn btn-primary position-relative" href="/ReserveSpace/cart.php">
             <i class="ri-shopping-cart-line"></i>
             <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
                 <span id="count-order"><?=$count_order?></span>
                 <span class="visually-hidden">unread messages</span>
             </span>
-        </a>
+        </a> -->
     </div>
     <div class="dropdown">
         <div class="d-flex align-items-center cursor-pointer dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
