@@ -104,10 +104,10 @@ $active_index = "active";
                                 <span class="text-light text-center">จองเเล้ว</span>
                             </div>
                             <div class="d-flex justify-content-center align-items-center reserve-box-yellow">
-                                <span class="text-light text-center">รอดำเนินการ</span>
+                                <span class="text-light text-center">ล็อคประจำว่าง</span>
                             </div>
                             <div class="d-flex justify-content-center align-items-center reserve-box-primary">
-                                <span class="text-light text-center">รายการที่เลือก</span>
+                                <span class="text-light text-center">ล็อคประจำ</span>
                             </div>
                         </div>
                         <div class="d-flex my-3">
@@ -118,7 +118,7 @@ $active_index = "active";
                 </div>
                 <div class="card my-1">
                     <div class="card-body">
-                        <div class="d-flex align-content-start flex-wrap" id="reserve-content">
+                        <div class="d-flex justify-content-center flex-wrap" id="reserve-content">
 
 
                         </div>
@@ -142,9 +142,10 @@ $active_index = "active";
                 <div class="modal-body">
                     <ul>
                         <li class="fw-bold">ชื่อผู้จอง : <span class="fw-normal" id="u_Name"></span></li>
+                        <li class="fw-bold">ชื่อร้าน : <span class="fw-normal" id="u_ShopName"></span></li>
                         <li class="fw-bold">ล็อค : <span class="fw-normal" id="a_Name"></span></li>
                         <li class="fw-bold">โซน : <span class="fw-normal" id="z_Name"></span></li>
-                        <li class="fw-bold">ประเภทสินค้า : <span class="fw-normal" id="pt_Name"></span></li>
+                        <li class="fw-bold">สินค้าที่ขาย : <span class="fw-normal" id="u_ProductName"></span></li>
                     </ul>
                 </div>
                 <div class="modal-footer">
@@ -185,12 +186,12 @@ $active_index = "active";
                             <input type="text" class="form-control" placeholder="ล็อค" id="a_Id" readonly hidden>
                             <div class="col-md">
                                 <label class="form-label">ชื่อร้าน</label>
-                                <input type="text" class="form-control" placeholder="ชื่อร้าน" id="u_ShopName" value="<?=$user["u_ShopName"]?>" readonly>
+                                <input type="text" class="form-control" placeholder="ชื่อร้าน" id="u_ShopName" value="<?= $user["u_ShopName"] ?>" readonly>
                                 <!-- <div class="form-text">Enter your Full name</div> -->
                             </div>
                             <div class="col-md">
                                 <label class="form-label">สินค้า</label>
-                                <input type="text" class="form-control" placeholder="สินค้า" id="u_ProductName" value="<?=$user["u_ProductName"]?>" readonly>
+                                <input type="text" class="form-control" placeholder="สินค้า" id="u_ProductName" value="<?= $user["u_ProductName"] ?>" readonly>
                                 <!-- <div  class="form-text">Enter your Last name</div> -->
                             </div>
                         </div>
@@ -302,46 +303,38 @@ $active_index = "active";
                     a_Name: $("#input_find").val()
                 },
                 success: function(res) {
-                    console.log(res)
-                    let order = '<?= (isset($_SESSION['order'])) ? json_encode(unserialize($_SESSION['order'])) : "" ?>';
-                    if (order === "") {
-                        order = [];
-                    } else {
-                        order = JSON.parse(order);
-                    }
-
-                    const data_product_type = res.data.product_type;
-                    let txt_product_type = "<option selected disabled value=''>เลือกประเภทสินค้า</option>";
-                    $.each(data_product_type, function(key, val) {
-                        txt_product_type += `<option value="${val.pt_Id}">${val.pt_Name}</option>`;
-                    })
-                    $("#type-product").html(txt_product_type);
-
-                    const data = res.data.area;
+                    const data = res.data;
                     let txt_content = "";
                     $.each(data, function(key, val) {
-                        let order_obj = order.find(i => i.a_Id === val.a_Id);
-                        if (val.a_ReserveStatus === "0") {
-                            if (order_obj !== undefined) {
-                                txt_content += `<div class="d-flex justify-content-center align-items-center reserve-box-primary">
-                                            <span class="text-light">${val.a_Name}</span>
-                                        </div>`;
-                            } else {
-                                txt_content += `<div class="d-flex justify-content-center align-items-center reserve-box-green" data-bs-toggle="modal" data-bs-target="#reserve-modal" data-bs-whatever='${JSON.stringify(val)}'>
-                                            <span class="text-light">${val.a_Name}</span>
-                                        </div>`;
-                            }
-
-                        } else {
-                            if (val.a_ReserveStatus === "2") {
-                                txt_content += `<div class="d-flex justify-content-center align-items-center reserve-box-yellow">
-                                            <span class="text-light">${val.a_Name}</span>
-                                        </div>`;
-                            } else {
-                                txt_content += `<div class="d-flex justify-content-center align-items-center reserve-box-red" data-bs-toggle="modal" data-bs-target="#reserve-detail-modal" data-bs-whatever='${val.a_Id}'>
-                                            <span class="text-light">${val.a_Name}</span>
-                                        </div>`;
-                            }
+                        if(val.a_ReserveStatus === "0")
+                        {
+                            txt_content += `<div class="d-flex justify-content-center align-items-center reserve-box-green" data-bs-toggle="modal" data-bs-target="#reserve-modal" data-bs-whatever='${JSON.stringify(val)}'>
+                                                <span class="text-light">${val.a_Name}</span>
+                                            </div>`;
+                        }
+                        else if(val.a_ReserveStatus === "1")
+                        {
+                            txt_content += `<div class="d-flex justify-content-center align-items-center reserve-box-red" data-bs-toggle="modal" data-bs-target="#reserve-detail-modal" data-bs-whatever='${val.a_Id}'>
+                                                <span class="text-light">${val.a_Name}</span>
+                                            </div>`;
+                        }
+                        else if(val.a_ReserveStatus === "2")
+                        {
+                            txt_content += `<div class="d-flex justify-content-center align-items-center reserve-box-primary" data-bs-toggle="modal" data-bs-target="#reserve-detail-modal" data-bs-whatever='${val.a_Id}'>
+                                                <span class="text-light">${val.a_Name}</span>
+                                            </div>`;
+                        }
+                        else if(val.a_ReserveStatus === "3")
+                        {
+                            txt_content += `<div class="d-flex justify-content-center align-items-center reserve-box-yellow" data-bs-toggle="modal" data-bs-target="#reserve-detail-modal" data-bs-whatever='${val.a_Id}'>
+                                                <span class="text-light">${val.a_Name}</span>
+                                            </div>`;
+                        }
+                        else
+                        {
+                            txt_content += `<div class="d-flex justify-content-center align-items-center reserve-box-red" data-bs-toggle="modal" data-bs-target="#reserve-detail-modal" data-bs-whatever='${val.a_Id}'>
+                                                <span class="text-light">${val.a_Name}</span>
+                                            </div>`;
                         }
                     })
                     $("#reserve-content").html(txt_content);
@@ -359,46 +352,10 @@ $active_index = "active";
             const data = JSON.parse(recipient);
             const modalTitle = reserve_modal.querySelector('.modal-title');
 
-            console.log(data);
-
             modalTitle.textContent = `ล็อค ${data.a_Name} # ${data.z_Name}`;
             $("#a_Id").val(data.a_Id);
             $("#a_Name-reserve-modal").val(data.a_Name);
             $("#z_Name-reserve-modal").val(data.z_Name);
-        });
-
-        $("#add-cart").click(function(e) {
-            e.preventDefault();
-            const type_product = $("#type-product").val();
-            const data = {
-                pt_Id: $("#type-product").val(),
-                a_Id: $("#a_Id").val(),
-                a_Name: $("#a_Name").val(),
-                z_Name: $("#z_Name").val(),
-                u_Name: '<?= $user["u_FirstName"] ?> <?= $user["u_LastName"] ?>'
-            }
-            if (type_product === null) {
-                Swal.fire(
-                    'ประเภทสินค้า',
-                    'กรุณาเลือกประเภทสินค้า',
-                    'warning'
-                )
-            } else {
-                $.ajax({
-                    url: "/ReserveSpace/backend/Service/cart_api.php",
-                    type: "POST",
-                    dataType: "json",
-                    data: data,
-                    success: function(res) {
-                        $('#reserve-modal').modal('hide');
-                        const myModalEl = document.getElementById('reserve-modal')
-                        myModalEl.addEventListener('hidden.bs.modal', event => {
-                            window.location.reload();
-                        });
-                    }
-                });
-            }
-
         });
 
         const reserve_modal_detail = document.getElementById('reserve-detail-modal')
@@ -417,9 +374,10 @@ $active_index = "active";
                     const data_arr = res.data;
                     if (res.status === "seccess") {
                         $("#u_Name").html(`${data_arr.u_FirstName} ${data_arr.u_LastName}`);
+                        $("#u_ShopName").html(data_arr.u_ShopName);
                         $("#a_Name").html(data_arr.a_Name);
                         $("#z_Name").html(data_arr.z_Name);
-                        $("#pt_Name").html(data_arr.pt_Name);
+                        $("#u_ProductName").html(data_arr.u_ProductName);
                     }
                 }
             });
@@ -431,7 +389,41 @@ $active_index = "active";
             $("#pt_Name").html("");
         });
 
-        
+        document.getElementById("add-cart").addEventListener('click',(e) => {
+            e.preventDefault();
+            const data = {
+                a_Id: $("#a_Id").val()
+            }
+            $.ajax({
+                url: "/ReserveSpace/backend/Service/confirmOrder.php",
+                type: "POST",
+                dataType: "json",
+                data: data,
+                success: function(res) {
+                    if (res.status === "success") {
+                        Swal.fire({
+                            icon: 'success',
+                            title: res.message,
+                            showConfirmButton: false,
+                            timer: 1500
+                        }).then((result) => {
+                            // $('#reserve-modal').modal('hide');
+                            // const myModalEl = document.getElementById('reserve-modal')
+                            // myModalEl.addEventListener('hidden.bs.modal', event => {
+                            //     window.location.reload();
+                            // });
+                            window.location.reload();
+                        });
+                    } else {
+                        Swal.fire({
+                            icon: 'warning',
+                            title: 'เเจ้งเตือน',
+                            text: res.message
+                        });
+                    }
+                }
+            });
+        });
     </script>
 </body>
 

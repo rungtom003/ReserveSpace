@@ -18,58 +18,64 @@ function uniqidReal($lenght = 13)
 $resp = new Resp();
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
     if ($connect_status == "success") {
-        $dataArea = array();
-
         $uuid_order = uniqidReal();
         $user = unserialize($_SESSION["user"]);
-        $order = unserialize($_SESSION["order"]);
 
-        $z_Id = $_POST["z_Id"];
+        $z_Id = $user["z_Id"];
+        $a_Id = $_POST["a_Id"];
+        $area_static = $_POST["area_static"];
 
-        if($z_Id == "2dacd150-9b8b-11ed-8054-0242ac110004") //โซนอาหาร
+        if ($z_Id == "2dacd150-9b8b-11ed-8054-0242ac110004") //โซนอาหาร
         {
-            
-        }
-
-        $count_loop = 0;
-        $count_order = count($order);
-        $sql_concat = "";
-        foreach ($order as $item) {
-            $count_loop++;
-            if ($count_loop == $count_order) {
-                $sql_concat .= "a_Id = '" . $item["a_Id"] . "'";
-            } else {
-                $sql_concat .= "a_Id = '" . $item["a_Id"] . "' or ";
-            }
-        }
-
-        $sql_select = "SELECT * FROM reserve_space.tb_area where (a_ReserveStatus != '0') and (".$sql_concat.");";
-        $result = $conn->query($sql_select);
-        if ($result->num_rows > 0) {
-            $messageFail = "";
-            while($row = $result->fetch_assoc()) {
-                array_push($dataArea,$row);
-                $messageFail .= " ".$row["a_Name"]."";
-            }
-            unset($_SESSION["order"]);
-            $resp->set_message("พื้นที่ ".$messageFail." จองไปเเล้ว");
-            $resp->set_status("fail");
-            $resp->data = $dataArea;
-        } else {
-            $sql = "INSERT INTO `reserve_space`.`tb_reserve` (`r_Id`, `u_Id`) VALUES ('" . $uuid_order . "', '" . $user["u_Id"] . "');";
-
-            foreach ($order as $item) {
-                $sql .= "INSERT INTO `reserve_space`.`tb_reserveDetail` (`r_Id`, `pt_Id`, `a_Id`) VALUES ('" . $uuid_order . "', '" . $item["pt_Id"] . "', '" . $item["a_Id"] . "');";
-                $sql .= "UPDATE `reserve_space`.`tb_area` SET `a_ReserveStatus` = '2' WHERE (`a_Id` = '" . $item["a_Id"] . "');";
-            }
-
-            if ($conn->multi_query($sql) === TRUE) {
-                unset($_SESSION["order"]);
-                $resp->set_message("จองพื้นที่สำเร็จ.");
-                $resp->set_status("success");
-            } else {
-                $resp->set_message("มีข้อผิดพลาดเกิดขึ้น.");
+            $sql_select_reserve = "SELECT * FROM reserve_space.tb_reserve as a  INNER JOIN reserve_space.tb_area as b ON a.a_Id = b.a_Id INNER JOIN reserve_space.tb_zone as c ON b.z_Id = c.z_Id WHERE b.z_Id = '" . $z_Id . "' AND a.r_Status = '1';";
+            $result = $conn->query($sql_select_reserve);
+            if ($result->num_rows > 0) {
+                $resp->set_message("ไม่สามารถจองพื้นที่เพิ่มได้เนื่องจาก 1 คน ต่อ 1 ล็อค ในโซนอาหาร");
                 $resp->set_status("fail");
+            } else {
+                $sql_insert_TBreserve = "INSERT INTO `reserve_space`.`tb_reserve` (`r_Id`, `u_Id`, `a_Id`, `r_Status`) VALUES ('" . $uuid_order . "', '" . $user["u_Id"] . "', '" . $a_Id . "', '1');";
+                $sql_insert_TBreserve .= "UPDATE `reserve_space`.`tb_area` SET `a_ReserveStatus` = '1' WHERE (`a_Id` = '" . $a_Id . "');";
+                //สถานะ 1 จองสำเร็จ
+                if ($conn->multi_query($sql_insert_TBreserve) === TRUE) {
+                    $resp->set_message("จองพื้นที่สำเร็จ.");
+                    $resp->set_status("success");
+                } else {
+                    $resp->set_message("มีข้อผิดพลาดเกิดขึ้น.");
+                    $resp->set_status("fail");
+                }
+            }
+        } else {
+            if ($area_static == "1") {
+                //ถ้าเป็นล็อคประจำ
+                $sql_select_static = "SELECT * FROM reserve_space.tb_reserve where u_Id = '" . $user["u_Id"] . "' AND a_Id = '" . $a_Id . "' AND r_Status = '2';";
+                $result_select_static = $conn->query($sql_select_static);
+                if ($result_select_static->num_rows > 0) {
+                    //ถ้า user มีล็อคประจำอยู่เเล้ว
+                    $resp->set_message("คุณมีล็อคนี้เป็นล็อคประจำอยู่เเล้วโปรดแจ้งเจ้าหน้าที่");
+                    $resp->set_status("fail");
+                } else {
+                    $sql_insert_TBreserve = "INSERT INTO `reserve_space`.`tb_reserve` (`r_Id`, `u_Id`, `a_Id`, `r_Status`) VALUES ('" . $uuid_order . "', '" . $user["u_Id"] . "', '" . $a_Id . "', '1');";
+                    $sql_insert_TBreserve .= "UPDATE `reserve_space`.`tb_area` SET `a_ReserveStatus` = '4' WHERE (`a_Id` = '" . $a_Id . "');";
+                    //สถานะ 3 จองล็อคประจำที่ว่างสำเร็จ
+                    if ($conn->multi_query($sql_insert_TBreserve) === TRUE) {
+                        $resp->set_message("จองพื้นที่สำเร็จ.");
+                        $resp->set_status("success");
+                    } else {
+                        $resp->set_message("มีข้อผิดพลาดเกิดขึ้น.");
+                        $resp->set_status("fail");
+                    }
+                }
+            } else {
+                $sql_insert_TBreserve = "INSERT INTO `reserve_space`.`tb_reserve` (`r_Id`, `u_Id`, `a_Id`, `r_Status`) VALUES ('" . $uuid_order . "', '" . $user["u_Id"] . "', '" . $a_Id . "', '1');";
+                $sql_insert_TBreserve .= "UPDATE `reserve_space`.`tb_area` SET `a_ReserveStatus` = '1' WHERE (`a_Id` = '" . $a_Id . "');";
+                //สถานะ 1 จองสำเร็จ
+                if ($conn->multi_query($sql_insert_TBreserve) === TRUE) {
+                    $resp->set_message("จองพื้นที่สำเร็จ.");
+                    $resp->set_status("success");
+                } else {
+                    $resp->set_message("มีข้อผิดพลาดเกิดขึ้น.");
+                    $resp->set_status("fail");
+                }
             }
         }
 

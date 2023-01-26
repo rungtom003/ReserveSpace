@@ -25,15 +25,7 @@ $active_reserveData = "active";
             <?php include("./layout/navmain.php"); ?>
             <!-- start: Content -->
             <div class="py-1" style="font-family: kanit-Regular;">
-            <div class="content d-flex flex-column flex-column-fluid">
-                <div class="d-flex justify-content-center">
-                <div class="container col-md-12">
-
-                <div id="data-reserve-content">
-                </div>
-                </div>
-                </div>
-
+                <div class="d-flex flex-column align-items-center" id="data-reserve-content">
                 </div>
             </div>
             <!-- end: Content -->
@@ -51,11 +43,12 @@ $active_reserveData = "active";
                 u_Id: u_Id
             },
             success: function(res) {
+                console.log(res)
                 let txtContent = "";
                 const dataarr = res.data;
                 $.each(dataarr, function(key, val) {
-                    if (val.rd_Status === "0") {
-                        txtContent += `<div class="card text-bg-warning mb-3 w-75">
+                    if (val.r_Status === "0") {
+                        txtContent += `<div class="card text-bg-danger my-2 w-100">
                         <div class="card-body">
                             <h5 class="card-title text-center">ล็อค ${val.a_Name}</h5>
                             <hr class="border border-primary border-3 opacity-75">
@@ -63,17 +56,16 @@ $active_reserveData = "active";
                                 <li class="list-group-item"><span>ชื่อผู้จอง : ${val.u_FirstName} ${val.u_LastName}</span></li>
                                 <li class="list-group-item"><span>ล็อค : ${val.a_Name}</span></li>
                                 <li class="list-group-item"><span>โซน : ${val.z_Name}</span></li>
-                                <li class="list-group-item"><span>รายละเอียดการจอง : ${val.rd_Detail===null?"":val.rd_Detail}</span></li>
-                                <li class="list-group-item"><span>หมายเหตุ : ${val.rd_Note===null?"":val.rd_Note}</span></li>
-                                <li class="list-group-item"><span>วันเวลาจอง : ${val.rd_DateTime}</span></li>
-                                <li class="list-group-item"><span>สถานะการจอง : <span class="text-warning">รอดำเนินการ</span></span></li>
-                                <li class="list-group-item"><span>ยกเลิก : <button class="btn btn-danger" id="cancel-order" value='${JSON.stringify(val)}' onclick="cancelOrder(this)">ยกเลิกจอง</button></li>
-                                
+                                <li class="list-group-item"><span>ชื่อร้าน : ${val.u_ShopName}</span></li>
+                                <li class="list-group-item"><span>สินค้าที่ขาย : ${val.u_ProductName}</span></li>
+                                <li class="list-group-item"><span>หมายเหตุ : ${val.r_Note===null?"":val.r_Note}</span></li>
+                                <li class="list-group-item"><span>วันเวลาจอง : ${val.r_DateTime}</span></li>
+                                <li class="list-group-item"><span>สถานะการจอง : <span class="text-danger">ยกเลิกการจอง</span></span></li>
                             </ul>
                         </div>
                     </div>`;
-                    } else if (val.rd_Status === "1") {
-                        txtContent += `<div class="card text-bg-success mb-3 w-75">
+                    } else if (val.r_Status === "1") {
+                        txtContent += `<div class="card text-bg-success my-2 w-100">
                         <div class="card-body">
                             <h5 class="card-title text-center">ล็อค ${val.a_Name}</h5>
                             <hr class="border border-primary border-3 opacity-75">
@@ -81,15 +73,16 @@ $active_reserveData = "active";
                                 <li class="list-group-item"><span>ชื่อผู้จอง : ${val.u_FirstName} ${val.u_LastName}</span></li>
                                 <li class="list-group-item"><span>ล็อค : ${val.a_Name}</span></li>
                                 <li class="list-group-item"><span>โซน : ${val.z_Name}</span></li>
-                                <li class="list-group-item"><span>รายละเอียดการจอง : ${val.rd_Detail===null?"":val.rd_Detail}</span></li>
-                                <li class="list-group-item"><span>หมายเหตุ : ${val.rd_Note===null?"":val.rd_Note}</span></li>
-                                <li class="list-group-item"><span>วันเวลาจอง : ${val.rd_DateTime}</span></li>
+                                <li class="list-group-item"><span>ชื่อร้าน : ${val.u_ShopName}</span></li>
+                                <li class="list-group-item"><span>สินค้าที่ขาย : ${val.u_ProductName}</span></li>
+                                <li class="list-group-item"><span>หมายเหตุ : ${val.r_Note===null?"":val.r_Note}</span></li>
+                                <li class="list-group-item"><span>วันเวลาจอง : ${val.r_DateTime}</span></li>
                                 <li class="list-group-item"><span>สถานะการจอง : <span class="text-success">สำเร็จ</span></span></li>
                             </ul>
                         </div>
                     </div>`;
                     } else {
-                        txtContent += `<div class="card text-bg-danger">
+                        txtContent += `<div class="card text-bg-primary my-2 w-100">
                         <div class="card-body">
                             <h5 class="card-title text-center">ล็อค ${val.a_Name}</h5>
                             <hr class="border border-primary border-3 opacity-75">
@@ -97,10 +90,11 @@ $active_reserveData = "active";
                                 <li class="list-group-item"><span>ชื่อผู้จอง : ${val.u_FirstName} ${val.u_LastName}</span></li>
                                 <li class="list-group-item"><span>ล็อค : ${val.a_Name}</span></li>
                                 <li class="list-group-item"><span>โซน : ${val.z_Name}</span></li>
-                                <li class="list-group-item"><span>รายละเอียดการจอง : ${val.rd_Detail===null?"":val.rd_Detail}</span></li>
-                                <li class="list-group-item"><span>หมายเหตุ : ${val.rd_Note===null?"":val.rd_Note}</span></li>
-                                <li class="list-group-item"><span>วันเวลาจอง : ${val.rd_DateTime}</span></li>
-                                <li class="list-group-item"><span>สถานะการจอง : <span class="text-danger">ยกเลิกการจอง</span></span></li>
+                                <li class="list-group-item"><span>ชื่อร้าน : ${val.u_ShopName}</span></li>
+                                <li class="list-group-item"><span>สินค้าที่ขาย : ${val.u_ProductName}</span></li>
+                                <li class="list-group-item"><span>หมายเหตุ : ${val.r_Note===null?"":val.r_Note}</span></li>
+                                <li class="list-group-item"><span>วันเวลาจอง : ${val.r_DateTime}</span></li>
+                                <li class="list-group-item"><span>สถานะการจอง : <span class="text-primary">สำเร็จ (ล็อคประจำ)</span></span></li>
                             </ul>
                         </div>
                     </div>`;
