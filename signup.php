@@ -104,6 +104,36 @@ $active_signup = "active";
                                     </div>
                                 </div>
                                 <div class="row g-2 p-2">
+                                <div class="col-md">
+                                    <label class="form-label">ชื่อร้าน</label>
+                                    <input type="text" class="form-control" placeholder="" id="" required>
+                                    <div class="invalid-feedback">
+                                        กรุณากรอก ชื่อร้าน
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="form-label">โซน</label>
+                                    <select class="form-select" aria-label="Default select example" id="" required>
+                                        <option selected disabled value="">เลือก.....</option>
+                                        <option value=""></option>
+                                        <option value=""></option>
+                                        <option value=""></option>
+                                    </select>
+                                    <div class="invalid-feedback">
+                                        กรุณาเลือก โซน
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row g-2 p-2">
+                                <div class="mb-3">
+                                    <label for="exampleFormControlTextarea1" class="form-label">รายละเอียดสินค้า</label>
+                                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" required></textarea>
+                                </div>
+                                <div class="invalid-feedback">
+                                    กรุณาเลือก รายละเอียดสินค้า
+                                </div>
+                            </div>
+                                <div class="row g-2 p-2">
                                     <div class="col-md" id="position-content" hidden>
                                         <label class="form-label">ตำแหน่ง</label>
                                         <input type="text" class="form-control" placeholder="" id="u_Position">
