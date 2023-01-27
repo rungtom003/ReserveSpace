@@ -94,18 +94,15 @@ $active_persionData = "active";
                                 <div class="row g-2 p-2">
                                 <div class="col-md">
                                     <label class="form-label">ชื่อร้าน</label>
-                                    <input type="text" class="form-control" placeholder="" id="" required>
+                                    <input type="text" class="form-control" placeholder="" value="<?=$user["u_ShopName"]?>" id="u_ShopName" required>
                                     <div class="invalid-feedback">
                                         กรุณากรอก ชื่อร้าน
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <label class="form-label">โซน</label>
-                                    <select class="form-select" aria-label="Default select example" id="" required>
-                                        <option selected disabled value="">เลือก.....</option>
-                                        <option value=""></option>
-                                        <option value=""></option>
-                                        <option value=""></option>
+                                    <select class="form-select" aria-label="Default select example" id="selectZoneName" required>
+                                        <option selected readonly value="<?= $user["z_Id"] ?>"><?=$user["z_Id"]?></option>
                                     </select>
                                     <div class="invalid-feedback">
                                         กรุณาเลือก โซน
@@ -114,8 +111,8 @@ $active_persionData = "active";
                             </div>
                             <div class="row g-2 p-2">
                                 <div class="mb-3">
-                                    <label for="exampleFormControlTextarea1" class="form-label">รายละเอียดสินค้า</label>
-                                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" required></textarea>
+                                    <label for="u_ProductName" class="form-label">รายละเอียดสินค้า</label>
+                                    <textarea class="form-control" id="u_ProductName" rows="3" required><?=$user["u_ProductName"]?></textarea>
                                 </div>
                                 <div class="invalid-feedback">
                                     กรุณาเลือก รายละเอียดสินค้า
@@ -219,6 +216,9 @@ $active_persionData = "active";
             let u_SubDistrict = $('#u_SubDistrict').val();
             let u_District = $('#u_District').val();
             let u_Province = $('#u_Province').val();
+            let z_Id = $('#selectZoneName').val();
+            let u_ShopName = $('#u_ShopName').val();
+            let u_ProductName = $('#u_ProductName').val();
 
             let data = {
                 u_FirstName: u_FirstName,
@@ -235,7 +235,10 @@ $active_persionData = "active";
                 u_Road: u_Road,
                 u_SubDistrict: u_SubDistrict,
                 u_District: u_District,
-                u_Province: u_Province
+                u_Province: u_Province,
+                z_Id: z_Id,
+                u_ShopName: u_ShopName,
+                u_ProductName: u_ProductName
             }
 
             $.ajax({
