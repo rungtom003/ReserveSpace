@@ -27,8 +27,9 @@ $active_signup = "active";
     <div class="p-2">
         <div class="py-2">
             <!-- start: Content -->
+            <div class="content d-flex flex-column flex-column-fluid">
             <div class="d-flex justify-content-center">
-                <div class="card w-50">
+            <div class="card">
                     <div class="card-header">
                         สมัครเข้าใช้งาน
                     </div>
@@ -85,6 +86,36 @@ $active_signup = "active";
                                 <div class="form-check form-check-inline">
                                     <input class="form-check-input" type="radio" name="inlineRadioOptions" checked id="RadioUser" value="R001">
                                     <label class="form-check-label" for="RadioUser">User</label>
+                                </div>
+                            </div>
+                            <div class="row g-2 p-2">
+                                <div class="col-md">
+                                    <label class="form-label">ชื่อร้าน</label>
+                                    <input type="text" class="form-control" placeholder="" id="" required>
+                                    <div class="invalid-feedback">
+                                        กรุณากรอก ชื่อร้าน
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="form-label">โซน</label>
+                                    <select class="form-select" aria-label="Default select example" id="" required>
+                                        <option selected disabled value="">เลือก.....</option>
+                                        <option value=""></option>
+                                        <option value=""></option>
+                                        <option value=""></option>
+                                    </select>
+                                    <div class="invalid-feedback">
+                                        กรุณาเลือก โซน
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row g-2 p-2">
+                                <div class="mb-3">
+                                    <label for="exampleFormControlTextarea1" class="form-label">รายละเอียดสินค้า</label>
+                                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" required></textarea>
+                                </div>
+                                <div class="invalid-feedback">
+                                    กรุณาเลือก รายละเอียดสินค้า
                                 </div>
                             </div>
 
@@ -170,10 +201,15 @@ $active_signup = "active";
                         </form>
                     </div>
                 </div>
+
             </div>
             <div class="d-flex justify-content-center my-3">
                 <a href="/ReserveSpace/login.php" class="btn btn-primary">กลับ</a>
             </div>
+
+
+            </div>
+
             <!-- end: Content -->
         </div>
     </div>
@@ -311,7 +347,7 @@ $active_signup = "active";
                     event.stopPropagation()
                     if (form.checkValidity()) {
                         signup();
-                    } 
+                    }
                     form.classList.add('was-validated')
                 }, false)
             })
