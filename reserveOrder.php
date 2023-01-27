@@ -110,11 +110,19 @@ $active_reserveOrder = "active";
                                 let txtHTML = "";
                                 if (row.r_Status === "0") {
                                     txtHTML = "<span class='text-danger'>ยกเลิก</span>";
-                                } else if (row.r_Status === "1") {
+                                } else if (row.r_Status === "1" && row.a_ReserveStatus === "1") {
                                     txtHTML = "<span class='text-success'>จองสำเร็จ</span>";
-                                } else if (row.r_Status === "2") {
+                                } else if (row.r_Status === "1" && row.a_ReserveStatus === "4") {
+                                    txtHTML = "<span class='text-success'>จองล็อคประจำสำเร็จ</span>";
+                                }
+                                else if (row.r_Status === "2" && row.a_ReserveStatus === "2") {
                                     txtHTML = "<span class='text-primary'>ล็อคประจำ</span>";
-                                } else {
+                                } else if (row.r_Status === "2" && row.a_ReserveStatus === "3" ) {
+                                    txtHTML = "<span class='text-danger'>ล็อคประจำ(ยกเลิกชั่วคราว)</span>";
+                                }else if (row.r_Status === "2" && row.a_ReserveStatus === "4") {
+                                    txtHTML = `<span class='text-danger'>ล็อคประจำถูกจอง</span>`;
+                                }
+                                else {
                                     txtHTML = "";
                                 }
                                 return txtHTML;
@@ -143,9 +151,7 @@ $active_reserveOrder = "active";
                                                 <button class="btn btn-primary" type="button"  onclick="fcCancelTemporary(this)" value='${JSON.stringify(obj)}'>ยกเลิกช่วงคราว</button>
                                                 <button class="btn btn-danger" type="button"  onclick="fcCancel(this)" value='${JSON.stringify(obj)}'>ยกเลิก</button>
                                             </div>`;
-                                } else if (row.r_Status === "2" && row.a_ReserveStatus === "4") {
-                                    txtHTML = `<span class='text-danger'>ล็อคประจำถูกจอง</span>`;
-                                } else if (row.r_Status === "1" && row.a_ReserveStatus === "4") {
+                                }  else if (row.r_Status === "1" && row.a_ReserveStatus === "4") {
                                     txtHTML = `<div class="d-grid gap-2 d-md-block" >
                                                 <button class="btn btn-primary" type="button" onclick="fcReturn(this)" value='${JSON.stringify(obj)}'>คืนล็อคประจำ</button>
                                             </div>`;
@@ -387,8 +393,8 @@ $active_reserveOrder = "active";
             let a_Id = obj.a_Id;
 
             Swal.fire({
-                title: 'ยืนยันการคืนล็อค?',
-                text: "คุณต้องการยืนยันการคืนล็อคหรือไม่",
+                title: 'ยืนยันการให้สถานะล็อคประจำ?',
+                text: "คุณต้องการยืนยันการให้สถานะล็อคประจำหรือไม่",
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',

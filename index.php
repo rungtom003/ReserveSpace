@@ -140,12 +140,10 @@ $active_index = "active";
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <ul>
-                        <li class="fw-bold">ชื่อผู้จอง : <span class="fw-normal" id="u_Name"></span></li>
-                        <li class="fw-bold">ชื่อร้าน : <span class="fw-normal" id="u_ShopName"></span></li>
-                        <li class="fw-bold">ล็อค : <span class="fw-normal" id="a_Name"></span></li>
-                        <li class="fw-bold">โซน : <span class="fw-normal" id="z_Name"></span></li>
-                        <li class="fw-bold">สินค้าที่ขาย : <span class="fw-normal" id="u_ProductName"></span></li>
+                    <ul id="ul-detail-content-1">
+                    </ul>
+
+                    <ul id="ul-detail-content-2">
                     </ul>
                 </div>
                 <div class="modal-footer">
@@ -170,7 +168,8 @@ $active_index = "active";
                     <div class="modal-body">
                         <h4>รายละเอียดการจอง</h4>
                         <div class="row g-2 p-2">
-                            <input type="text" class="form-control" placeholder="ล็อค" id="a_Id" readonly hidden>
+                            <input type="text" class="form-control" placeholder="ล็อค" id="a_Id" readonly hidden >
+                            <input type="text" class="form-control" placeholder="ล็อคประจำ" id="area_static" readonly hidden>
                             <div class="col-md">
                                 <label class="form-label">ล็อค</label>
                                 <input type="text" class="form-control" placeholder="ล็อค" id="a_Name-reserve-modal" readonly>
@@ -308,7 +307,7 @@ $active_index = "active";
                     $.each(data, function(key, val) {
                         if(val.a_ReserveStatus === "0")
                         {
-                            txt_content += `<div class="d-flex justify-content-center align-items-center reserve-box-green" data-bs-toggle="modal" data-bs-target="#reserve-modal" data-bs-whatever='${JSON.stringify(val)}'>
+                            txt_content += `<div class="d-flex justify-content-center align-items-center reserve-box-green" data-bs-toggle="modal" data-bs-target="#reserve-modal" data-bs-area_static="0" data-bs-whatever='${JSON.stringify(val)}'>
                                                 <span class="text-light">${val.a_Name}</span>
                                             </div>`;
                         }
@@ -326,7 +325,7 @@ $active_index = "active";
                         }
                         else if(val.a_ReserveStatus === "3")
                         {
-                            txt_content += `<div class="d-flex justify-content-center align-items-center reserve-box-yellow" data-bs-toggle="modal" data-bs-target="#reserve-detail-modal" data-bs-whatever='${val.a_Id}'>
+                            txt_content += `<div class="d-flex justify-content-center align-items-center reserve-box-yellow" data-bs-toggle="modal" data-bs-target="#reserve-modal" data-bs-area_static="1" data-bs-whatever='${JSON.stringify(val)}'>
                                                 <span class="text-light">${val.a_Name}</span>
                                             </div>`;
                         }
@@ -350,10 +349,12 @@ $active_index = "active";
             // Extract info from data-bs-* attributes
             const recipient = button.getAttribute('data-bs-whatever');
             const data = JSON.parse(recipient);
+            const area_static = button.getAttribute('data-bs-area_static');
             const modalTitle = reserve_modal.querySelector('.modal-title');
 
             modalTitle.textContent = `ล็อค ${data.a_Name} # ${data.z_Name}`;
             $("#a_Id").val(data.a_Id);
+            $("#area_static").val(area_static);
             $("#a_Name-reserve-modal").val(data.a_Name);
             $("#z_Name-reserve-modal").val(data.z_Name);
         });
@@ -371,13 +372,31 @@ $active_index = "active";
                     a_Id: a_Id
                 },
                 success: function(res) {
+                    //console.log(res)
                     const data_arr = res.data;
                     if (res.status === "seccess") {
-                        $("#u_Name").html(`${data_arr.u_FirstName} ${data_arr.u_LastName}`);
-                        $("#u_ShopName").html(data_arr.u_ShopName);
-                        $("#a_Name").html(data_arr.a_Name);
-                        $("#z_Name").html(data_arr.z_Name);
-                        $("#u_ProductName").html(data_arr.u_ProductName);
+                        let txtHTML = "";
+                        let txtHTML2 = "";
+                        $.each(data_arr,function(key,val){
+                            if(val.r_Status === "1"){
+                                txtHTML += `<li class="fw-bold">ชื่อผู้จอง : <span class="fw-normal" id="u_Name">${val.u_FirstName} ${val.u_LastName}</span></li>
+                                        <li class="fw-bold">ชื่อร้าน : <span class="fw-normal" id="u_ShopName">${val.u_ShopName}</span></li>
+                                        <li class="fw-bold">ล็อค : <span class="fw-normal" id="a_Name">${val.a_Name}</span></li>
+                                        <li class="fw-bold">โซน : <span class="fw-normal" id="z_Name">${val.z_Name}</span></li>
+                                        <li class="fw-bold">สินค้าที่ขาย : <span class="fw-normal" id="u_ProductName">${val.u_ProductName}</span></li>`;
+                            }
+                            else if(val.r_Status === "2"){
+                                txtHTML2 += `<li class="fw-bold">เจ้าของล็อคประจำ : <span class="fw-normal" >${val.u_FirstName} ${val.u_LastName}</span></li>
+                                        <li class="fw-bold">ชื่อร้าน : <span class="fw-normal" >${val.u_ShopName}</span></li>
+                                        <li class="fw-bold">สินค้าที่ขาย : <span class="fw-normal" >${val.u_ProductName}</span></li>`;
+                            }
+                            else
+                            {
+                                txtHTML += "";
+                            }
+                        });
+                        $("#ul-detail-content-1").html(txtHTML);
+                        $("#ul-detail-content-2").html(txtHTML2);
                     }
                 }
             });
@@ -392,7 +411,8 @@ $active_index = "active";
         document.getElementById("add-cart").addEventListener('click',(e) => {
             e.preventDefault();
             const data = {
-                a_Id: $("#a_Id").val()
+                a_Id: $("#a_Id").val(),
+                area_static:$("#area_static").val()
             }
             $.ajax({
                 url: "/ReserveSpace/backend/Service/confirmOrder.php",
@@ -415,10 +435,18 @@ $active_index = "active";
                             window.location.reload();
                         });
                     } else {
+                        // Swal.fire({
+                        //     icon: 'warning',
+                        //     title: 'เเจ้งเตือน',
+                        //     text: res.message
+                        // });
                         Swal.fire({
                             icon: 'warning',
-                            title: 'เเจ้งเตือน',
-                            text: res.message
+                            title: res.message,
+                            showConfirmButton: false,
+                            timer: 1500
+                        }).then((result) => {
+                            window.location.reload();
                         });
                     }
                 }
