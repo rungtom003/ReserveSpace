@@ -168,7 +168,7 @@ $active_index = "active";
                     <div class="modal-body">
                         <h4>รายละเอียดการจอง</h4>
                         <div class="row g-2 p-2">
-                            <input type="text" class="form-control" placeholder="ล็อค" id="a_Id" readonly hidden >
+                            <input type="text" class="form-control" placeholder="ล็อค" id="a_Id" readonly hidden>
                             <input type="text" class="form-control" placeholder="ล็อคประจำ" id="area_static" readonly hidden>
                             <div class="col-md">
                                 <label class="form-label">ล็อค</label>
@@ -289,58 +289,96 @@ $active_index = "active";
 
     <?php include("./layout/script.php"); ?>
     <script>
+        const socket = new WebSocket('ws://localhost:8888');
         const z_Id = "<?= $user["z_Id"] ?>";
         const btnfind = $("#input_find").val();
 
-        const fcFind = () => {
-            $.ajax({
-                url: "/ReserveSpace/backend/Service/areaList_api.php",
-                type: "POST",
-                dataType: "json",
-                data: {
-                    z_Id: z_Id,
-                    a_Name: $("#input_find").val()
-                },
-                success: function(res) {
-                    const data = res.data;
-                    let txt_content = "";
-                    $.each(data, function(key, val) {
-                        if(val.a_ReserveStatus === "0")
-                        {
-                            txt_content += `<div class="d-flex justify-content-center align-items-center reserve-box-green" data-bs-toggle="modal" data-bs-target="#reserve-modal" data-bs-area_static="0" data-bs-whatever='${JSON.stringify(val)}'>
+        socket.onmessage = function(e) {
+            const obj = JSON.parse(e.data);
+            const data = obj.data;
+            let txt_content = "";
+            $.each(data, function(key, val) {
+                if (val.a_ReserveStatus === "0") {
+                    txt_content += `<div class="d-flex justify-content-center align-items-center reserve-box-green" data-bs-toggle="modal" data-bs-target="#reserve-modal" data-bs-area_static="0" data-bs-whatever='${JSON.stringify(val)}'>
                                                 <span class="text-light">${val.a_Name}</span>
                                             </div>`;
-                        }
-                        else if(val.a_ReserveStatus === "1")
-                        {
-                            txt_content += `<div class="d-flex justify-content-center align-items-center reserve-box-red" data-bs-toggle="modal" data-bs-target="#reserve-detail-modal" data-bs-whatever='${val.a_Id}'>
+                } else if (val.a_ReserveStatus === "1") {
+                    txt_content += `<div class="d-flex justify-content-center align-items-center reserve-box-red" data-bs-toggle="modal" data-bs-target="#reserve-detail-modal" data-bs-whatever='${val.a_Id}'>
                                                 <span class="text-light">${val.a_Name}</span>
                                             </div>`;
-                        }
-                        else if(val.a_ReserveStatus === "2")
-                        {
-                            txt_content += `<div class="d-flex justify-content-center align-items-center reserve-box-primary" data-bs-toggle="modal" data-bs-target="#reserve-detail-modal" data-bs-whatever='${val.a_Id}'>
+                } else if (val.a_ReserveStatus === "2") {
+                    txt_content += `<div class="d-flex justify-content-center align-items-center reserve-box-primary" data-bs-toggle="modal" data-bs-target="#reserve-detail-modal" data-bs-whatever='${val.a_Id}'>
                                                 <span class="text-light">${val.a_Name}</span>
                                             </div>`;
-                        }
-                        else if(val.a_ReserveStatus === "3")
-                        {
-                            txt_content += `<div class="d-flex justify-content-center align-items-center reserve-box-yellow" data-bs-toggle="modal" data-bs-target="#reserve-modal" data-bs-area_static="1" data-bs-whatever='${JSON.stringify(val)}'>
+                } else if (val.a_ReserveStatus === "3") {
+                    txt_content += `<div class="d-flex justify-content-center align-items-center reserve-box-yellow" data-bs-toggle="modal" data-bs-target="#reserve-modal" data-bs-area_static="1" data-bs-whatever='${JSON.stringify(val)}'>
                                                 <span class="text-light">${val.a_Name}</span>
                                             </div>`;
-                        }
-                        else
-                        {
-                            txt_content += `<div class="d-flex justify-content-center align-items-center reserve-box-red" data-bs-toggle="modal" data-bs-target="#reserve-detail-modal" data-bs-whatever='${val.a_Id}'>
+                } else {
+                    txt_content += `<div class="d-flex justify-content-center align-items-center reserve-box-red" data-bs-toggle="modal" data-bs-target="#reserve-detail-modal" data-bs-whatever='${val.a_Id}'>
                                                 <span class="text-light">${val.a_Name}</span>
                                             </div>`;
-                        }
-                    })
-                    $("#reserve-content").html(txt_content);
                 }
-            });
+            })
+            $("#reserve-content").html(txt_content);
         }
-        fcFind();
+        socket.onerror = function(e) {
+        };
+
+        const fcFind = () => {
+            // $.ajax({
+            //     url: "/ReserveSpace/backend/Service/areaList_api.php",
+            //     type: "POST",
+            //     dataType: "json",
+            //     data: {
+            //         z_Id: z_Id,
+            //         a_Name: $("#input_find").val()
+            //     },
+            //     success: function(res) {
+            //         const data = res.data;
+            //         let txt_content = "";
+            //         $.each(data, function(key, val) {
+            //             if (val.a_ReserveStatus === "0") {
+            //                 txt_content += `<div class="d-flex justify-content-center align-items-center reserve-box-green" data-bs-toggle="modal" data-bs-target="#reserve-modal" data-bs-area_static="0" data-bs-whatever='${JSON.stringify(val)}'>
+            //                                     <span class="text-light">${val.a_Name}</span>
+            //                                 </div>`;
+            //             } else if (val.a_ReserveStatus === "1") {
+            //                 txt_content += `<div class="d-flex justify-content-center align-items-center reserve-box-red" data-bs-toggle="modal" data-bs-target="#reserve-detail-modal" data-bs-whatever='${val.a_Id}'>
+            //                                     <span class="text-light">${val.a_Name}</span>
+            //                                 </div>`;
+            //             } else if (val.a_ReserveStatus === "2") {
+            //                 txt_content += `<div class="d-flex justify-content-center align-items-center reserve-box-primary" data-bs-toggle="modal" data-bs-target="#reserve-detail-modal" data-bs-whatever='${val.a_Id}'>
+            //                                     <span class="text-light">${val.a_Name}</span>
+            //                                 </div>`;
+            //             } else if (val.a_ReserveStatus === "3") {
+            //                 txt_content += `<div class="d-flex justify-content-center align-items-center reserve-box-yellow" data-bs-toggle="modal" data-bs-target="#reserve-modal" data-bs-area_static="1" data-bs-whatever='${JSON.stringify(val)}'>
+            //                                     <span class="text-light">${val.a_Name}</span>
+            //                                 </div>`;
+            //             } else {
+            //                 txt_content += `<div class="d-flex justify-content-center align-items-center reserve-box-red" data-bs-toggle="modal" data-bs-target="#reserve-detail-modal" data-bs-whatever='${val.a_Id}'>
+            //                                     <span class="text-light">${val.a_Name}</span>
+            //                                 </div>`;
+            //             }
+            //         })
+            //         $("#reserve-content").html(txt_content);
+            //     }
+            // });
+
+            const data = {
+                z_Id: "<?= $user["z_Id"] ?>",
+                a_Id: "",
+                area_static: "",
+                u_Id: "<?= $user["u_Id"] ?>",
+                a_Name: $("#input_find").val(),
+                ActionStatus: "START",
+            }
+            const jsondata = JSON.stringify(data);
+            socket.send(jsondata);
+        }
+
+        socket.onopen = function(e) {
+            fcFind();
+        };
 
         const reserve_modal = document.getElementById('reserve-modal')
         reserve_modal.addEventListener('show.bs.modal', event => {
@@ -377,21 +415,18 @@ $active_index = "active";
                     if (res.status === "seccess") {
                         let txtHTML = "";
                         let txtHTML2 = "";
-                        $.each(data_arr,function(key,val){
-                            if(val.r_Status === "1"){
+                        $.each(data_arr, function(key, val) {
+                            if (val.r_Status === "1") {
                                 txtHTML += `<li class="fw-bold">ชื่อผู้จอง : <span class="fw-normal" id="u_Name">${val.u_FirstName} ${val.u_LastName}</span></li>
                                         <li class="fw-bold">ชื่อร้าน : <span class="fw-normal" id="u_ShopName">${val.u_ShopName}</span></li>
                                         <li class="fw-bold">ล็อค : <span class="fw-normal" id="a_Name">${val.a_Name}</span></li>
                                         <li class="fw-bold">โซน : <span class="fw-normal" id="z_Name">${val.z_Name}</span></li>
                                         <li class="fw-bold">สินค้าที่ขาย : <span class="fw-normal" id="u_ProductName">${val.u_ProductName}</span></li>`;
-                            }
-                            else if(val.r_Status === "2"){
+                            } else if (val.r_Status === "2") {
                                 txtHTML2 += `<li class="fw-bold">เจ้าของล็อคประจำ : <span class="fw-normal" >${val.u_FirstName} ${val.u_LastName}</span></li>
                                         <li class="fw-bold">ชื่อร้าน : <span class="fw-normal" >${val.u_ShopName}</span></li>
                                         <li class="fw-bold">สินค้าที่ขาย : <span class="fw-normal" >${val.u_ProductName}</span></li>`;
-                            }
-                            else
-                            {
+                            } else {
                                 txtHTML += "";
                             }
                         });
@@ -408,49 +443,61 @@ $active_index = "active";
             $("#pt_Name").html("");
         });
 
-        document.getElementById("add-cart").addEventListener('click',(e) => {
+        document.getElementById("add-cart").addEventListener('click', (e) => {
             e.preventDefault();
             const data = {
                 a_Id: $("#a_Id").val(),
-                area_static:$("#area_static").val()
+                area_static: $("#area_static").val()
             }
-            $.ajax({
-                url: "/ReserveSpace/backend/Service/confirmOrder.php",
-                type: "POST",
-                dataType: "json",
-                data: data,
-                success: function(res) {
-                    if (res.status === "success") {
-                        Swal.fire({
-                            icon: 'success',
-                            title: res.message,
-                            showConfirmButton: false,
-                            timer: 1500
-                        }).then((result) => {
-                            // $('#reserve-modal').modal('hide');
-                            // const myModalEl = document.getElementById('reserve-modal')
-                            // myModalEl.addEventListener('hidden.bs.modal', event => {
-                            //     window.location.reload();
-                            // });
-                            window.location.reload();
-                        });
-                    } else {
-                        // Swal.fire({
-                        //     icon: 'warning',
-                        //     title: 'เเจ้งเตือน',
-                        //     text: res.message
-                        // });
-                        Swal.fire({
-                            icon: 'warning',
-                            title: res.message,
-                            showConfirmButton: false,
-                            timer: 1500
-                        }).then((result) => {
-                            window.location.reload();
-                        });
-                    }
-                }
-            });
+            const dataw = {
+                z_Id: "<?= $user["z_Id"] ?>",
+                a_Id: $("#a_Id").val(),
+                area_static: $("#area_static").val(),
+                u_Id: "<?= $user["u_Id"] ?>",
+                a_Name: $("#input_find").val(),
+                ActionStatus: "",
+            }
+            const jsondata = JSON.stringify(dataw);
+            socket.send(jsondata);
+            window.location.reload();
+
+            // $.ajax({
+            //     url: "/ReserveSpace/backend/Service/confirmOrder.php",
+            //     type: "POST",
+            //     dataType: "json",
+            //     data: data,
+            //     success: function(res) {
+            //         if (res.status === "success") {
+            //             Swal.fire({
+            //                 icon: 'success',
+            //                 title: res.message,
+            //                 showConfirmButton: false,
+            //                 timer: 1500
+            //             }).then((result) => {
+            //                 // $('#reserve-modal').modal('hide');
+            //                 // const myModalEl = document.getElementById('reserve-modal')
+            //                 // myModalEl.addEventListener('hidden.bs.modal', event => {
+            //                 //     window.location.reload();
+            //                 // });
+            //                 window.location.reload();
+            //             });
+            //         } else {
+            //             // Swal.fire({
+            //             //     icon: 'warning',
+            //             //     title: 'เเจ้งเตือน',
+            //             //     text: res.message
+            //             // });
+            //             Swal.fire({
+            //                 icon: 'warning',
+            //                 title: res.message,
+            //                 showConfirmButton: false,
+            //                 timer: 1500
+            //             }).then((result) => {
+            //                 window.location.reload();
+            //             });
+            //         }
+            //     }
+            // });
         });
     </script>
 </body>
