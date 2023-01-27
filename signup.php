@@ -106,18 +106,15 @@ $active_signup = "active";
                                 <div class="row g-2 p-2">
                                 <div class="col-md">
                                     <label class="form-label">ชื่อร้าน</label>
-                                    <input type="text" class="form-control" placeholder="" id="" required>
+                                    <input type="text" class="form-control" placeholder="" id="u_ShopName" required>
                                     <div class="invalid-feedback">
                                         กรุณากรอก ชื่อร้าน
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <label class="form-label">โซน</label>
-                                    <select class="form-select" aria-label="Default select example" id="" required>
+                                    <select class="form-select" aria-label="Default select example" id="selectZoneName" required>
                                         <option selected disabled value="">เลือก.....</option>
-                                        <option value=""></option>
-                                        <option value=""></option>
-                                        <option value=""></option>
                                     </select>
                                     <div class="invalid-feedback">
                                         กรุณาเลือก โซน
@@ -126,8 +123,8 @@ $active_signup = "active";
                             </div>
                             <div class="row g-2 p-2">
                                 <div class="mb-3">
-                                    <label for="exampleFormControlTextarea1" class="form-label">รายละเอียดสินค้า</label>
-                                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" required></textarea>
+                                    <label for="u_ProductName" class="form-label">รายละเอียดสินค้า</label>
+                                    <textarea class="form-control" id="u_ProductName" rows="3" required></textarea>
                                 </div>
                                 <div class="invalid-feedback">
                                     กรุณาเลือก รายละเอียดสินค้า
@@ -339,6 +336,21 @@ $active_signup = "active";
             }
         }
 
+        function loadZone() {
+            $.ajax({
+                url: "/ReserveSpace/backend/Service/zone_api.php",
+                type: "POST",
+                dataType: "json",
+                success: function(res) {
+                    let length = res.data.length;
+                    $('#selectZoneName').empty()
+                    for (let i = 0; i < length; i++) {
+                        $('#selectZoneName').append(`<option value="${res.data[i].z_Id}">${res.data[i].z_Name}</option>`);
+                    }
+                }
+            });
+        }
+        
         function signup() {
             const file = document.getElementById("formFile").files[0];
             let ur_Id = "";
@@ -358,6 +370,9 @@ $active_signup = "active";
             let u_SubDistrict = $('#u_SubDistrict').val();
             let u_District = $('#u_District').val();
             let u_Province = $('#u_Province').val();
+            let z_Id = $('#selectZoneName').val();
+            let u_ShopName = $('#u_ShopName').val();
+            let u_ProductName = $('#u_ProductName').val();
 
             let RadioAdmin = $('#RadioAdmin').prop('checked')
             let RadioUser = $('#RadioUser').prop('checked')
@@ -384,7 +399,10 @@ $active_signup = "active";
                 u_Road: u_Road,
                 u_SubDistrict: u_SubDistrict,
                 u_District: u_District,
-                u_Province: u_Province
+                u_Province: u_Province,
+                z_Id: z_Id,
+                u_ShopName: u_ShopName,
+                u_ProductName: u_ProductName
             }
 
             const formData = new FormData();
@@ -405,6 +423,9 @@ $active_signup = "active";
             formData.append("u_District", data.u_District);
             formData.append("u_Province", data.u_Province);
             formData.append("u_Img", data.u_Img);
+            formData.append("z_Id", data.z_Id);
+            formData.append("u_ShopName", data.u_ShopName);
+            formData.append("u_ProductName", data.u_ProductName);
 
             $.ajax({
                 url: "/ReserveSpace/backend/Service/signup_api.php",
@@ -458,6 +479,8 @@ $active_signup = "active";
         $('#RadioUser').change(function() {
             checkRole();
         })
+
+        loadZone();
 
         // Fetch all the forms we want to apply custom Bootstrap validation styles to
         const forms = document.querySelectorAll('.needs-validation')

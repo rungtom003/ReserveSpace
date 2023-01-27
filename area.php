@@ -52,9 +52,6 @@ $active_area = "active";
                                 <label for="selectZoneName" class="col-form-label">โซน:</label>
                                 <select class="form-select" aria-label="Default select example" id="selectZoneName">
                                     <option selected value="">เลือกโซน</option>
-                                    <option value="นาย">นาย</option>
-                                    <option value="นาง">นาง</option>
-                                    <option value="นางสาว">นางสาว</option>
                                 </select>
                             </div>
                             <div class="mb-3">
@@ -172,6 +169,7 @@ $active_area = "active";
                 url: "/ReserveSpace/backend/Service/areaAdd_api.php",
                 type: "POST",
                 data: {z_Id:z_Id, a_Name:a_Name},
+                //data: null,
                 dataType: "json",
                 success: function(res) {
                     let message = res.message;

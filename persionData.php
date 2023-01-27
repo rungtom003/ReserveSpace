@@ -26,174 +26,173 @@ $active_persionData = "active";
             <!-- start: Content -->
             <div class="py-1">
                 <div class="content d-flex flex-column flex-column-fluid">
-                <div class="d-flex justify-content-center">
-                    <div class="card">
-                        <div class="card-header">
-                            Featured
-                        </div>
-                        <div class="card-body">
-                            <form>
-                                <?php if($user["ur_Id"] != "R001"){ ?>
-                                <div class="row g-2 p-2">
-                                    <div class="col-md-3">
-                                        <label class="form-label">รหัสเจ้าหน้าที่</label>
-                                        <input type="text" class="form-control" placeholder="ID" id="u_OfficerId" value="<?= $user["u_OfficerId"] ?>">
-                                        <!-- <div class="form-text">Enter your Full name</div> -->
-                                    </div>
-                                </div>
-                                <?php } ?>
-                                <div class="row g-2 p-2">
-                                    <div class="col-md-2">
-                                        <label class="form-label">คำนำหน้า</label>
-                                        <select class="form-select" aria-label="Default select example" id="Prefix">
-                                            <option selected value="<?= $user["u_Prefix"] ?>"><?= $user["u_Prefix"] ?></option>
-                                            <option value="นาย">นาย</option>
-                                            <option value="นาง">นาง</option>
-                                            <option value="นางสาว">นางสาว</option>
-                                        </select>
-                                        <!-- <div class="form-text">Enter your Full name</div> -->
-                                    </div>
-                                    <div class="col-md">
-                                        <label class="form-label">ชื่อ</label>
-                                        <input type="text" class="form-control" placeholder="Full name" id="u_FullName" value="<?= $user["u_FirstName"] ?>">
-                                        <!-- <div class="form-text">Enter your Full name</div> -->
-                                    </div>
-                                    <div class="col-md">
-                                        <label class="form-label">นามสกุล</label>
-                                        <input type="text" class="form-control" placeholder="Last name" id="u_Last" value="<?= $user["u_LastName"] ?>">
-                                        <!-- <div  class="form-text">Enter your Last name</div> -->
-                                    </div>
-                                </div>
-
-                                <div class="row g-2 p-2">
-                                    <div class="col-md">
-                                        <label class="form-label">ชื่อผู้ใช้</label>
-                                        <input type="Username" class="form-control" placeholder="Username" id="u_Username" value="<?= $user["u_Username"] ?>" readonly>
-                                        <!-- <div class="form-text">Enter your Full name</div> -->
-                                    </div>
-                                </div>
-                                <div class="g-2 p-2">
-                                    <?php if ($user["ur_Id"] == "R002") {
-                                    ?>
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="RadioAdmin" value="R002" checked>
-                                            <label class="form-check-label" for="RadioAdmin">Admin</label>
-                                        </div>
-                                    <?php
-                                    } else {
-                                    ?>
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="RadioUser" value="R001" checked>
-                                            <label class="form-check-label" for="RadioUser">User</label>
-                                        </div>
-
-                                    <?php
-                                    }
-                                    ?>
-                                </div>
-                                <div class="row g-2 p-2">
-                                <div class="col-md">
-                                    <label class="form-label">ชื่อร้าน</label>
-                                    <input type="text" class="form-control" placeholder="" id="" required>
-                                    <div class="invalid-feedback">
-                                        กรุณากรอก ชื่อร้าน
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <label class="form-label">โซน</label>
-                                    <select class="form-select" aria-label="Default select example" id="" required>
-                                        <option selected disabled value="">เลือก.....</option>
-                                        <option value=""></option>
-                                        <option value=""></option>
-                                        <option value=""></option>
-                                    </select>
-                                    <div class="invalid-feedback">
-                                        กรุณาเลือก โซน
-                                    </div>
-                                </div>
+                    <div class="d-flex justify-content-center">
+                        <div class="card">
+                            <div class="card-header">
+                                Featured
                             </div>
-                            <div class="row g-2 p-2">
-                                <div class="mb-3">
-                                    <label for="exampleFormControlTextarea1" class="form-label">รายละเอียดสินค้า</label>
-                                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" required></textarea>
-                                </div>
-                                <div class="invalid-feedback">
-                                    กรุณาเลือก รายละเอียดสินค้า
-                                </div>
-                            </div>
-                                <div class="row g-2 p-2">
-                                <?php if($user["ur_Id"] != "R001"){ ?>
-                                    <div class="col-md">
-                                        <label class="form-label">ตำแหน่ง</label>
-                                        <input type="text" class="form-control" placeholder="" id="u_Position" value="<?= $user["u_Position"] ?>">
-                                        <!-- <div  class="form-text">Enter your Last name</div> -->
-                                    </div>
+                            <div class="card-body">
+                                <form>
+                                    <span hidden id="ur_ID"><?= $user["ur_Id"] ?></span>
+                                    <?php if ($user["ur_Id"] != "R001") { ?>
+                                        <div class="row g-2 p-2">
+                                            <div class="col-md-3">
+                                                <label class="form-label">รหัสเจ้าหน้าที่</label>
+                                                <input type="text" class="form-control" placeholder="ID" id="u_OfficerId" value="<?= $user["u_OfficerId"] ?>">
+                                                <!-- <div class="form-text">Enter your Full name</div> -->
+                                            </div>
+                                        </div>
                                     <?php } ?>
-                                    <div class="col-md">
-                                        <label class="form-label">เลขบัตรประจำตัวประชาชน</label>
-                                        <input type="text" class="form-control" placeholder="" id="u_CardNumber" value="<?= $user["u_CardNumber"] ?>" readonly>
-                                        <!-- <div class="form-text">Enter your Full name</div> -->
-                                    </div>
-                                    <div class="col-md">
-                                        <label class="form-label">วัน/เดือน/ปีเกิด</label>
-                                        <input type="date" class="form-control" placeholder="" id="u_Birthday" value="<?= $user["u_Birthday"] ?>">
-                                        <!-- <div  class="form-text">Enter your Last name</div> -->
-                                    </div>
-                                </div>
-
-                                <div class="row g-2 p-2">
-                                    <div class="col-md">
-                                        <div class="col-md">
-                                            <label class="form-label">บ้านเลขที่/หมู่</label>
-                                            <input type="text" class="form-control" placeholder="" id="u_Address" value="<?= $user["u_Address"] ?>">
-                                            <!-- <div  class="form-text">Enter your Last name</div> -->
+                                    <div class="row g-2 p-2">
+                                        <div class="col-md-2">
+                                            <label class="form-label">คำนำหน้า</label>
+                                            <select class="form-select" aria-label="Default select example" id="Prefix">
+                                                <option selected value="<?= $user["u_Prefix"] ?>"><?= $user["u_Prefix"] ?></option>
+                                                <option value="นาย">นาย</option>
+                                                <option value="นาง">นาง</option>
+                                                <option value="นางสาว">นางสาว</option>
+                                            </select>
+                                            <!-- <div class="form-text">Enter your Full name</div> -->
                                         </div>
-                                    </div>
-                                    <div class="col-md">
                                         <div class="col-md">
-                                            <label class="form-label">ถนน</label>
-                                            <input type="text" class="form-control" placeholder="" id="u_Road" value="<?= $user["u_Road"] ?>">
-                                            <!-- <div  class="form-text">Enter your Last name</div> -->
+                                            <label class="form-label">ชื่อ</label>
+                                            <input type="text" class="form-control" placeholder="Full name" id="u_FullName" value="<?= $user["u_FirstName"] ?>">
+                                            <!-- <div class="form-text">Enter your Full name</div> -->
                                         </div>
-                                    </div>
-                                    <div class="col-md">
                                         <div class="col-md">
-                                            <label class="form-label">ตำบล</label>
-                                            <input type="text" class="form-control" placeholder="" id="u_SubDistrict" value="<?= $user["u_SubDistrict"] ?>">
+                                            <label class="form-label">นามสกุล</label>
+                                            <input type="text" class="form-control" placeholder="Last name" id="u_Last" value="<?= $user["u_LastName"] ?>">
                                             <!-- <div  class="form-text">Enter your Last name</div> -->
                                         </div>
                                     </div>
 
-                                </div>
-                                <div class="row g-2 p-2">
-                                    <div class="col-md">
+                                    <div class="row g-2 p-2">
                                         <div class="col-md">
-                                            <label class="form-label">อำเภอ</label>
-                                            <input type="text" class="form-control" placeholder="" id="u_District" value="<?= $user["u_District"] ?>">
+                                            <label class="form-label">ชื่อผู้ใช้</label>
+                                            <input type="Username" class="form-control" placeholder="Username" id="u_Username" value="<?= $user["u_Username"] ?>" readonly>
+                                            <!-- <div class="form-text">Enter your Full name</div> -->
+                                        </div>
+                                    </div>
+                                    <div class="g-2 p-2">
+                                        <?php if ($user["ur_Id"] == "R002") {
+                                        ?>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="RadioAdmin" value="R002" checked>
+                                                <label class="form-check-label" for="RadioAdmin">Admin</label>
+                                            </div>
+                                        <?php
+                                        } else {
+                                        ?>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="RadioUser" value="R001" checked>
+                                                <label class="form-check-label" for="RadioUser">User</label>
+                                            </div>
+
+                                        <?php
+                                        }
+                                        ?>
+                                    </div>
+                                    <div class="row g-2 p-2">
+                                        <div class="col-md">
+                                            <label class="form-label">ชื่อร้าน</label>
+                                            <input type="text" class="form-control" placeholder="" value="<?= $user["u_ShopName"] ?>" id="u_ShopName" required>
+                                            <div class="invalid-feedback">
+                                                กรุณากรอก ชื่อร้าน
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <span hidden id="zoneID"><?= $user["z_Id"] ?></span>
+                                            <label class="form-label">โซน</label>
+                                            <select class="form-select" aria-label="Default select example" id="selectZoneName" readonly required>
+                                                <option selected value="<?= $user["z_Id"] ?>"></option>
+                                            </select>
+                                            <div class="invalid-feedback">
+                                                กรุณาเลือก โซน
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row g-2 p-2">
+                                        <div class="mb-3">
+                                            <label for="u_ProductName" class="form-label">รายละเอียดสินค้า</label>
+                                            <textarea class="form-control" id="u_ProductName" rows="3" required><?= $user["u_ProductName"] ?></textarea>
+                                        </div>
+                                        <div class="invalid-feedback">
+                                            กรุณาเลือก รายละเอียดสินค้า
+                                        </div>
+                                    </div>
+                                    <div class="row g-2 p-2">
+                                        <?php if ($user["ur_Id"] != "R001") { ?>
+                                            <div class="col-md">
+                                                <label class="form-label">ตำแหน่ง</label>
+                                                <input type="text" class="form-control" placeholder="" id="u_Position" value="<?= $user["u_Position"] ?>">
+                                                <!-- <div  class="form-text">Enter your Last name</div> -->
+                                            </div>
+                                        <?php } ?>
+                                        <div class="col-md">
+                                            <label class="form-label">เลขบัตรประจำตัวประชาชน</label>
+                                            <input type="text" class="form-control" placeholder="" id="u_CardNumber" value="<?= $user["u_CardNumber"] ?>" readonly>
+                                            <!-- <div class="form-text">Enter your Full name</div> -->
+                                        </div>
+                                        <div class="col-md">
+                                            <label class="form-label">วัน/เดือน/ปีเกิด</label>
+                                            <input type="date" class="form-control" placeholder="" id="u_Birthday" value="<?= $user["u_Birthday"] ?>">
                                             <!-- <div  class="form-text">Enter your Last name</div> -->
                                         </div>
                                     </div>
-                                    <div class="col-md">
+
+                                    <div class="row g-2 p-2">
                                         <div class="col-md">
-                                            <label class="form-label">จังหวัด</label>
-                                            <input type="text" class="form-control" placeholder="" id="u_Province" value="<?= $user["u_Province"] ?>">
-                                            <!-- <div  class="form-text">Enter your Last name</div> -->
+                                            <div class="col-md">
+                                                <label class="form-label">บ้านเลขที่/หมู่</label>
+                                                <input type="text" class="form-control" placeholder="" id="u_Address" value="<?= $user["u_Address"] ?>">
+                                                <!-- <div  class="form-text">Enter your Last name</div> -->
+                                            </div>
+                                        </div>
+                                        <div class="col-md">
+                                            <div class="col-md">
+                                                <label class="form-label">ถนน</label>
+                                                <input type="text" class="form-control" placeholder="" id="u_Road" value="<?= $user["u_Road"] ?>">
+                                                <!-- <div  class="form-text">Enter your Last name</div> -->
+                                            </div>
+                                        </div>
+                                        <div class="col-md">
+                                            <div class="col-md">
+                                                <label class="form-label">ตำบล</label>
+                                                <input type="text" class="form-control" placeholder="" id="u_SubDistrict" value="<?= $user["u_SubDistrict"] ?>">
+                                                <!-- <div  class="form-text">Enter your Last name</div> -->
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="row g-2 p-2">
+                                        <div class="col-md">
+                                            <div class="col-md">
+                                                <label class="form-label">อำเภอ</label>
+                                                <input type="text" class="form-control" placeholder="" id="u_District" value="<?= $user["u_District"] ?>">
+                                                <!-- <div  class="form-text">Enter your Last name</div> -->
+                                            </div>
+                                        </div>
+                                        <div class="col-md">
+                                            <div class="col-md">
+                                                <label class="form-label">จังหวัด</label>
+                                                <input type="text" class="form-control" placeholder="" id="u_Province" value="<?= $user["u_Province"] ?>">
+                                                <!-- <div  class="form-text">Enter your Last name</div> -->
+                                            </div>
+                                        </div>
+                                        <div class="col-md">
+                                            <div class="col-md">
+                                                <label class="form-label">เบอร์โทรศัพท์</label>
+                                                <input type="text" class="form-control" placeholder="" id="u_Phone" value="<?= $user["u_Phone"] ?>">
+                                                <!-- <div  class="form-text">Enter your Last name</div> -->
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="col-md">
-                                        <div class="col-md">
-                                            <label class="form-label">เบอร์โทรศัพท์</label>
-                                            <input type="text" class="form-control" placeholder="" id="u_Phone" value="<?= $user["u_Phone"] ?>">
-                                            <!-- <div  class="form-text">Enter your Last name</div> -->
-                                        </div>
-                                    </div>
-                                </div>
-                                <button type="submit" class="btn btn-primary" id="btn_update">บันทึก</button>
-                            </form>
+                                    <button type="submit" class="btn btn-primary" id="btn_update">บันทึก</button>
+                                </form>
+                            </div>
                         </div>
-                    </div>
 
-                </div>
+                    </div>
                 </div>
 
             </div>
@@ -203,13 +202,40 @@ $active_persionData = "active";
     <!-- end: Main -->
     <?php include("./layout/script.php"); ?>
     <script>
+        function loadZone() {
+            let zoneID = $('#zoneID').html();
+            $.ajax({
+                url: "/ReserveSpace/backend/Service/zone_api.php",
+                type: "POST",
+                dataType: "json",
+                success: function(res) {
+                    let length = res.data.length;
+
+                    $('#selectZoneName').empty()
+                    for (let i = 0; i < length; i++) {
+                        if (zoneID === res.data[i].z_Id) {
+                            $('#selectZoneName').append(`<option selected value="${res.data[i].z_Id}">${res.data[i].z_Name}</option>`);
+                        }
+
+
+                    }
+                }
+            });
+        }
+
         function UpdatePersionData() {
+            let ur_ID = $('#ur_ID').html();
+            let u_OfficerId = "";
+            let u_Position = "";
+            if (ur_ID === "R002") {
+                u_OfficerId = $('#u_OfficerId').val();
+                u_Position = $('#u_Position').val();
+            }
             let u_FirstName = $('#u_FullName').val();
             let u_LastName = $('#u_Last').val();
             let u_Username = $('#u_Username').val();
             let u_CardNumber = $('#u_CardNumber').val();
-            let u_OfficerId = $('#u_OfficerId').val();
-            let u_Position = $('#u_Position').val();
+
             let u_Phone = $('#u_Phone').val();
             let u_Prefix = $('#Prefix').val();
             let u_Birthday = $('#u_Birthday').val();
@@ -219,6 +245,9 @@ $active_persionData = "active";
             let u_SubDistrict = $('#u_SubDistrict').val();
             let u_District = $('#u_District').val();
             let u_Province = $('#u_Province').val();
+            let z_Id = $('#selectZoneName').val();
+            let u_ShopName = $('#u_ShopName').val();
+            let u_ProductName = $('#u_ProductName').val();
 
             let data = {
                 u_FirstName: u_FirstName,
@@ -235,7 +264,10 @@ $active_persionData = "active";
                 u_Road: u_Road,
                 u_SubDistrict: u_SubDistrict,
                 u_District: u_District,
-                u_Province: u_Province
+                u_Province: u_Province,
+                z_Id: z_Id,
+                u_ShopName: u_ShopName,
+                u_ProductName: u_ProductName
             }
 
             $.ajax({
@@ -268,12 +300,11 @@ $active_persionData = "active";
 
             })
         }
-
+        loadZone();
         $('#btn_update').click(function(event) {
             event.preventDefault();
             UpdatePersionData();
         })
-        
     </script>
 </body>
 
