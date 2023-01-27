@@ -34,6 +34,10 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         $u_SubDistrict = $_POST["u_SubDistrict"];
         $u_District = $_POST["u_District"];
         $u_Province = $_POST["u_Province"];
+        $z_Id = $_POST["z_Id"];
+        $u_ShopName = $_POST["u_ShopName"];
+        $u_ProductName = $_POST["u_ProductName"];
+
 
         if ($u_Birthday == "") {
             $u_Birthday = "NULL";
@@ -60,10 +64,10 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         $u_Password_hash = hash("sha256", $u_Password);
         $sql = "INSERT INTO `reserve_space`.`tb_user` (`ur_Id`, `u_FirstName`, `u_LastName`, `u_Username`, `u_Password`, `u_CardNumber`,";
         $sql .= " `u_OfficerId`, `u_Position`, `u_Phone`, `u_Prefix`, `u_Birthday`, `u_Img`, `u_Address`, ";
-        $sql .= " `u_Road`,`u_SubDistrict`, `u_District`, `u_Province` ) ";
+        $sql .= " `u_Road`,`u_SubDistrict`, `u_District`, `u_Province`, `z_Id`,`u_ShopName`,`u_ProductName` ) ";
         $sql .= "VALUES ('" . $ur_Id . "', '" . $u_FirstName . "', '" . $u_LastName . "', '" . $u_Username . "', '" . $u_Password_hash . "', '" . $u_CardNumber . "', ";
         $sql .= " '" . $u_OfficerId . "', '" . $u_Position . "', '" . $u_Phone . "', '" . $u_Prefix . "', " . $u_Birthday . ", '" . $u_Img . "', '" . $u_Address . "', ";
-        $sql .= " '" . $u_Road . "', '" . $u_SubDistrict . "', '" . $u_District . "', '" . $u_Province . "' );";
+        $sql .= " '" . $u_Road . "', '" . $u_SubDistrict . "', '" . $u_District . "', '" . $u_Province . "', '".$z_Id."', '".$u_ShopName."', '".$u_ProductName."' );";
 
         $sqlCheckUser = "SELECT * FROM reserve_space.tb_user where u_Username = '" . $u_Username . "';";
         $sqlCheckCardNumber = "SELECT * FROM reserve_space.tb_user where u_CardNumber = '" . $u_CardNumber . "';";

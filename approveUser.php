@@ -112,10 +112,20 @@ $active_approve = "active";
                             data: null,
                             defaultContent: "",
                             render: function(data, type, row, meta) {
+                                let status = row.u_Approve;
                                 const u_Id = row.u_Id;
-                                return `<div class="d-grid gap-2 d-md-block" >
-                                        <button class="btn btn-primary" type="button" id="btn_Approve" onclick="fcApprove(this)" value="${u_Id}">อนุมัติ</button>
-                                    </div>`;
+                                let txtHTML = "";
+                                if(status === "0"){
+                                    txtHTML = `<div class="d-grid gap-2 d-md-block" >
+                                                <button class="btn btn-primary" type="button" id="btn_Approve" onclick="fcApprove(this)" value="${u_Id}">อนุมัติ</button>
+                                            </div>`;
+                                }else{
+                                    txtHTML = `<div class="d-grid gap-2 d-md-block" >
+                                                <button class="btn btn-danger" type="button" id="btn_Cancel" onclick="cancelUser(this)" value="${u_Id}">ยกเลิก</button>
+                                            </div>`;
+                                }
+                                
+                                return txtHTML;
                             }
                         }
                     ]
@@ -199,6 +209,42 @@ $active_approve = "active";
                 }
             });
         }
+
+        const cancelUser = (elm) =>{
+            let u_Id = elm.value;
+
+            $.ajax({
+                url: "/ReserveSpace/backend/Service/cancelUser_api.php",
+                type: "POST",
+                data: {
+                    u_Id: u_Id
+                },
+                dataType: "json",
+                success: function(res) {
+                    let message = res.message;
+                    let status = res.status;
+
+                    if (status == "success") {
+                        Swal.fire({
+                            icon: 'success',
+                            title: message,
+                            showConfirmButton: true,
+                            timer: 1500
+                        }).then((result) => {
+                            $('#table-users').DataTable().destroy();
+                            loadUser();
+                        })
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'เเจ้งเตือน',
+                            text: message
+                        })
+                    }
+                }
+            });
+        }
+        
     </script>
 </body>
 

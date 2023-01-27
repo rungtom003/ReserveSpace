@@ -22,6 +22,9 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         $u_SubDistrict = $_POST["u_SubDistrict"];
         $u_District = $_POST["u_District"];
         $u_Province = $_POST["u_Province"];
+        $z_Id = $_POST["z_Id"];
+        $u_ShopName = $_POST["u_ShopName"];
+        $u_ProductName = $_POST["u_ProductName"];
 
         if ($u_Birthday == "") {
             $u_Birthday = "NULL";
@@ -31,7 +34,8 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
         $sql = "UPDATE `reserve_space`.`tb_user` SET `u_FirstName` = '" . $u_FirstName . "', u_LastName = '" . $u_LastName . "', `u_OfficerId` = '" . $u_OfficerId . "', ";
         $sql .= "`u_Position` = '" . $u_Position . "',  `u_Phone` = '" . $u_Phone . "', `u_Prefix` = '" . $u_Prefix . "', `u_Birthday` = " . $u_Birthday . ", `u_Img` = '" . $u_Img . "', ";
-        $sql .= "`u_Address` = '" . $u_Address . "', `u_Road` = '" . $u_Road . "', `u_SubDistrict` = '" . $u_SubDistrict . "', `u_District` = '" . $u_District . "', `u_Province` = '" . $u_Province . "' ";
+        $sql .= "`u_Address` = '" . $u_Address . "', `u_Road` = '" . $u_Road . "', `u_SubDistrict` = '" . $u_SubDistrict . "', `u_District` = '" . $u_District . "', `u_Province` = '" . $u_Province . "', ";
+        $sql .= "`z_Id` = '" . $z_Id . "', `u_ShopName` = '" . $u_ShopName . "', `u_ProductName` = '" . $u_ProductName . "' ";
         $sql .= "WHERE `u_Username` = '" . $u_Username . "' and `u_CardNumber` = '" . $u_CardNumber . "';";
 
         if ($conn->query($sql) === TRUE) {
