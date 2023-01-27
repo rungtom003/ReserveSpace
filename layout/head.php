@@ -17,12 +17,14 @@
                 รูปพื้นที่จริง
             </a>
         </li>
+        <?php if($user["ur_Id"] == "R001"){ ?>
         <li class="sidebar-menu-item <?=isset($active_reserveData)?$active_reserveData:""?>">
             <a href="/ReserveSpace/reserveData.php">
                 <i class="ri-file-mark-line sidebar-menu-item-icon"></i>
                 ข้อมูลการจอง
             </a>
         </li>
+        <?php } ?>
         <li class="sidebar-menu-item <?=isset($active_persionData)?$active_persionData:""?>">
             <a href="/ReserveSpace/persionData.php">
                 <i class="ri-file-user-line sidebar-menu-item-icon"></i>

@@ -346,7 +346,9 @@ $active_signup = "active";
                 success: function(res) {
                     let length = res.data.length;
                     $('#selectZoneName').empty()
+                    $("#selectZoneName").append(`<option selected disabled value="">เลือก.....</option>`);
                     for (let i = 0; i < length; i++) {
+                        
                         $('#selectZoneName').append(`<option value="${res.data[i].z_Id}">${res.data[i].z_Name}</option>`);
                     }
                 }
