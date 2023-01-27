@@ -104,16 +104,16 @@ $active_signup = "active";
                                     </div>
                                 </div>
                                 <div class="row g-2 p-2">
-                                <div class="col-md">
+                                <div class="col-md" id="g-u_ShopName" hidden>
                                     <label class="form-label">ชื่อร้าน</label>
-                                    <input type="text" class="form-control" placeholder="" id="u_ShopName" required>
+                                    <input type="text" class="form-control" placeholder="" id="u_ShopName" >
                                     <div class="invalid-feedback">
                                         กรุณากรอก ชื่อร้าน
                                     </div>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-3" id="g-selectZoneName" hidden>
                                     <label class="form-label">โซน</label>
-                                    <select class="form-select" aria-label="Default select example" id="selectZoneName" required>
+                                    <select class="form-select" aria-label="Default select example" id="selectZoneName" >
                                         <option selected disabled value="">เลือก.....</option>
                                     </select>
                                     <div class="invalid-feedback">
@@ -121,10 +121,10 @@ $active_signup = "active";
                                     </div>
                                 </div>
                             </div>
-                            <div class="row g-2 p-2">
+                            <div class="row g-2 p-2" id="g-u_ProductName" hidden>
                                 <div class="mb-3">
                                     <label for="u_ProductName" class="form-label">รายละเอียดสินค้า</label>
-                                    <textarea class="form-control" id="u_ProductName" rows="3" required></textarea>
+                                    <textarea class="form-control" id="u_ProductName" rows="3" ></textarea>
                                 </div>
                                 <div class="invalid-feedback">
                                     กรุณาเลือก รายละเอียดสินค้า
@@ -244,6 +244,10 @@ $active_signup = "active";
                 $("#address-content1").prop('hidden', true);
                 $("#address-content2").prop('hidden', true);
                 $("#upload-content").prop('hidden', true);
+                $("#g-u_ShopName").prop('hidden', true);
+                $("#g-selectZoneName").prop('hidden', true);
+                $("#g-u_ProductName").prop('hidden', true);
+                
 
             } else if ($("#RadioAdmin").prop('checked') === true && $("#RadioUser").prop('checked') === false) {
                 $("#btn_signup").prop('hidden', false);
@@ -289,6 +293,9 @@ $active_signup = "active";
                 $("#u_District").prop("value", "");
                 $("#u_Province").prop("value", "");
                 $("#u_Phone").prop("value", "");
+                $("#u_ShopName").prop("value", "");
+                $("#selectZoneName").prop("value", "");
+                $("#u_ProductName").prop("value", "");
 
             } else {
                 $("#btn_signup").prop('hidden', false);
@@ -303,6 +310,9 @@ $active_signup = "active";
                 $("#address-content1").prop('hidden', false);
                 $("#address-content2").prop('hidden', false);
                 $("#upload-content").prop('hidden', false);
+                $("#g-u_ShopName").prop('hidden', false);
+                $("#g-selectZoneName").prop('hidden', false);
+                $("#g-u_ProductName").prop('hidden', false);
 
                 $("#u_OfficerId").prop("required", false);
                 $("#u_FullName").prop("required", true);
@@ -318,6 +328,9 @@ $active_signup = "active";
                 $("#u_District").prop("required", true);
                 $("#u_Province").prop("required", true);
                 $("#u_Phone").prop("required", true);
+                $("#u_ShopName").prop('required', true);
+                $("#selectZoneName").prop('required', true);
+                $("#u_ProductName").prop('required', true);
 
                 $("#u_OfficerId").prop("value", "");
                 $("#u_FullName").prop("value", "");
@@ -333,6 +346,9 @@ $active_signup = "active";
                 $("#u_District").prop("value", "");
                 $("#u_Province").prop("value", "");
                 $("#u_Phone").prop("value", "");
+                $("#u_ShopName").prop("value", "");
+                $("#selectZoneName").prop("value", "");
+                $("#u_ProductName").prop("value", "");
             }
         }
 
