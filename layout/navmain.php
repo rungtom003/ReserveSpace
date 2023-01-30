@@ -36,10 +36,10 @@
     <div class="dropdown">
         <div class="d-flex align-items-center cursor-pointer dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
             <span class="me-2 d-none d-sm-block" style="font-family: kanit-Regular;"><?php echo isset($user["u_FirstName"]) ? $user["u_FirstName"] : "" ?> <?php echo isset($user["u_LastName"]) ? $user["u_LastName"] : "" ?></span>
-            <img class="navbar-profile-image" src="https://images.unsplash.com/flagged/photo-1570612861542-284f4c12e75f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8cGVyc29ufGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60" alt="Image">
+            <img class="navbar-profile-image" src="/ReserveSpace/src/img/user.jpg" alt="Image">
         </div>
         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-            <li><a class="dropdown-item" style="font-family: kanit-Regular;" href="#">ข้อมูลส่วนตัว</a></li>
+            <li><a class="dropdown-item" style="font-family: kanit-Regular;" href="/ReserveSpace/persionData.php">ข้อมูลส่วนตัว</a></li>
             <li><a class="dropdown-item" style="font-family: kanit-Regular;" href="/ReserveSpace/backend/Service/logout_api.php">ออกจากระบบ</a></li>
         </ul>
     </div>

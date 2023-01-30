@@ -23,7 +23,10 @@ if($user != null){
 
   <main class="form-signin w-100 m-auto">
     <form>
-      <img class="mb-4" alt="" width="72" height="57">
+      <div class="d-flex justify-content-center">
+      <img class="mb-4 w-50" alt="" class="img-fluid" src="/ReserveSpace/src/img/user.png">
+      </div>
+      
       <h1 class="h3 mb-3 fw-normal">เข้าสู่ระบบ</h1>
 
       <div class="form-floating">

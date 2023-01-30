@@ -5,13 +5,9 @@ if ($user == null) {
     header('location: /ReserveSpace/login.php');
 }
 
-if($user["ur_Id"] == "R002")
-{
-    header('location: /ReserveSpace/dashboard.php');
-}
+$titleHead = "Dashboard";
+$active_Dashboard = "active";
 
-$titleHead = "จองพื้นที่ขาย";
-$active_index = "active";
 ?>
 <!doctype html>
 <html lang="en">
@@ -120,6 +116,10 @@ $active_index = "active";
                             <input class="form-control text-center" type="text" placeholder="ค้นหา" id="input_find" value="">
                             <button class="btn btn-primary mx-3" onclick="fcFind()">ค้นหา</button>
                         </div>
+
+                        <select class="form-select" id="select-zone">
+                        </select>
+
                     </div>
                 </div>
                 <div class="card my-1">
@@ -304,7 +304,7 @@ $active_index = "active";
                 type: "POST",
                 dataType: "json",
                 data: {
-                    z_Id: z_Id,
+                    z_Id: $("#select-zone").val(),
                     a_Name: $("#input_find").val()
                 },
                 success: function(res) {
@@ -313,7 +313,7 @@ $active_index = "active";
                     $.each(data, function(key, val) {
                         if(val.a_ReserveStatus === "0")
                         {
-                            txt_content += `<div class="d-flex justify-content-center align-items-center reserve-box-green" data-bs-toggle="modal" data-bs-target="#reserve-modal" data-bs-area_static="0" data-bs-whatever='${JSON.stringify(val)}'>
+                            txt_content += `<div class="d-flex justify-content-center align-items-center reserve-box-green">
                                                 <span class="text-light">${val.a_Name}</span>
                                             </div>`;
                         }
@@ -347,23 +347,6 @@ $active_index = "active";
             });
         }
         fcFind();
-
-        const reserve_modal = document.getElementById('reserve-modal')
-        reserve_modal.addEventListener('show.bs.modal', event => {
-            // Button that triggered the modal
-            const button = event.relatedTarget;
-            // Extract info from data-bs-* attributes
-            const recipient = button.getAttribute('data-bs-whatever');
-            const data = JSON.parse(recipient);
-            const area_static = button.getAttribute('data-bs-area_static');
-            const modalTitle = reserve_modal.querySelector('.modal-title');
-
-            modalTitle.textContent = `ล็อค ${data.a_Name} # ${data.z_Name}`;
-            $("#a_Id").val(data.a_Id);
-            $("#area_static").val(area_static);
-            $("#a_Name-reserve-modal").val(data.a_Name);
-            $("#z_Name-reserve-modal").val(data.z_Name);
-        });
 
         const reserve_modal_detail = document.getElementById('reserve-detail-modal')
         reserve_modal_detail.addEventListener('show.bs.modal', event => {
@@ -414,50 +397,26 @@ $active_index = "active";
             $("#pt_Name").html("");
         });
 
-        document.getElementById("add-cart").addEventListener('click',(e) => {
-            e.preventDefault();
-            const data = {
-                a_Id: $("#a_Id").val(),
-                area_static:$("#area_static").val()
-            }
+
+        $(document).ready(function() {
             $.ajax({
-                url: "/ReserveSpace/backend/Service/confirmOrder.php",
-                type: "POST",
+                url: "/ReserveSpace/backend/Service/zone_api.php",
                 dataType: "json",
-                data: data,
+                type: "POST",
                 success: function(res) {
-                    if (res.status === "success") {
-                        Swal.fire({
-                            icon: 'success',
-                            title: res.message,
-                            showConfirmButton: false,
-                            timer: 1500
-                        }).then((result) => {
-                            // $('#reserve-modal').modal('hide');
-                            // const myModalEl = document.getElementById('reserve-modal')
-                            // myModalEl.addEventListener('hidden.bs.modal', event => {
-                            //     window.location.reload();
-                            // });
-                            window.location.reload();
-                        });
-                    } else {
-                        // Swal.fire({
-                        //     icon: 'warning',
-                        //     title: 'เเจ้งเตือน',
-                        //     text: res.message
-                        // });
-                        Swal.fire({
-                            icon: 'warning',
-                            title: res.message,
-                            showConfirmButton: false,
-                            timer: 1500
-                        }).then((result) => {
-                            window.location.reload();
-                        });
-                    }
+                    let option = '<option disabled selected value="">เลือกโซน</option>';
+                    $.each(res.data, function(key, val) {
+                        option += `<option value="${val.z_Id}">${val.z_Name}</option>`;
+                    });
+                    $("#select-zone").html(option);
                 }
             });
         });
+
+        $("#select-zone").change(function() {
+            fcFind();
+        });
+
     </script>
 </body>
 
