@@ -195,23 +195,24 @@ $active_signup = "active";
                                     <input class="form-control" type="file" id="formFile">
                                 </div>
 
-                                <div>
+                                <div hidden>
                                     <h2>Original Image</h2>
                                     <img style="margin-top: 5px;" id="originalImage" crossorigin="anonymous" />
                                 </div>
-                                <div style="margin-top: 5px;">
+                                <!-- <div style="margin-top: 5px;">
                                     <span>Resizing: </span>
                                     <input type="range" min="1" max="100" value="80" id="resizingRange" />
-                                </div>
-                                <div style="margin-top: 5px; margin-left: 8px;">
+                                </div> -->
+                                <!-- <div style="margin-top: 5px; margin-left: 8px;">
                                     <span>Quality: </span>
                                     <input type="range" min="1" max="100" value="80" id="qualityRange" />
+                                </div> -->
+                                <div class="d-flex flex-column align-items-center">
+                                    <h2>Compressed Image</h2>
+                                    <!-- <div><b>Size:</b> <span id="size"></span></div> -->
+                                    <img id="compressedImage" />
+                                    <button type="submit" class="btn btn-primary my-3" id="btn_signup">สร้างบัญชี</button>
                                 </div>
-                                <h2>Compressed Image</h2>
-                                <div><b>Size:</b> <span id="size"></span></div>
-                                <img id="compressedImage" />
-
-                                <button type="submit" class="btn btn-primary" id="btn_signup">สร้างบัญชี</button>
                             </form>
                         </div>
                     </div>
@@ -230,9 +231,12 @@ $active_signup = "active";
     <!-- end: Main -->
     <?php include("./layout/script.php"); ?>
     <script>
+        let compressedImageBlob;
+        let fileIMG = null;
+
         function signup() {
             const file = document.getElementById("formFile").files[0];
-            let ur_Id = $('#RadioUser').val();;
+            let ur_Id = $('#RadioUser').val();
             let u_FirstName = $('#u_FullName').val();
             let u_LastName = $('#u_Last').val();
             let u_Username = $('#u_Username').val();
@@ -252,6 +256,11 @@ $active_signup = "active";
             let z_Id = $('#selectZoneName').val();
             let u_ShopName = $('#u_ShopName').val();
             let u_ProductName = $('#u_ProductName').val();
+
+            if(fileIMG !== null)
+            {
+                u_Img = fileIMG;
+            }
 
             let data = {
                 ur_Id: ur_Id,
@@ -390,7 +399,7 @@ $active_signup = "active";
                     if (form.checkValidity()) {
                         signup();
                     }
-                    form.classList.add('was-validated')
+                    form.classList.add('was-validated');
                 }, false)
             })
         })()
@@ -401,11 +410,9 @@ $active_signup = "active";
 
         const compressedImage = document.querySelector("#compressedImage");
 
-        const resizingElement = document.querySelector("#resizingRange");
-        const qualityElement = document.querySelector("#qualityRange");
+        //const resizingElement = document.querySelector("#resizingRange");
+        //const qualityElement = document.querySelector("#qualityRange");
         //const uploadButton = document.querySelector("#uploadButton");
-
-        let compressedImageBlob;
 
         let resizingFactor = 0.8;
         let quality = 0.8;
@@ -427,49 +434,16 @@ $active_signup = "active";
             return false;
         });
 
-        resizingElement.oninput = (e) => {
-            resizingFactor = parseInt(e.target.value) / 100;
-            compressImage(originalImage, resizingFactor, quality);
-        };
-
-        qualityElement.oninput = (e) => {
-            quality = parseInt(e.target.value) / 100;
-            compressImage(originalImage, resizingFactor, quality);
-        };
-
-        // uploadButton.onclick = () => {
-        //     // uploading the compressed image to
-        //     // Imgur (if present)
-        //     if (compressedImageBlob) {
-        //         const formdata = new FormData();
-        //         formdata.append("image", compressedImageBlob);
-
-        //         fetch("https://api.imgur.com/3/image/", {
-        //             method: "POST",
-        //             headers: {
-        //                 Accept: "application/json",
-        //                 Authorization: "Client-ID YOUR_CLIENT_ID"
-        //             },
-        //             body: formdata
-        //         }).then((response) => {
-        //             if (response?.status === 403) {
-        //                 alert("Unvalid Client-ID!");
-        //             } else if (response?.status === 200) {
-        //                 // retrieving the URL of the image
-        //                 // just uploaded to Imgur
-        //                 response.json().then((jsonResponse) => {
-        //                     alert(`URL: ${jsonResponse.data?.link}`);
-        //                 });
-        //                 alert("Upload completed succesfully!");
-        //             } else {
-        //                 console.error(response);
-        //             }
-        //         });
-        //     } else {
-        //         alert("Rezind and compressed image missing!");
-        //     }
+        // resizingElement.oninput = (e) => {
+        //     resizingFactor = parseInt(e.target.value) / 100;
+        //     compressImage(originalImage, resizingFactor, quality);
         // };
 
+        // qualityElement.oninput = (e) => {
+        //     quality = parseInt(e.target.value) / 100;
+        //     compressImage(originalImage, resizingFactor, quality);
+        // };
+        
         function compressImage(imgToCompress, resizingFactor, quality) {
             // showing the compressed image
             const canvas = document.createElement("canvas");
@@ -478,39 +452,43 @@ $active_signup = "active";
             const originalWidth = imgToCompress.width;
             const originalHeight = imgToCompress.height;
 
-            resizingFactor = 100;
+            let resizingFactor_fill = 100;
 
-            for(let i = 0 ; i < resizingFactor; i++){
+            for (let i = 0; i < 100; i++) {
+                resizingFactor = parseInt(resizingFactor_fill) / 100;
+                const canvasWidth = originalWidth * resizingFactor;
+                const canvasHeight = originalHeight * resizingFactor;
 
-            }
+                if (canvasWidth <= 300) {
+                    canvas.width = canvasWidth;
+                    canvas.height = canvasHeight;
 
-            const canvasWidth = originalWidth * resizingFactor;
-            const canvasHeight = originalHeight * resizingFactor;
+                    context.drawImage(
+                        imgToCompress,
+                        0,
+                        0,
+                        originalWidth * resizingFactor,
+                        originalHeight * resizingFactor
+                    );
 
-            if (canvasWidth < 200) {
-                canvas.width = canvasWidth;
-                canvas.height = canvasHeight;
+                    const file = document.getElementById("formFile").files[0];
 
-                context.drawImage(
-                    imgToCompress,
-                    0,
-                    0,
-                    originalWidth * resizingFactor,
-                    originalHeight * resizingFactor
-                );
-
-                // reducing the quality of the image
-                canvas.toBlob(
-                    (blob) => {
-                        if (blob) {
-                            compressedImageBlob = blob;
-                            compressedImage.src = URL.createObjectURL(compressedImageBlob);
-                            document.querySelector("#size").innerHTML = bytesToSize(blob.size);
-                        }
-                    },
-                    "image/jpeg",
-                    quality
-                );
+                    // reducing the quality of the image
+                    canvas.toBlob(
+                        (blob) => {
+                            if (blob) {
+                                compressedImageBlob = blob;
+                                compressedImage.src = URL.createObjectURL(compressedImageBlob);
+                                //document.querySelector("#size").innerHTML = bytesToSize(blob.size);
+                                fileIMG = new File([blob], file.name, { type: 'image/jpeg' });
+                            }
+                        },
+                        "image/jpeg",
+                        quality
+                    );
+                    break;
+                }
+                resizingFactor_fill = resizingFactor_fill - 1;
             }
         }
 
@@ -524,7 +502,6 @@ $active_signup = "active";
             });
         }
 
-        // source: https://stackoverflow.com/a/18650828
         function bytesToSize(bytes) {
             var sizes = ["Bytes", "KB", "MB", "GB", "TB"];
 

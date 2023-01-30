@@ -53,11 +53,15 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
             
             if (filesize($file["tmp_name"]) > 0) {
                 $file_name_custom = "[" . uniqidReal() . "]" . $file["name"];
-                move_uploaded_file(
+                
+                $checkupload = move_uploaded_file(
                     $file["tmp_name"],
                     "../../src/img/upload/" . $file_name_custom
                 );
-                $u_Img = $file_name_custom;
+                if($checkupload){
+                    $u_Img = $file_name_custom;
+                }
+                
             }
         }
 

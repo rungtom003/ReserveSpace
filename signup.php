@@ -104,32 +104,32 @@ $active_signup = "active";
                                     </div>
                                 </div>
                                 <div class="row g-2 p-2">
-                                <div class="col-md" id="g-u_ShopName" hidden>
-                                    <label class="form-label">ชื่อร้าน</label>
-                                    <input type="text" class="form-control" placeholder="" id="u_ShopName" >
-                                    <div class="invalid-feedback">
-                                        กรุณากรอก ชื่อร้าน
+                                    <div class="col-md" id="g-u_ShopName" hidden>
+                                        <label class="form-label">ชื่อร้าน</label>
+                                        <input type="text" class="form-control" placeholder="" id="u_ShopName">
+                                        <div class="invalid-feedback">
+                                            กรุณากรอก ชื่อร้าน
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3" id="g-selectZoneName" hidden>
+                                        <label class="form-label">โซน</label>
+                                        <select class="form-select" aria-label="Default select example" id="selectZoneName">
+                                            <option selected disabled value="">เลือก.....</option>
+                                        </select>
+                                        <div class="invalid-feedback">
+                                            กรุณาเลือก โซน
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="col-md-3" id="g-selectZoneName" hidden>
-                                    <label class="form-label">โซน</label>
-                                    <select class="form-select" aria-label="Default select example" id="selectZoneName" >
-                                        <option selected disabled value="">เลือก.....</option>
-                                    </select>
+                                <div class="row g-2 p-2" id="g-u_ProductName" hidden>
+                                    <div class="mb-3">
+                                        <label for="u_ProductName" class="form-label">รายละเอียดสินค้า</label>
+                                        <textarea class="form-control" id="u_ProductName" rows="3"></textarea>
+                                    </div>
                                     <div class="invalid-feedback">
-                                        กรุณาเลือก โซน
+                                        กรุณาเลือก รายละเอียดสินค้า
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row g-2 p-2" id="g-u_ProductName" hidden>
-                                <div class="mb-3">
-                                    <label for="u_ProductName" class="form-label">รายละเอียดสินค้า</label>
-                                    <textarea class="form-control" id="u_ProductName" rows="3" ></textarea>
-                                </div>
-                                <div class="invalid-feedback">
-                                    กรุณาเลือก รายละเอียดสินค้า
-                                </div>
-                            </div>
                                 <div class="row g-2 p-2">
                                     <div class="col-md" id="position-content" hidden>
                                         <label class="form-label">ตำแหน่ง</label>
@@ -217,7 +217,18 @@ $active_signup = "active";
                                     <label for="formFile" class="form-label">อัพโหลดรูป</label>
                                     <input class="form-control" type="file" id="formFile">
                                 </div>
-                                <button type="submit" class="btn btn-primary" id="btn_signup" hidden>สร้างบัญชี</button>
+
+                                <div hidden>
+                                    <h2>Original Image</h2>
+                                    <img style="margin-top: 5px;" id="originalImage" crossorigin="anonymous" />
+                                </div>
+
+                                <div class="d-flex flex-column align-items-center">
+                                    <h2>Compressed Image</h2>
+                                    <!-- <div><b>Size:</b> <span id="size"></span></div> -->
+                                    <img id="compressedImage" />
+                                    <button type="submit" class="btn btn-primary my-3" id="btn_signup">สร้างบัญชี</button>
+                                </div>
                             </form>
                         </div>
                     </div>
@@ -230,6 +241,9 @@ $active_signup = "active";
     <!-- end: Main -->
     <?php include("./layout/script.php"); ?>
     <script>
+        let compressedImageBlob;
+        let fileIMG = null;
+
         function checkRole() {
             if ($("#RadioAdmin").prop('checked') === false && $("#RadioUser").prop('checked') === false) {
                 $("#btn_signup").prop('hidden', true);
@@ -247,7 +261,7 @@ $active_signup = "active";
                 $("#g-u_ShopName").prop('hidden', true);
                 $("#g-selectZoneName").prop('hidden', true);
                 $("#g-u_ProductName").prop('hidden', true);
-                
+
 
             } else if ($("#RadioAdmin").prop('checked') === true && $("#RadioUser").prop('checked') === false) {
                 $("#btn_signup").prop('hidden', false);
@@ -273,7 +287,6 @@ $active_signup = "active";
                 $("#u_CarNumber").prop("required", true);
                 $("#u_Birthday").prop("required", true);
                 $("#u_Address").prop("required", true);
-                $("#u_Road").prop("required", true);
                 $("#u_SubDistrict").prop("required", true);
                 $("#u_District").prop("required", true);
                 $("#u_Province").prop("required", true);
@@ -323,7 +336,6 @@ $active_signup = "active";
                 $("#u_CarNumber").prop("required", true);
                 $("#u_Birthday").prop("required", true);
                 $("#u_Address").prop("required", true);
-                $("#u_Road").prop("required", true);
                 $("#u_SubDistrict").prop("required", true);
                 $("#u_District").prop("required", true);
                 $("#u_Province").prop("required", true);
@@ -366,7 +378,7 @@ $active_signup = "active";
                 }
             });
         }
-        
+
         function signup() {
             const file = document.getElementById("formFile").files[0];
             let ur_Id = "";
@@ -380,7 +392,7 @@ $active_signup = "active";
             let u_Phone = $('#u_Phone').val();
             let u_Prefix = $('#Prefix').val();
             let u_Birthday = $('#u_Birthday').val();
-            let u_Img = file;
+            let u_Img = null;
             let u_Address = $('#u_Address').val();
             let u_Road = $('#u_Road').val();
             let u_SubDistrict = $('#u_SubDistrict').val();
@@ -396,6 +408,10 @@ $active_signup = "active";
                 ur_Id = $('#RadioAdmin').val();
             } else if (RadioAdmin == false && RadioUser == true) {
                 ur_Id = $('#RadioUser').val();
+            }
+
+            if (fileIMG !== null) {
+                u_Img = fileIMG;
             }
 
             let data = {
@@ -459,6 +475,8 @@ $active_signup = "active";
                             title: message,
                             showConfirmButton: false,
                             timer: 1500
+                        }).then((result) => {
+                            window.location.reload();
                         })
 
                     } else if (res.status == "Duplicate user") {
@@ -509,9 +527,121 @@ $active_signup = "active";
                 if (form.checkValidity()) {
                     signup();
                 }
-                form.classList.add('was-validated')
+                form.classList.add('was-validated');
             }, false)
         })
+
+
+        const fileInput = document.querySelector("#formFile");
+        const originalImage = document.querySelector("#originalImage");
+
+        const compressedImage = document.querySelector("#compressedImage");
+
+        //const resizingElement = document.querySelector("#resizingRange");
+        //const qualityElement = document.querySelector("#qualityRange");
+        //const uploadButton = document.querySelector("#uploadButton");
+
+        let resizingFactor = 0.8;
+        let quality = 0.8;
+
+        // initializing the compressed image
+        //compressImage(originalImage, resizingFactor, quality);
+
+        fileInput.addEventListener("change", async (e) => {
+            const [file] = fileInput.files;
+
+            //storing the original image
+            originalImage.src = await fileToDataUri(file);
+
+            // compressing the uplodaded image
+            originalImage.addEventListener("load", () => {
+                compressImage(originalImage, resizingFactor, quality);
+            });
+
+            return false;
+        });
+
+        // resizingElement.oninput = (e) => {
+        //     resizingFactor = parseInt(e.target.value) / 100;
+        //     compressImage(originalImage, resizingFactor, quality);
+        // };
+
+        // qualityElement.oninput = (e) => {
+        //     quality = parseInt(e.target.value) / 100;
+        //     compressImage(originalImage, resizingFactor, quality);
+        // };
+
+        function compressImage(imgToCompress, resizingFactor, quality) {
+            // showing the compressed image
+            const canvas = document.createElement("canvas");
+            const context = canvas.getContext("2d");
+
+            const originalWidth = imgToCompress.width;
+            const originalHeight = imgToCompress.height;
+
+            let resizingFactor_fill = 100;
+
+            for (let i = 0; i < 100; i++) {
+                resizingFactor = parseInt(resizingFactor_fill) / 100;
+                const canvasWidth = originalWidth * resizingFactor;
+                const canvasHeight = originalHeight * resizingFactor;
+
+                if (canvasWidth <= 300) {
+                    canvas.width = canvasWidth;
+                    canvas.height = canvasHeight;
+
+                    context.drawImage(
+                        imgToCompress,
+                        0,
+                        0,
+                        originalWidth * resizingFactor,
+                        originalHeight * resizingFactor
+                    );
+
+                    const file = document.getElementById("formFile").files[0];
+
+                    // reducing the quality of the image
+                    canvas.toBlob(
+                        (blob) => {
+                            if (blob) {
+                                compressedImageBlob = blob;
+                                compressedImage.src = URL.createObjectURL(compressedImageBlob);
+                                //document.querySelector("#size").innerHTML = bytesToSize(blob.size);
+                                fileIMG = new File([blob], file.name, {
+                                    type: 'image/jpeg'
+                                });
+                            }
+                        },
+                        "image/jpeg",
+                        quality
+                    );
+                    break;
+                }
+                resizingFactor_fill = resizingFactor_fill - 1;
+            }
+        }
+
+        function fileToDataUri(field) {
+            return new Promise((resolve) => {
+                const reader = new FileReader();
+                reader.addEventListener("load", () => {
+                    resolve(reader.result);
+                });
+                reader.readAsDataURL(field);
+            });
+        }
+
+        function bytesToSize(bytes) {
+            var sizes = ["Bytes", "KB", "MB", "GB", "TB"];
+
+            if (bytes === 0) {
+                return "0 Byte";
+            }
+
+            const i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
+
+            return Math.round(bytes / Math.pow(1024, i), 2) + " " + sizes[i];
+        }
     </script>
 </body>
 
