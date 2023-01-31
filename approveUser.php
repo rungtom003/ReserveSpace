@@ -46,7 +46,7 @@ $active_approve = "active";
                         <div class="modal-body">
                             <form>
                                 <div class="d-flex justify-content-center">
-                                    <img class="mb-4" id="img" alt="" src="" class="rounded mx-auto d-block" alt="...">
+                                    <img class="img-fluid" id="img" alt="" src="" style="height: 150px" >
                                 </div>
 
                                 <div class="row g-2 p-2">
