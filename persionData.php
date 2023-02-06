@@ -224,10 +224,10 @@ $active_persionData = "active";
         }
 
         function UpdatePersionData() {
-            let role = "<?=$user["ur_Id"]?>";
+            let role = "<?= $user["ur_Id"] ?>";
             let ur_ID = $('#ur_ID').html();
-            let u_OfficerId = "";
-            let u_Position = "";
+            let u_OfficerId = "-";
+            let u_Position = "-";
             if (ur_ID === "R002") {
                 u_OfficerId = $('#u_OfficerId').val();
                 u_Position = $('#u_Position').val();
@@ -251,14 +251,11 @@ $active_persionData = "active";
             let u_ShopName = "";
             let u_ProductName = "";
 
-            if(role === "R001")
-            {
-                let z_Id = $('#selectZoneName').val();
-                let u_ShopName = $('#u_ShopName').val();
-                let u_ProductName = $('#u_ProductName').val();
+            if (role === "R001") {
+                z_Id = $('#selectZoneName').val();
+                u_ShopName = $('#u_ShopName').val();
+                u_ProductName = $('#u_ProductName').val();
             }
-
-            
 
             let data = {
                 u_FirstName: u_FirstName,
