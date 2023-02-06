@@ -119,7 +119,7 @@ $active_signup = "active";
                                 <div class="row g-2 p-2">
                                     <div class="col-md">
                                         <label class="form-label">เลขบัตรประจำตัวประชาชน</label>
-                                        <input type="text" class="form-control" placeholder="" id="u_CarNumber" required>
+                                        <input type="number" class="form-control" placeholder="" id="u_CarNumber" required>
                                         <div class="invalid-feedback">
                                             กรุณากรอก เลขบัตรประจำตัวประชาชน
                                         </div>
@@ -183,7 +183,7 @@ $active_signup = "active";
                                     <div class="col-md">
                                         <div class="col-md">
                                             <label class="form-label">เบอร์โทรศัพท์</label>
-                                            <input type="text" class="form-control" placeholder="" id="u_Phone" required>
+                                            <input type="tel" class="form-control" placeholder="" id="u_Phone" required>
                                             <div class="invalid-feedback">
                                                 กรุณากรอก เบอร์โทรศัพท์
                                             </div>
@@ -257,8 +257,7 @@ $active_signup = "active";
             let u_ShopName = $('#u_ShopName').val();
             let u_ProductName = $('#u_ProductName').val();
 
-            if(fileIMG !== null)
-            {
+            if (fileIMG !== null) {
                 u_Img = fileIMG;
             }
 
@@ -396,8 +395,10 @@ $active_signup = "active";
                 form.addEventListener('submit', event => {
                     event.preventDefault()
                     event.stopPropagation()
+                    console.log(form);
                     if (form.checkValidity()) {
                         signup();
+                        //console.log("success");
                     }
                     form.classList.add('was-validated');
                 }, false)
@@ -443,7 +444,7 @@ $active_signup = "active";
         //     quality = parseInt(e.target.value) / 100;
         //     compressImage(originalImage, resizingFactor, quality);
         // };
-        
+
         function compressImage(imgToCompress, resizingFactor, quality) {
             // showing the compressed image
             const canvas = document.createElement("canvas");
@@ -480,7 +481,9 @@ $active_signup = "active";
                                 compressedImageBlob = blob;
                                 compressedImage.src = URL.createObjectURL(compressedImageBlob);
                                 //document.querySelector("#size").innerHTML = bytesToSize(blob.size);
-                                fileIMG = new File([blob], file.name, { type: 'image/jpeg' });
+                                fileIMG = new File([blob], file.name, {
+                                    type: 'image/jpeg'
+                                });
                             }
                         },
                         "image/jpeg",
@@ -512,6 +515,15 @@ $active_signup = "active";
             const i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
 
             return Math.round(bytes / Math.pow(1024, i), 2) + " " + sizes[i];
+        }
+
+        function Script_checkID(id) {
+            if (id.substring(0, 1) == 0) return false;
+            if (id.length != 13) return false;
+            for (i = 0, sum = 0; i < 12; i++)
+                sum += parseFloat(id.charAt(i)) * (13 - i);
+            if ((11 - sum % 11) % 10 != parseFloat(id.charAt(12))) return false;
+            return true;
         }
     </script>
 </body>
