@@ -255,7 +255,7 @@ $active_approve = "active";
                                 const u_Id = row.u_Id;
                                 return `<div class="d-grid gap-2 d-md-block" >
                                             <button class="btn btn-link" type="button" data-bs-toggle="modal" data-bs-target="#detailModal" onclick="detailUser(this)" value="${u_Id}">เพิ่มเติม</button>
-                                        </div>`;
+                                            </div>`;
                             }
                         },
                         {
@@ -266,17 +266,21 @@ $active_approve = "active";
                             render: function(data, type, row, meta) {
                                 let status = row.u_Approve;
                                 const u_Id = row.u_Id;
+                                const ur_Id = row.ur_Id;
+                                let txtBtn = "";
                                 let txtHTML = "";
                                 if (status === "0") {
-                                    txtHTML = `<button class="btn btn-primary" type="button" id="btn_Approve" onclick="fcApprove(this)" value="${u_Id}">อนุมัติ</button>`;
-                                } else {
-                                    txtHTML = `<button class="btn btn-warning" type="button" id="btn_Cancel" onclick="cancelUser(this)" value="${u_Id}">ยกเลิก</button>`;
-                                }
-
-
-                                return `<div class="d-grid gap-2 d-md-block" >` + txtHTML + `
+                                        txtBtn = `<button class="btn btn-primary" type="button" id="btn_Approve" onclick="fcApprove(this)" value="${u_Id}">อนุมัติ</button>`;
+                                    } else {
+                                        txtBtn = `<button class="btn btn-warning" type="button" id="btn_Cancel" onclick="cancelUser(this)" value="${u_Id}">ยกเลิก</button>`;
+                                    }
+                                    txtHTML = `<div class="d-grid gap-2 d-md-block" >` + txtBtn + `
                                         <button class="btn btn-danger" type="button" id="btn_Delete" onclick="deleteUser(this)" value="${u_Id}">ลบ</button>
-                                        </div>`;
+                                        </div>`
+                                
+
+
+                                return txtHTML;
                             }
                         }
                     ]
