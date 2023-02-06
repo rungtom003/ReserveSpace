@@ -16,7 +16,7 @@
 
         <?php if ($user["ur_Id"] == "R002") { ?>
             <li class="sidebar-menu-item <?= isset($active_Dashboard) ? $active_Dashboard : "" ?>">
-                <a href="/ReserveSpace/Dashboard.php">
+                <a href="/ReserveSpace/dashboard.php">
                     <i class="ri-dashboard-line sidebar-menu-item-icon"></i>
                     Dashboard
                 </a>

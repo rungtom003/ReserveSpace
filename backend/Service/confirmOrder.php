@@ -34,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         } else {
             if ($z_Id == "2dacd150-9b8b-11ed-8054-0242ac110004" && $area_static == "0") //โซนอาหาร
             {
-                $sql_select_reserve = "SELECT * FROM reserve_space.tb_reserve as a  INNER JOIN reserve_space.tb_area as b ON a.a_Id = b.a_Id INNER JOIN reserve_space.tb_zone as c ON b.z_Id = c.z_Id WHERE b.z_Id = '" . $z_Id . "' AND a.r_Status = '1';";
+                $sql_select_reserve = "SELECT * FROM reserve_space.tb_reserve as a   INNER JOIN reserve_space.tb_area as b ON a.a_Id = b.a_Id  INNER JOIN reserve_space.tb_zone as c ON b.z_Id = c.z_Id  INNER JOIN reserve_space.tb_user as d ON d.u_Id = a.u_Id  WHERE c.z_Id = '2dacd150-9b8b-11ed-8054-0242ac110004' AND a.r_Status = '1' AND d.u_Id = '".$user["u_Id"]."'";
                 $result = $conn->query($sql_select_reserve);
                 if ($result->num_rows > 0) {
                     $resp->set_message("ไม่สามารถจองพื้นที่เพิ่มได้เนื่องจาก 1 คน ต่อ 1 ล็อค ในโซนอาหาร");
