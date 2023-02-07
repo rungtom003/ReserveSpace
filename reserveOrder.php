@@ -28,6 +28,18 @@ $active_reserveOrder = "active";
             <?php include("./layout/navmain.php"); ?>
             <!-- start: Content -->
             <div class="py-1" style="font-family: kanit-Regular;">
+
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex flex-wrap">
+                            <button class="btn btn-primary m-1" id="reset-all" onclick="resetAll()">รีเซ็ตการจองทั้งหมด</button>
+                            <button class="btn btn-primary m-1" id="reset-static" onclick="resetStatic()">รีเซ็ตการจองล็อคประจำ</button>
+                            <button class="btn btn-primary m-1" id="reset-non-static" onclick="resetNonStatic()">รีเซ็ตการจองล็อคไม่ประจำ</button>
+                        </div>
+
+                    </div>
+                </div>
+
                 <div class="card">
                     <div class="card-body">
                         <table id="table-Order" class="table table-striped w-100 text-nowrap"></table>
@@ -114,15 +126,13 @@ $active_reserveOrder = "active";
                                     txtHTML = "<span class='text-success'>จองสำเร็จ</span>";
                                 } else if (row.r_Status === "1" && row.a_ReserveStatus === "4") {
                                     txtHTML = "<span class='text-success'>จองล็อคประจำสำเร็จ</span>";
-                                }
-                                else if (row.r_Status === "2" && row.a_ReserveStatus === "2") {
+                                } else if (row.r_Status === "2" && row.a_ReserveStatus === "2") {
                                     txtHTML = "<span class='text-primary'>ล็อคประจำ</span>";
-                                } else if (row.r_Status === "2" && row.a_ReserveStatus === "3" ) {
+                                } else if (row.r_Status === "2" && row.a_ReserveStatus === "3") {
                                     txtHTML = "<span class='text-danger'>ล็อคประจำ(ยกเลิกชั่วคราว)</span>";
-                                }else if (row.r_Status === "2" && row.a_ReserveStatus === "4") {
+                                } else if (row.r_Status === "2" && row.a_ReserveStatus === "4") {
                                     txtHTML = `<span class='text-danger'>ล็อคประจำถูกจอง</span>`;
-                                }
-                                else {
+                                } else {
                                     txtHTML = "";
                                 }
                                 return txtHTML;
@@ -151,7 +161,7 @@ $active_reserveOrder = "active";
                                                 <button class="btn btn-primary" type="button"  onclick="fcCancelTemporary(this)" value='${JSON.stringify(obj)}'>ยกเลิกช่วงคราว</button>
                                                 <button class="btn btn-danger" type="button"  onclick="fcCancel(this)" value='${JSON.stringify(obj)}'>ยกเลิก</button>
                                             </div>`;
-                                }  else if (row.r_Status === "1" && row.a_ReserveStatus === "4") {
+                                } else if (row.r_Status === "1" && row.a_ReserveStatus === "4") {
                                     txtHTML = `<div class="d-grid gap-2 d-md-block" >
                                                 <button class="btn btn-primary" type="button" onclick="fcReturn(this)" value='${JSON.stringify(obj)}'>คืนล็อคประจำ</button>
                                             </div>`;
@@ -159,8 +169,7 @@ $active_reserveOrder = "active";
                                     txtHTML = `<div class="d-grid gap-2 d-md-block" >
                                                 <button class="btn btn-primary" type="button" onclick="fcReturnNoReserve(this)" value='${JSON.stringify(obj)}'>คืนล็อคประจำ</button>
                                             </div>`;
-                                }
-                                else {
+                                } else {
                                     txtHTML = "";
                                 }
                                 return txtHTML;
@@ -490,7 +499,136 @@ $active_reserveOrder = "active";
                 }
             });
         }
-        
+
+        const resetAll = () =>{
+            Swal.fire({
+                title: 'ยืนยันรีเซ็ตการจองทั้งหมด?',
+                text: "คุณต้องการยืนยันรีเซ็ตการจองทั้งหมดหรือไม่",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'ใช่',
+                cancelButtonText: 'ไม่'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: "/ReserveSpace/backend/Service/reset_all.php",
+                        type: "POST",
+                        dataType: "json",
+                        success: function(res) {
+                            let message = res.message;
+                            let status = res.status;
+
+                            if (status == "success") {
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: message,
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                }).then((result) => {
+                                    $('#table-Order').DataTable().destroy();
+                                    loadOrder();
+                                })
+                            } else {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'เเจ้งเตือน',
+                                    text: message
+                                })
+                            }
+                        }
+                    });
+                }
+            });
+        }
+
+        const resetNonStatic = () =>{
+            Swal.fire({
+                title: 'ยืนยันรีเซ็ตการจองล็อคไม่ประจำทั้งหมด?',
+                text: "คุณต้องการยืนยันรีเซ็ตการจองล็อคไม่ประจำทั้งหมดหรือไม่",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'ใช่',
+                cancelButtonText: 'ไม่'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: "/ReserveSpace/backend/Service/reset_non_static.php",
+                        type: "POST",
+                        dataType: "json",
+                        success: function(res) {
+                            let message = res.message;
+                            let status = res.status;
+
+                            if (status == "success") {
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: message,
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                }).then((result) => {
+                                    $('#table-Order').DataTable().destroy();
+                                    loadOrder();
+                                })
+                            } else {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'เเจ้งเตือน',
+                                    text: message
+                                })
+                            }
+                        }
+                    });
+                }
+            });
+        }
+
+        const resetStatic = () =>{
+            Swal.fire({
+                title: 'ยืนยันรีเซ็ตการจองล็อคประจำทั้งหมด?',
+                text: "คุณต้องการยืนยันรีเซ็ตการจองล็อคประจำทั้งหมดหรือไม่",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'ใช่',
+                cancelButtonText: 'ไม่'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: "/ReserveSpace/backend/Service/reset_static.php",
+                        type: "POST",
+                        dataType: "json",
+                        success: function(res) {
+                            let message = res.message;
+                            let status = res.status;
+
+                            if (status == "success") {
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: message,
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                }).then((result) => {
+                                    $('#table-Order').DataTable().destroy();
+                                    loadOrder();
+                                })
+                            } else {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'เเจ้งเตือน',
+                                    text: message
+                                })
+                            }
+                        }
+                    });
+                }
+            });
+        }
+
 
         //====================================  สถานะล็อค
         //a_ReserveStatus 0 -> ล็อคว่างปกติ

@@ -23,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
         $z_Id = $user["z_Id"];
         $a_Id = $_POST["a_Id"];
-        $area_static = $_POST["area_static"];
+        $area_static = $_POST["area_static"]; // 0 >> ล็อคประจำ  1 >> ล็อคไม่ประจำ
 
         $sql_select_area = "SELECT * FROM reserve_space.tb_area where (a_ReserveStatus = '1' OR a_ReserveStatus = '4') AND a_Id = '" . $a_Id . "'";
         $result_select_area = $conn->query($sql_select_area);
@@ -34,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         } else {
             if ($z_Id == "2dacd150-9b8b-11ed-8054-0242ac110004" && $area_static == "0") //โซนอาหาร
             {
-                $sql_select_reserve = "SELECT * FROM reserve_space.tb_reserve as a   INNER JOIN reserve_space.tb_area as b ON a.a_Id = b.a_Id  INNER JOIN reserve_space.tb_zone as c ON b.z_Id = c.z_Id  INNER JOIN reserve_space.tb_user as d ON d.u_Id = a.u_Id  WHERE c.z_Id = '2dacd150-9b8b-11ed-8054-0242ac110004' AND a.r_Status = '1' AND d.u_Id = '".$user["u_Id"]."'";
+                $sql_select_reserve = "SELECT * FROM reserve_space.tb_reserve as a   INNER JOIN reserve_space.tb_area as b ON a.a_Id = b.a_Id  INNER JOIN reserve_space.tb_zone as c ON b.z_Id = c.z_Id  INNER JOIN reserve_space.tb_user as d ON d.u_Id = a.u_Id  WHERE c.z_Id = '2dacd150-9b8b-11ed-8054-0242ac110004' AND d.u_Id = '".$user["u_Id"]."' AND (a.r_Status = '1' OR a.r_Status = '2');";
                 $result = $conn->query($sql_select_reserve);
                 if ($result->num_rows > 0) {
                     $resp->set_message("ไม่สามารถจองพื้นที่เพิ่มได้เนื่องจาก 1 คน ต่อ 1 ล็อค ในโซนอาหาร");
