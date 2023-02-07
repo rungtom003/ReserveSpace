@@ -33,6 +33,9 @@ $active_persionData = "active";
                             </div>
                             <div class="card-body">
                                 <form>
+                                <div class="d-flex justify-content-center">
+                                    <img class="img-fluid" id="img" alt="" src="/ReserveSpace/src/img/upload/<?=$user["u_Img"]?>" style="height: 150px" >
+                                </div>
                                     <span hidden id="ur_ID"><?= $user["ur_Id"] ?></span>
                                     <?php if ($user["ur_Id"] != "R001") { ?>
                                         <div class="row g-2 p-2">
