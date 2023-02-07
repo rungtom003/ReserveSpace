@@ -269,6 +269,7 @@ $active_approve = "active";
                                 const ur_Id = row.ur_Id;
                                 let txtBtn = "";
                                 let txtHTML = "";
+                                if(row.u_Username !== "admin"){
                                 if (status === "0") {
                                         txtBtn = `<button class="btn btn-primary" type="button" id="btn_Approve" onclick="fcApprove(this)" value="${u_Id}">อนุมัติ</button>`;
                                     } else {
@@ -277,9 +278,7 @@ $active_approve = "active";
                                     txtHTML = `<div class="d-grid gap-2 d-md-block" >` + txtBtn + `
                                         <button class="btn btn-danger" type="button" id="btn_Delete" onclick="deleteUser(this)" value="${u_Id}">ลบ</button>
                                         </div>`
-                                
-
-
+                                }
                                 return txtHTML;
                             }
                         }
@@ -391,7 +390,7 @@ $active_approve = "active";
                                 Swal.fire({
                                     icon: 'success',
                                     title: message,
-                                    showConfirmButton: true,
+                                    showConfirmButton: false,
                                     timer: 1500
                                 }).then((result) => {
                                     $('#table-users').DataTable().destroy();
