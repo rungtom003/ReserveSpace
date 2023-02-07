@@ -328,7 +328,7 @@ $active_signup = "active";
                             Swal.fire({
                                 icon: 'success',
                                 title: message,
-                                showConfirmButton: true,
+                                showConfirmButton: false,
                                 timer: 1500
                             }).then((result) => {
                                 window.location.href = "/ReserveSpace/login.php"
