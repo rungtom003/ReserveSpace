@@ -60,6 +60,7 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
             $resp->set_status("seccess");
         }
         else{
+            $resp->set_message("ไม่พบข้อมูล");
             $resp->set_status("fail");
         }
     } else {
@@ -70,7 +71,7 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
 else
 {
     $resp->set_message("Request method fail.");
-    $resp->set_status("");
+    $resp->set_status("fail");
 }
 
 echo json_encode($resp);
