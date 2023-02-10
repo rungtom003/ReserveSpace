@@ -430,7 +430,7 @@ $active_index = "active";
                 area_static: $("#area_static").val()
             }
             $.ajax({
-                url: "/ReserveSpace/backend/Service/confirmOrder555.php",
+                url: "/ReserveSpace/backend/Service/confirmOrder.php",
                 type: "POST",
                 dataType: "json",
                 data: data,
