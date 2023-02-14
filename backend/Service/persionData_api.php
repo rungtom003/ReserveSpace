@@ -16,7 +16,6 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         $u_Phone = $_POST["u_Phone"];
         $u_Prefix = $_POST["u_Prefix"];
         $u_Birthday = $_POST["u_Birthday"];
-        $u_Img = $_POST["u_Img"];
         $u_Address = $_POST["u_Address"];
         $u_Road = $_POST["u_Road"];
         $u_SubDistrict = $_POST["u_SubDistrict"];

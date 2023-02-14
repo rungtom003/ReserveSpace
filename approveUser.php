@@ -50,10 +50,15 @@ $active_approve = "active";
                                 </div>
 
                                 <div class="row g-2 p-2">
-                                    <div class="col-md-3">
+                                    <div class="col-md">
                                         <span id="u_Id" hidden></span>
                                         <label class="form-label">รหัสเจ้าหน้าที่</label>
-                                        <input type="text" class="form-control" placeholder="ID" id="u_OfficerId" readonly>
+                                        <input type="text" class="form-control" placeholder="" id="u_OfficerId" readonly>
+                                        <!-- <div class="form-text">Enter your Full name</div> -->
+                                    </div>
+                                    <div class="col-md">
+                                        <label class="form-label">รหัส Walk in</label>
+                                        <input type="text" class="form-control" placeholder="" id="u_IdWalkin" readonly>
                                         <!-- <div class="form-text">Enter your Full name</div> -->
                                     </div>
                                 </div>
@@ -82,12 +87,12 @@ $active_approve = "active";
                                         <!-- <div class="form-text">Enter your Full name</div> -->
                                     </div>
                                 </div>
-                                <div class="row g-2 p-2">
-                                    <div class="col-md">
+                                <div class="row g-2 p-2" id="password-content">
+                                    <div class="col-md-9">
                                         <input type="text" class="form-control" placeholder="********" id="u_Password">
                                         <!-- <div class="form-text">Enter your Full name</div> -->
                                     </div>
-                                    <div class="col-md-3">
+                                    <div class="col-md">
                                         <button type="button" class="btn btn-primary" id="btnEditPassword">แก้ไขรหัสผ่าน</button>
                                         <!-- <div class="form-text">Enter your Full name</div> -->
                                     </div>
@@ -298,7 +303,6 @@ $active_approve = "active";
             }
 
         }
-
         loadUser();
 
         const fcApprove = (elm) => {
@@ -479,7 +483,25 @@ $active_approve = "active";
                         $('#u_District').val(res.data.u_District);
                         $('#u_Province').val(res.data.u_Province);
                         $('#u_Phone').val(res.data.u_Phone);
+                        $('#u_IdWalkin').val(res.data.u_IdWalkin);
 
+                        if(res.data.u_Approve == 0){
+                            $("#password-content").prop('hidden', true);
+                        }else{
+                            $("#password-content").prop('hidden', false);
+                        }
+                        
+                        $('#btnEditPassword').prop('disabled', true);
+                        $('#u_Password').keyup(function() {
+                            let val = $("#u_Password").val();
+                            if (event.key != "Enter") {
+                                if (val == "") {
+                                    $('#btnEditPassword').prop('disabled', true);
+                                } else {
+                                    $('#btnEditPassword').prop('disabled', false);
+                                }
+                            }
+                        })
                     } else {
                         Swal.fire({
                             icon: 'error',
@@ -495,14 +517,16 @@ $active_approve = "active";
 
         $('#btnEditPassword').click(function () {
             let u_Id = $('#u_Id').html();
-            let u_Password = $('#u_Password').val();
+            let u_PasswordNew = $('#u_Password').val();
             
             $.ajax({
                 url: "/ReserveSpace/backend/Service/updatePassword_api.php",
                 type: "POST",
                 data: {
+                    status: "admin",
                     u_Id: u_Id,
-                    u_Password: u_Password
+                    u_Password: "",
+                    u_PasswordNew: u_PasswordNew
                 },
                 dataType: "json",
                 success: function(res) {

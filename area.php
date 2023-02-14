@@ -105,21 +105,6 @@ $active_area = "active";
                         },
                         {
                             targets: 2,
-                            title: "a_Number",
-                            data: "a_Number",
-                        },
-                        {
-                            targets: 3,
-                            title: "a_Detail",
-                            data: "a_Detail",
-                        },
-                        {
-                            targets: 4,
-                            title: "a_ReserveStatus",
-                            data: "a_ReserveStatus",
-                        },
-                        {
-                            targets: 5,
                             title: "#",
                             data: null,
                             defaultContent: "",

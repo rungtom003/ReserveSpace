@@ -33,15 +33,23 @@ $active_persionData = "active";
                             </div>
                             <div class="card-body">
                                 <form>
-                                <div class="d-flex justify-content-center">
-                                    <img class="img-fluid" id="img" alt="" src="/ReserveSpace/src/img/upload/<?=$user["u_Img"]?>" style="height: 150px" >
-                                </div>
-                                    <span hidden id="ur_ID"><?= $user["ur_Id"] ?></span>
+                                    <div class="d-flex justify-content-center">
+                                        <img class="img-fluid" id="img" alt="" src="/ReserveSpace/src/img/upload/<?= $user["u_Img"] ?>" style="height: 150px">
+                                    </div>
                                     <?php if ($user["ur_Id"] != "R001") { ?>
                                         <div class="row g-2 p-2">
                                             <div class="col-md-3">
                                                 <label class="form-label">รหัสเจ้าหน้าที่</label>
-                                                <input type="text" class="form-control" placeholder="ID" id="u_OfficerId" value="<?= $user["u_OfficerId"] ?>">
+                                                <input type="text" class="form-control" placeholder="" id="u_OfficerId" value="<?= $user["u_OfficerId"] ?>" readonly>
+                                                <!-- <div class="form-text">Enter your Full name</div> -->
+                                            </div>
+                                        </div>
+                                    <?php } ?>
+                                    <?php if ($user["ur_Id"] != "R002") { ?>
+                                        <div class="row g-2 p-2">
+                                            <div class="col-md-3">
+                                                <label class="form-label">รหัส Walk in</label>
+                                                <input type="text" class="form-control" placeholder="" id="u_IdWalkin" value="<?= $user["u_IdWalkin"] ?>" readonly>
                                                 <!-- <div class="form-text">Enter your Full name</div> -->
                                             </div>
                                         </div>
@@ -69,10 +77,32 @@ $active_persionData = "active";
                                         </div>
                                     </div>
 
-                                    <div class="row g-2 p-2">
+                                    <div class="row g-2 p-2 d-flex align-items-end">
                                         <div class="col-md">
                                             <label class="form-label">ชื่อผู้ใช้</label>
-                                            <input type="Username" class="form-control" placeholder="Username" id="u_Username" value="<?= $user["u_Username"] ?>" readonly>
+                                            <input type="Username" class="form-control" placeholder="Username" id="u_Username" value="<?= $user["u_Username"] ?>">
+                                            <!-- <div class="form-text">Enter your Full name</div> -->
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label class="form-label"></label>
+                                            <button type="button" class="btn btn-primary" id="btnEditUser">แก้ไขชื่อผู้ใช้</button>
+                                            <!-- <div class="form-text">Enter your Full name</div> -->
+                                        </div>
+                                    </div>
+                                    <div class="row g-2 p-2 d-flex align-items-end">
+                                        <div class="col-md">
+                                            <label class="form-label">รหัสผ่านเดิม</label>
+                                            <input type="Username" class="form-control" placeholder="********" id="u_PasswordOld">
+                                            <!-- <div class="form-text">Enter your Full name</div> -->
+                                        </div>
+                                        <div class="col-md">
+                                            <label class="form-label">รหัสผ่านใหม่</label>
+                                            <input type="Username" class="form-control" placeholder="" id="u_PasswordNew">
+                                            <!-- <div class="form-text">Enter your Full name</div> -->
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label class="form-label"></label>
+                                            <button type="button" class="btn btn-primary" id="btnEditPassword">แก้ไขรหัสผ่าน</button>
                                             <!-- <div class="form-text">Enter your Full name</div> -->
                                         </div>
                                     </div>
@@ -95,7 +125,8 @@ $active_persionData = "active";
                                         }
                                         ?>
                                     </div>
-                                    <div class="row g-2 p-2">
+                                    <?php if ($user["ur_Id"] == "R001") {?>
+                                        <div class="row g-2 p-2">
                                         <div class="col-md">
                                             <label class="form-label">ชื่อร้าน</label>
                                             <input type="text" class="form-control" placeholder="" value="<?= $user["u_ShopName"] ?>" id="u_ShopName" required>
@@ -123,6 +154,8 @@ $active_persionData = "active";
                                             กรุณาเลือก รายละเอียดสินค้า
                                         </div>
                                     </div>
+                                    <?php } ?>
+                                    
                                     <div class="row g-2 p-2">
                                         <?php if ($user["ur_Id"] != "R001") { ?>
                                             <div class="col-md">
@@ -190,7 +223,10 @@ $active_persionData = "active";
                                             </div>
                                         </div>
                                     </div>
-                                    <button type="submit" class="btn btn-primary" id="btn_update">บันทึก</button>
+                                    <div class="row g-2 p-2">
+                                        <button type="submit" class="btn btn-primary" id="btn_update">บันทึก</button>
+                                    </div>
+
                                 </form>
                             </div>
                         </div>
@@ -228,18 +264,17 @@ $active_persionData = "active";
 
         function UpdatePersionData() {
             let role = "<?= $user["ur_Id"] ?>";
-            let ur_ID = $('#ur_ID').html();
-            let u_OfficerId = "-";
-            let u_Position = "-";
-            if (ur_ID === "R002") {
+            let u_OfficerId = "";
+            let u_Position = "";
+            if (role === "R002") {
                 u_OfficerId = $('#u_OfficerId').val();
                 u_Position = $('#u_Position').val();
             }
+            
             let u_FirstName = $('#u_FullName').val();
             let u_LastName = $('#u_Last').val();
             let u_Username = $('#u_Username').val();
             let u_CardNumber = $('#u_CardNumber').val();
-
             let u_Phone = $('#u_Phone').val();
             let u_Prefix = $('#Prefix').val();
             let u_Birthday = $('#u_Birthday').val();
@@ -270,7 +305,6 @@ $active_persionData = "active";
                 u_Phone: u_Phone,
                 u_Prefix: u_Prefix,
                 u_Birthday: u_Birthday,
-                u_Img: u_Img,
                 u_Address: u_Address,
                 u_Road: u_Road,
                 u_SubDistrict: u_SubDistrict,
@@ -312,9 +346,145 @@ $active_persionData = "active";
             })
         }
         loadZone();
+
+        function update_User() {
+            let u_Id = "<?= $user["u_Id"] ?>";
+            let u_Username = $('#u_Username').val();
+            $.ajax({
+                url: "/ReserveSpace/backend/Service/updateUser_api.php",
+                type: "POST",
+                data: {
+                    u_Id: u_Id,
+                    u_Username: u_Username
+                },
+                dataType: "json",
+                success: function(res) {
+                    let message = res.message;
+                    let status = res.status;
+                    if (status == "success") {
+                        Swal.fire({
+                            icon: 'success',
+                            title: message,
+                            showConfirmButton: false,
+                            timer: 1500
+                        }).then((result) => {
+                            window.location.href = "/ReserveSpace/backend/Service/logout_api.php"
+                        })
+
+                    } else if (status == "Duplicate user") {
+                        Swal.fire({
+                            icon: 'warning',
+                            title: 'เเจ้งเตือน',
+                            text: message
+                        })
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'เเจ้งเตือน',
+                            text: message
+                        })
+                    }
+
+
+                }
+            });
+        }
+
+        function update_Password() {
+            let u_Id = "<?= $user["u_Id"] ?>";
+            let u_PasswordOld = $('#u_PasswordOld').val();
+            let u_PasswordNew = $('#u_PasswordNew').val();
+
+            $.ajax({
+                url: "/ReserveSpace/backend/Service/updatePassword_api.php",
+                type: "POST",
+                data: {
+                    status: "user",
+                    u_Id: u_Id,
+                    u_Password: u_PasswordOld,
+                    u_PasswordNew: u_PasswordNew
+                },
+                dataType: "json",
+                success: function(res) {
+                    //console.log(res)
+                    let message = res.message;
+                    let status = res.status;
+                    if (status == "success") {
+                        Swal.fire({
+                            icon: 'success',
+                            title: message,
+                            showConfirmButton: false,
+                            timer: 1500
+                        }).then((result) => {
+                            window.location.href = "/ReserveSpace/backend/Service/logout_api.php"
+                        })
+
+                    } else {
+                        Swal.fire({
+                            icon: 'warning',
+                            title: 'เเจ้งเตือน',
+                            text: message
+                        })
+                    }
+
+
+                }
+            });
+        }
+
         $('#btn_update').click(function(event) {
             event.preventDefault();
             UpdatePersionData();
+        })
+
+        $('#btnEditUser').prop('disabled', true);
+        let u_Username = $('#u_Username').val()
+        $('#u_Username').keyup(function() {
+            let val = $("#u_Username").val();
+            if (event.key != "Enter") {
+                if (val == "" || val == u_Username) {
+                    $('#btnEditUser').prop('disabled', true);
+                } else {
+                    $('#btnEditUser').prop('disabled', false);
+                }
+            }
+        })
+
+        $('#btnEditPassword').prop('disabled', true);
+        let u_PasswordOld = $('#u_PasswordOld').val()
+        let u_PasswordNew = $('#u_PasswordNew').val()
+        $('#u_PasswordOld').keyup(function() {
+            let valOld = $("#u_PasswordOld").val();
+            let valNew = $("#u_PasswordNew").val();
+            if (event.key != "Enter") {
+                if (valOld == "" || valNew == "") {
+                    $('#btnEditPassword').prop('disabled', true);
+                } else {
+                    $('#btnEditPassword').prop('disabled', false);
+                }
+            }
+        })
+
+        $('#u_PasswordNew').keyup(function() {
+            let valOld = $("#u_PasswordOld").val();
+            let valNew = $("#u_PasswordNew").val();
+            if (event.key != "Enter") {
+                if (valOld == "" || valNew == "") {
+                    $('#btnEditPassword').prop('disabled', true);
+                } else {
+                    $('#btnEditPassword').prop('disabled', false);
+                }
+            }
+        })
+
+        $('#btnEditUser').click(function(event) {
+            event.preventDefault();
+            update_User()
+        })
+
+        $('#btnEditPassword').click(function(event) {
+            event.preventDefault();
+            update_Password()
         })
     </script>
 </body>

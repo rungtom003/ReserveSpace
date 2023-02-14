@@ -56,6 +56,12 @@ $active_signup = "active";
                                         </div>
                                     </div>
                                 </div>
+                                <div class="row g-2 p-2" id="u_IdWalkin-content" hidden>
+                                    <div class="col-md-3">
+                                        <label class="form-label">รหัส Walk in</label>
+                                        <input type="text" class="form-control" placeholder="" id="u_IdWalkin">
+                                    </div>
+                                </div>
                                 <div class="row g-2 p-2" id="fullname-content" hidden>
                                     <div class="col-md-2">
                                         <label class="form-label">คำนำหน้า</label>
@@ -103,6 +109,8 @@ $active_signup = "active";
                                         </div>
                                     </div>
                                 </div>
+
+                                <div class="row g-2 p-2" id="shop-content" hidden>
                                 <div class="row g-2 p-2">
                                     <div class="col-md" id="g-u_ShopName" hidden>
                                         <label class="form-label">ชื่อร้าน</label>
@@ -130,6 +138,9 @@ $active_signup = "active";
                                         กรุณาเลือก รายละเอียดสินค้า
                                     </div>
                                 </div>
+                                </div>
+
+                                
                                 <div class="row g-2 p-2">
                                     <div class="col-md" id="position-content" hidden>
                                         <label class="form-label">ตำแหน่ง</label>
@@ -277,7 +288,8 @@ $active_signup = "active";
                 $("#address-content2").prop('hidden', false);
                 $("#upload-content").prop('hidden', false);
 
-
+                $('#u_IdWalkin-content').prop('hidden', true);
+                $('#shop-content').prop('hidden', true);
                 $("#u_OfficerId").prop("required", true);
                 $("#u_FullName").prop("required", true);
                 $("#u_Last").prop("required", true);
@@ -314,6 +326,7 @@ $active_signup = "active";
                 $("#btn_signup").prop('hidden', false);
 
                 $("#u_OfficerId-content").prop('hidden', true);
+                $('#u_IdWalkin-content').prop('hidden', false);
                 $("#fullname-content").prop('hidden', false);
                 $("#username-content").prop('hidden', false);
                 $("#password-content").prop('hidden', false);
@@ -326,6 +339,7 @@ $active_signup = "active";
                 $("#g-u_ShopName").prop('hidden', false);
                 $("#g-selectZoneName").prop('hidden', false);
                 $("#g-u_ProductName").prop('hidden', false);
+                $('#shop-content').prop('hidden', false);
 
                 $("#u_OfficerId").prop("required", false);
                 $("#u_FullName").prop("required", true);
@@ -401,6 +415,7 @@ $active_signup = "active";
             let z_Id = $('#selectZoneName').val();
             let u_ShopName = $('#u_ShopName').val();
             let u_ProductName = $('#u_ProductName').val();
+            let u_IdWalkin = $('#u_IdWalkin').val()
 
             let RadioAdmin = $('#RadioAdmin').prop('checked')
             let RadioUser = $('#RadioUser').prop('checked')
@@ -434,7 +449,8 @@ $active_signup = "active";
                 u_Province: u_Province,
                 z_Id: z_Id,
                 u_ShopName: u_ShopName,
-                u_ProductName: u_ProductName
+                u_ProductName: u_ProductName,
+                u_IdWalkin:u_IdWalkin
             }
 
             const formData = new FormData();
@@ -458,6 +474,7 @@ $active_signup = "active";
             formData.append("z_Id", data.z_Id);
             formData.append("u_ShopName", data.u_ShopName);
             formData.append("u_ProductName", data.u_ProductName);
+            formData.append("u_IdWalkin", data.u_IdWalkin);
 
             $.ajax({
                 url: "/ReserveSpace/backend/Service/signup_api.php",

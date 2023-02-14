@@ -35,11 +35,17 @@ $active_signup = "active";
                         </div>
                         <div class="card-body">
                             <form class="needs-validation" novalidate>
+                            <div class="row g-2 p-2">
+                                    <div class="col-md-3">
+                                    <label class="form-label">รหัส Walk in</label>
+                                        <input type="text" class="form-control" placeholder="" id="u_IdWalkin">
+                                    </div>
+                                </div>
                                 <div class="row g-2 p-2">
                                     <div class="col-md-2">
                                         <label class="form-label">คำนำหน้า</label>
                                         <select class="form-select" aria-label="Default select example" id="Prefix" required>
-                                            <option selected disabled value="">เลือก.....</option>
+                                            <option selected disabled value="">เลือก</option>
                                             <option value="นาย">นาย</option>
                                             <option value="นาง">นาง</option>
                                             <option value="นางสาว">นางสาว</option>
@@ -256,6 +262,7 @@ $active_signup = "active";
             let z_Id = $('#selectZoneName').val();
             let u_ShopName = $('#u_ShopName').val();
             let u_ProductName = $('#u_ProductName').val();
+            let u_IdWalkin = $('#u_IdWalkin').val()
 
             if (fileIMG !== null) {
                 u_Img = fileIMG;
@@ -281,7 +288,8 @@ $active_signup = "active";
                 u_Province: u_Province,
                 z_Id: z_Id,
                 u_ShopName: u_ShopName,
-                u_ProductName: u_ProductName
+                u_ProductName: u_ProductName,
+                u_IdWalkin: u_IdWalkin
             }
 
             const formData = new FormData();
@@ -305,6 +313,7 @@ $active_signup = "active";
             formData.append("z_Id", data.z_Id);
             formData.append("u_ShopName", data.u_ShopName);
             formData.append("u_ProductName", data.u_ProductName);
+            formData.append("u_IdWalkin", data.u_IdWalkin);
 
             if (ur_Id == "" || u_Username == "" || u_Password == "" || u_CardNumber == "") {
                 Swal.fire({
