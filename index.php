@@ -108,12 +108,12 @@ $active_index = "active";
                             <div class="d-flex justify-content-center align-items-center reserve-box-red">
                                 <span class="text-light text-center">จองเเล้ว</span>
                             </div>
-                            <div class="d-flex justify-content-center align-items-center reserve-box-yellow">
+                            <!-- <div class="d-flex justify-content-center align-items-center reserve-box-yellow">
                                 <span class="text-light text-center">ล็อคประจำว่าง</span>
                             </div>
                             <div class="d-flex justify-content-center align-items-center reserve-box-primary">
                                 <span class="text-light text-center">ล็อคประจำ</span>
-                            </div>
+                            </div> -->
                         </div>
                         <div class="d-flex my-3">
                             <input class="form-control text-center" type="text" placeholder="ค้นหา" id="input_find" value="">
@@ -334,11 +334,11 @@ $active_index = "active";
                                                 <span class="text-light">${val.a_Name}</span>
                                             </div>`;
                         } else if (val.a_ReserveStatus === "2") {
-                            txt_content += `<div class="d-flex justify-content-center align-items-center reserve-box-primary" data-bs-toggle="modal" data-bs-target="#reserve-detail-modal" data-bs-whatever='${val.a_Id}'>
+                            txt_content += `<div class="d-flex justify-content-center align-items-center reserve-box-red" data-bs-toggle="modal" data-bs-target="#reserve-detail-modal" data-bs-whatever='${val.a_Id}'>
                                                 <span class="text-light">${val.a_Name}</span>
                                             </div>`;
                         } else if (val.a_ReserveStatus === "3") {
-                            txt_content += `<div class="d-flex justify-content-center align-items-center reserve-box-yellow" data-bs-toggle="modal" data-bs-target="#reserve-modal" data-bs-area_static="1" data-bs-whatever='${JSON.stringify(val)}'>
+                            txt_content += `<div class="d-flex justify-content-center align-items-center reserve-box-green" data-bs-toggle="modal" data-bs-target="#reserve-modal" data-bs-area_static="1" data-bs-whatever='${JSON.stringify(val)}'>
                                                 <span class="text-light">${val.a_Name}</span>
                                             </div>`;
                         } else {
