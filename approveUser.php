@@ -1,11 +1,12 @@
 <?php
+include("./layout/static_path.php");
 session_start();
 $user = (isset($_SESSION['user'])) ? unserialize($_SESSION['user']) : null;
 if ($user == null) {
-    header('location: /ReserveSpace/login.php');
+    header('location: '.$host_path.'/login.php');
 }
 if ($user["ur_Id"] == "R001") {
-    header('location: /ReserveSpace/noaccess.php');
+    header('location: '.$host_path.'/noaccess.php');
 }
 $titleHead = "Appove User";
 $active_approve = "active";
@@ -185,7 +186,7 @@ $active_approve = "active";
     <script>
         function loadUser() {
             $.ajax({
-                url: "/ReserveSpace/backend/Service/usersList_api.php",
+                url: "<?=$host_path?>/backend/Service/usersList_api.php",
                 type: "GET",
                 dataType: "json",
                 success: function(res) {
@@ -294,7 +295,7 @@ $active_approve = "active";
             let u_Id = elm.value;
 
             $.ajax({
-                url: "/ReserveSpace/backend/Service/approveUser_api.php",
+                url: "<?=$host_path?>/backend/Service/approveUser_api.php",
                 type: "POST",
                 data: {
                     u_Id: u_Id
@@ -329,7 +330,7 @@ $active_approve = "active";
             let u_Id = elm.value;
 
             $.ajax({
-                url: "/ReserveSpace/backend/Service/cancelUser_api.php",
+                url: "<?=$host_path?>/backend/Service/cancelUser_api.php",
                 type: "POST",
                 data: {
                     u_Id: u_Id
@@ -375,7 +376,7 @@ $active_approve = "active";
                 if (result.isConfirmed) {
 
                     $.ajax({
-                        url: "/ReserveSpace/backend/Service/userDelete_api.php",
+                        url: "<?=$host_path?>/backend/Service/userDelete_api.php",
                         type: "POST",
                         data: {
                             u_Id: u_Id
@@ -413,7 +414,7 @@ $active_approve = "active";
         const detailUser = (elm) => {
             let u_Id = elm.value;
             $.ajax({
-                url: "/ReserveSpace/backend/Service/user_api.php",
+                url: "<?=$host_path?>/backend/Service/user_api.php",
                 type: "POST",
                 data: {
                     u_Id: u_Id
@@ -425,10 +426,10 @@ $active_approve = "active";
                     let status = res.status;
                     let ur_Id = res.data.ur_Id;
                     let zoneID = res.data.z_Id;
-                    let u_Img = "/ReserveSpace/src/img/upload/" + res.data.u_Img;
+                    let u_Img = "<?=$host_path?>/src/img/upload/" + res.data.u_Img;
 
                     $.ajax({
-                        url: "/ReserveSpace/backend/Service/zone_api.php",
+                        url: "<?=$host_path?>/backend/Service/zone_api.php",
                         type: "POST",
                         dataType: "json",
                         success: function(res_Zone) {

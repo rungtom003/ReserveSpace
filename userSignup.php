@@ -1,4 +1,5 @@
 <?php
+include("./layout/static_path.php");
 session_start();
 // $user = (isset($_SESSION['user'])) ? unserialize($_SESSION['user']) : null;
 // if ($user == null) {
@@ -219,7 +220,7 @@ $active_signup = "active";
 
                 </div>
                 <div class="d-flex justify-content-center my-3">
-                    <a href="/ReserveSpace/login.php" class="btn btn-primary">กลับ</a>
+                    <a href="<?=$host_path?>/login.php" class="btn btn-primary">กลับ</a>
                 </div>
 
 
@@ -315,7 +316,7 @@ $active_signup = "active";
 
             } else {
                 $.ajax({
-                    url: "/ReserveSpace/backend/Service/signup_api.php",
+                    url: "<?=$host_path?>/backend/Service/signup_api.php",
                     type: "POST",
                     data: formData,
                     dataType: "json",
@@ -331,7 +332,7 @@ $active_signup = "active";
                                 showConfirmButton: false,
                                 timer: 1500
                             }).then((result) => {
-                                window.location.href = "/ReserveSpace/login.php"
+                                window.location.href = "<?=$host_path?>/login.php"
                             })
 
 
@@ -366,7 +367,7 @@ $active_signup = "active";
 
         function loadZone() {
             $.ajax({
-                url: "/ReserveSpace/backend/Service/zone_api.php",
+                url: "<?=$host_path?>/backend/Service/zone_api.php",
                 type: "POST",
                 dataType: "json",
                 success: function(res) {

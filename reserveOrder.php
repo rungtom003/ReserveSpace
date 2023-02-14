@@ -1,11 +1,12 @@
 <?php
+include("./layout/static_path.php");
 session_start();
 $user = (isset($_SESSION['user'])) ? unserialize($_SESSION['user']) : null;
 if ($user == null) {
-    header('location: /ReserveSpace/login.php');
+    header('location: '.$host_path.'/login.php');
 }
 if ($user["ur_Id"] == "R001") {
-    header('location: /ReserveSpace/noaccess.php');
+    header('location: '.$host_path.'/noaccess.php');
 }
 $titleHead = "รายการจอง";
 $active_reserveOrder = "active";
@@ -54,7 +55,7 @@ $active_reserveOrder = "active";
     <script>
         function loadOrder() {
             $.ajax({
-                url: "/ReserveSpace/backend/Service/reserveList_api.php",
+                url: "<?=$host_path?>/backend/Service/reserveList_api.php",
                 type: "GET",
                 dataType: "json",
                 success: function(res) {
@@ -201,7 +202,7 @@ $active_reserveOrder = "active";
             }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({
-                        url: "/ReserveSpace/backend/Service/cancelReserve.php",
+                        url: "<?=$host_path?>/backend/Service/cancelReserve.php",
                         type: "POST",
                         data: {
                             r_Id: r_Id,
@@ -254,7 +255,7 @@ $active_reserveOrder = "active";
             }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({
-                        url: "/ReserveSpace/backend/Service/approveReserve_api.php",
+                        url: "<?=$host_path?>/backend/Service/approveReserve_api.php",
                         type: "POST",
                         data: {
                             r_Id: r_Id,
@@ -307,7 +308,7 @@ $active_reserveOrder = "active";
             }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({
-                        url: "/ReserveSpace/backend/Service/CancelTemporary.php",
+                        url: "<?=$host_path?>/backend/Service/CancelTemporary.php",
                         type: "POST",
                         data: {
                             r_Id: r_Id,
@@ -360,7 +361,7 @@ $active_reserveOrder = "active";
             }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({
-                        url: "/ReserveSpace/backend/Service/returnArea.php",
+                        url: "<?=$host_path?>/backend/Service/returnArea.php",
                         type: "POST",
                         data: {
                             r_Id: r_Id,
@@ -413,7 +414,7 @@ $active_reserveOrder = "active";
             }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({
-                        url: "/ReserveSpace/backend/Service/StaticArea.php",
+                        url: "<?=$host_path?>/backend/Service/StaticArea.php",
                         type: "POST",
                         data: {
                             r_Id: r_Id,
@@ -466,7 +467,7 @@ $active_reserveOrder = "active";
             }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({
-                        url: "/ReserveSpace/backend/Service/returnAreaNoReserve.php",
+                        url: "<?=$host_path?>/backend/Service/returnAreaNoReserve.php",
                         type: "POST",
                         data: {
                             r_Id: r_Id,
@@ -513,7 +514,7 @@ $active_reserveOrder = "active";
             }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({
-                        url: "/ReserveSpace/backend/Service/reset_all.php",
+                        url: "<?=$host_path?>/backend/Service/reset_all.php",
                         type: "POST",
                         dataType: "json",
                         success: function(res) {
@@ -556,7 +557,7 @@ $active_reserveOrder = "active";
             }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({
-                        url: "/ReserveSpace/backend/Service/reset_non_static.php",
+                        url: "<?=$host_path?>/backend/Service/reset_non_static.php",
                         type: "POST",
                         dataType: "json",
                         success: function(res) {
@@ -599,7 +600,7 @@ $active_reserveOrder = "active";
             }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({
-                        url: "/ReserveSpace/backend/Service/reset_static.php",
+                        url: "<?=$host_path?>/backend/Service/reset_static.php",
                         type: "POST",
                         dataType: "json",
                         success: function(res) {
