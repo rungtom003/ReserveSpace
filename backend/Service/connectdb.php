@@ -2,7 +2,7 @@
 $servername = "45.144.164.52";
 $username = "root";
 $password = "Rung_tom003";
-$db = "reserve_space";
+$db = "kkmuni_street";
 $port = "13306";
 // Create connection
 $conn = mysqli_connect($servername, $username, $password,$db,$port);
@@ -17,5 +17,6 @@ else
 {
     $connect_status = "success";
     $connect_message = "Connection success";
+    $conn->set_charset("utf8");
 }
 ?>

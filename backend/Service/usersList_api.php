@@ -6,7 +6,7 @@ $resp = new Resp();
 $dataUsers = array();
 if ($_SERVER['REQUEST_METHOD'] == "GET") {
     if ($connect_status == "success") {
-        $sql = "SELECT * FROM reserve_space.tb_user ;";
+        $sql = "SELECT * FROM kkmuni_street.tb_user as a left join kkmuni_street.tb_zone as b on a.z_Id = b.z_Id;";
         $result = $conn->query($sql);
         if ($result->num_rows > 0) {
             while($row = $result->fetch_assoc()) {

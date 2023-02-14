@@ -6,8 +6,8 @@ $resp = new Resp();
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
     if ($connect_status == "success") {
 
-        $sql = "UPDATE reserve_space.tb_reserve SET r_Status = '0';";
-        $sql .= "UPDATE reserve_space.tb_area SET a_ReserveStatus = '0';";
+        $sql = "UPDATE kkmuni_street.tb_reserve SET r_Status = '0';";
+        $sql .= "UPDATE kkmuni_street.tb_area SET a_ReserveStatus = '0';";
 
         if ($conn->multi_query($sql) === TRUE) {
 

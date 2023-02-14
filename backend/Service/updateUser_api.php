@@ -10,9 +10,9 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         $u_Id = $_POST["u_Id"];
         $u_Username = $_POST["u_Username"];
 
-        $sql = "UPDATE `reserve_space`.`tb_user` SET `u_Username` = '".$u_Username."' WHERE (`u_Id` = '".$u_Id."');";
+        $sql = "UPDATE `kkmuni_street`.`tb_user` SET `u_Username` = '".$u_Username."' WHERE (`u_Id` = '".$u_Id."');";
 
-        $sqlCheckUser = "SELECT * FROM reserve_space.tb_user where u_Username = '" . $u_Username . "';";
+        $sqlCheckUser = "SELECT * FROM kkmuni_street.tb_user where u_Username = '" . $u_Username . "';";
         $resultUser = $conn->query($sqlCheckUser);
 
         if ($resultUser->num_rows > 0) {

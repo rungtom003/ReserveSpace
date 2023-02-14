@@ -7,7 +7,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     if ($connect_status == "success") {
         $u_Id = $_POST["u_Id"];
 
-        $sql = "SELECT * FROM reserve_space.tb_user where u_Id = '" . $u_Id . "';";
+        $sql = "SELECT * FROM kkmuni_street.tb_user where u_Id = '" . $u_Id . "';";
         $result = $conn->query($sql);
         if ($result->num_rows > 0) {
             $row = $result->fetch_assoc();

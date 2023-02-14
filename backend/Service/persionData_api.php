@@ -32,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
             $u_Birthday = "'" . $u_Birthday . "'";
         }
 
-        $sql = "UPDATE `reserve_space`.`tb_user` SET `u_FirstName` = '" . $u_FirstName . "', u_LastName = '" . $u_LastName . "', `u_OfficerId` = '" . $u_OfficerId . "', ";
+        $sql = "UPDATE `kkmuni_street`.`tb_user` SET `u_FirstName` = '" . $u_FirstName . "', u_LastName = '" . $u_LastName . "', `u_OfficerId` = '" . $u_OfficerId . "', ";
         $sql .= "`u_Position` = '" . $u_Position . "',  `u_Phone` = '" . $u_Phone . "', `u_Prefix` = '" . $u_Prefix . "', `u_Birthday` = " . $u_Birthday . ", `u_IdWalkin` = '".$u_IdWalkin."', ";
         $sql .= "`u_Address` = '" . $u_Address . "', `u_Road` = '" . $u_Road . "', `u_SubDistrict` = '" . $u_SubDistrict . "', `u_District` = '" . $u_District . "', `u_Province` = '" . $u_Province . "', ";
         $sql .= "`z_Id` = '" . $z_Id . "', `u_ShopName` = '" . $u_ShopName . "', `u_ProductName` = '" . $u_ProductName . "' ";
@@ -42,7 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
             $resp->set_message("บันทึกข้อมูลสำเร็จ");
             $resp->set_status("success");
 
-            $sqlSelect = "SELECT * FROM reserve_space.tb_user where `u_Username` = '" . $u_Username . "' and `u_CardNumber` = '" . $u_CardNumber . "' ;";
+            $sqlSelect = "SELECT * FROM kkmuni_street.tb_user where `u_Username` = '" . $u_Username . "' and `u_CardNumber` = '" . $u_CardNumber . "' ;";
             $result = $conn->query($sqlSelect);
             if ($result->num_rows > 0) {
                 $row = $result->fetch_assoc();

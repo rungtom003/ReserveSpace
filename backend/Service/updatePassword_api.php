@@ -14,7 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
         $u_Password_hash = hash("sha256", $u_PasswordNew);
 
-        $sql = "UPDATE `reserve_space`.`tb_user` SET `u_Password` = '" . $u_Password_hash . "' WHERE (`u_Id` = '" . $u_Id . "');";
+        $sql = "UPDATE `kkmuni_street`.`tb_user` SET `u_Password` = '" . $u_Password_hash . "' WHERE (`u_Id` = '" . $u_Id . "');";
 
         if ($status == "admin") {
             if ($conn->query($sql) === TRUE) {
@@ -26,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
             }
         } else if ($status == "user") {
 
-            $sqlCheck = "SELECT * FROM reserve_space.tb_user where u_Id = '" . $u_Id . "';";
+            $sqlCheck = "SELECT * FROM kkmuni_street.tb_user where u_Id = '" . $u_Id . "';";
             $result = $conn->query($sqlCheck);
             if ($result->num_rows > 0) {
                 $row = $result->fetch_assoc();

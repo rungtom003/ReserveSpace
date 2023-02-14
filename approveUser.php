@@ -3,10 +3,10 @@ include("./layout/static_path.php");
 session_start();
 $user = (isset($_SESSION['user'])) ? unserialize($_SESSION['user']) : null;
 if ($user == null) {
-    header('location: '.$host_path.'/login.php');
+    header('location: ' . $host_path . '/login.php');
 }
 if ($user["ur_Id"] == "R001") {
-    header('location: '.$host_path.'/noaccess.php');
+    header('location: ' . $host_path . '/noaccess.php');
 }
 $titleHead = "Appove User";
 $active_approve = "active";
@@ -47,7 +47,7 @@ $active_approve = "active";
                         <div class="modal-body">
                             <form>
                                 <div class="d-flex justify-content-center">
-                                    <img class="img-fluid" id="img" alt="" src="" style="height: 150px" >
+                                    <img class="img-fluid" id="img" alt="" src="" style="height: 150px">
                                 </div>
 
                                 <div class="row g-2 p-2">
@@ -202,7 +202,7 @@ $active_approve = "active";
     <script>
         function loadUser() {
             $.ajax({
-                url: "<?=$host_path?>/backend/Service/usersList_api.php",
+                url: "<?= $host_path ?>/backend/Service/usersList_api.php",
                 type: "GET",
                 dataType: "json",
                 success: function(res) {
@@ -251,6 +251,11 @@ $active_approve = "active";
                         },
                         {
                             targets: 5,
+                            title: "โซน",
+                            data: "z_Name",
+                        },
+                        {
+                            targets: 6,
                             title: "Approve",
                             data: "u_Approve",
                             render: function(data, type, row, meta) {
@@ -264,7 +269,7 @@ $active_approve = "active";
                             }
                         },
                         {
-                            targets: 6,
+                            targets: 7,
                             title: "รายละเอียด",
                             data: null,
                             defaultContent: "",
@@ -276,7 +281,7 @@ $active_approve = "active";
                             }
                         },
                         {
-                            targets: 7,
+                            targets: 8,
                             title: "#",
                             data: null,
                             defaultContent: "",
@@ -286,8 +291,8 @@ $active_approve = "active";
                                 const ur_Id = row.ur_Id;
                                 let txtBtn = "";
                                 let txtHTML = "";
-                                if(row.u_Username !== "admin"){
-                                if (status === "0") {
+                                if (row.u_Username !== "admin") {
+                                    if (status === "0") {
                                         txtBtn = `<button class="btn btn-primary" type="button" id="btn_Approve" onclick="fcApprove(this)" value="${u_Id}">อนุมัติ</button>`;
                                     } else {
                                         txtBtn = `<button class="btn btn-warning" type="button" id="btn_Cancel" onclick="cancelUser(this)" value="${u_Id}">ยกเลิก</button>`;
@@ -299,7 +304,13 @@ $active_approve = "active";
                                 return txtHTML;
                             }
                         }
-                    ]
+                    ],
+                    order: [
+                        [5, 'asc']
+                    ],
+                    rowGroup: {
+                        dataSrc: 'z_Name'
+                    },
                 });
             }
 
@@ -310,7 +321,7 @@ $active_approve = "active";
             let u_Id = elm.value;
 
             $.ajax({
-                url: "<?=$host_path?>/backend/Service/approveUser_api.php",
+                url: "<?= $host_path ?>/backend/Service/approveUser_api.php",
                 type: "POST",
                 data: {
                     u_Id: u_Id
@@ -345,7 +356,7 @@ $active_approve = "active";
             let u_Id = elm.value;
 
             $.ajax({
-                url: "<?=$host_path?>/backend/Service/cancelUser_api.php",
+                url: "<?= $host_path ?>/backend/Service/cancelUser_api.php",
                 type: "POST",
                 data: {
                     u_Id: u_Id
@@ -391,7 +402,7 @@ $active_approve = "active";
                 if (result.isConfirmed) {
 
                     $.ajax({
-                        url: "<?=$host_path?>/backend/Service/userDelete_api.php",
+                        url: "<?= $host_path ?>/backend/Service/userDelete_api.php",
                         type: "POST",
                         data: {
                             u_Id: u_Id
@@ -429,7 +440,7 @@ $active_approve = "active";
         const detailUser = (elm) => {
             let u_Id = elm.value;
             $.ajax({
-                url: "<?=$host_path?>/backend/Service/user_api.php",
+                url: "<?= $host_path ?>/backend/Service/user_api.php",
                 type: "POST",
                 data: {
                     u_Id: u_Id
@@ -441,10 +452,10 @@ $active_approve = "active";
                     let status = res.status;
                     let ur_Id = res.data.ur_Id;
                     let zoneID = res.data.z_Id;
-                    let u_Img = "<?=$host_path?>/src/img/upload/" + res.data.u_Img;
+                    let u_Img = "<?= $host_path ?>/src/img/upload/" + res.data.u_Img;
 
                     $.ajax({
-                        url: "<?=$host_path?>/backend/Service/zone_api.php",
+                        url: "<?= $host_path ?>/backend/Service/zone_api.php",
                         type: "POST",
                         dataType: "json",
                         success: function(res_Zone) {
@@ -486,12 +497,12 @@ $active_approve = "active";
                         $('#u_Phone').val(res.data.u_Phone);
                         $('#u_IdWalkin').val(res.data.u_IdWalkin);
 
-                        if(res.data.u_Approve == 0){
+                        if (res.data.u_Approve == 0) {
                             $("#password-content").prop('hidden', true);
-                        }else{
+                        } else {
                             $("#password-content").prop('hidden', false);
                         }
-                        
+
                         $('#btnEditPassword').prop('disabled', true);
                         $('#u_Password').keyup(function() {
                             let val = $("#u_Password").val();
@@ -516,10 +527,10 @@ $active_approve = "active";
             });
         }
 
-        $('#btnEditPassword').click(function () {
+        $('#btnEditPassword').click(function() {
             let u_Id = $('#u_Id').html();
             let u_PasswordNew = $('#u_Password').val();
-            
+
             $.ajax({
                 url: "/ReserveSpace/backend/Service/updatePassword_api.php",
                 type: "POST",
@@ -555,7 +566,6 @@ $active_approve = "active";
                 }
             });
         })
-
     </script>
 </body>
 
