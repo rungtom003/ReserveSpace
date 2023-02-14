@@ -9,14 +9,14 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         $a_Id = $_POST["a_Id"];
         $a_Name = $_POST["a_Name"];
 
-        $sql = "UPDATE `reserve_space`.`tb_area` SET `a_Name` = '" . $a_Name . "' ";
+        $sql = "UPDATE `kkmuni_street`.`tb_area` SET `a_Name` = '" . $a_Name . "' ";
         $sql .= "WHERE `a_Id` = '" . $a_Id . "';";
 
         if ($conn->query($sql) === TRUE) {
             $resp->set_message("บันทึกข้อมูลสำเร็จ");
             $resp->set_status("success");
 
-            // $sqlSelect = "SELECT * FROM reserve_space.tb_user where `u_Username` = '" . $u_Username . "' and `u_CardNumber` = '" . $u_CardNumber . "' ;";
+            // $sqlSelect = "SELECT * FROM kkmuni_street.tb_user where `u_Username` = '" . $u_Username . "' and `u_CardNumber` = '" . $u_CardNumber . "' ;";
             // $result = $conn->query($sqlSelect);
             // if ($result->num_rows > 0) {
             //     $row = $result->fetch_assoc();

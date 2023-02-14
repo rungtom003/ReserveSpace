@@ -9,7 +9,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
         $u_Id = $_POST["u_Id"];
 
-        $sql = "UPDATE `reserve_space`.`tb_user` SET `u_Approve` = '1' WHERE (`u_Id` = '".$u_Id."');";
+        $sql = "UPDATE `kkmuni_street`.`tb_user` SET `u_Approve` = '1' WHERE (`u_Id` = '".$u_Id."');";
 
         if ($conn->multi_query($sql) === TRUE) {
             $resp->set_message("อนุมัติผู้ใช้สำเร็จ.");

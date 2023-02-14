@@ -10,7 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         $username = $_POST["u_Username"];
         $password = $_POST["u_Password"];
 
-        $sql = "SELECT * FROM reserve_space.tb_user where u_Username = '" . $username . "';";
+        $sql = "SELECT * FROM kkmuni_street.tb_user where u_Username = '" . $username . "';";
         $result = $conn->query($sql);
         if ($result->num_rows > 0) {
             $row = $result->fetch_assoc();

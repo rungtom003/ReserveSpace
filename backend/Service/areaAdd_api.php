@@ -22,7 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
         // for($i = 0; $i <= 42; $i++){
         //     $name = $a_Name.$i;
-        //     $sql = "INSERT INTO `reserve_space`.`tb_area` (`z_Id`,`a_Name` ) VALUES ('".$z_Id."', '" . $name . "');";
+        //     $sql = "INSERT INTO `kkmuni_street`.`tb_area` (`z_Id`,`a_Name` ) VALUES ('".$z_Id."', '" . $name . "');";
         //     if ($conn->query($sql) === TRUE) {
         //         $resp->set_message("บันทึกข้อมูลสำเร็จ > ".$i);
         //         $resp->set_status("success");
@@ -32,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         //     }
         // }
 
-        $sql = "INSERT INTO `reserve_space`.`tb_area` (`a_Id`,`z_Id`,`a_Name` ) VALUES ('" . uniqidReal() . "','" . $z_Id . "', '" . $a_Name . "');";
+        $sql = "INSERT INTO `kkmuni_street`.`tb_area` (`a_Id`,`z_Id`,`a_Name` ) VALUES ('" . uniqidReal() . "','" . $z_Id . "', '" . $a_Name . "');";
 
         if ($conn->query($sql) === TRUE) {
             $resp->set_message("บันทึกข้อมูลสำเร็จ");

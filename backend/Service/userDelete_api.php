@@ -8,7 +8,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
         $u_Id = $_POST["u_Id"];
 
-        $sql = "DELETE FROM `reserve_space`.`tb_user` WHERE `u_Id` = '".$u_Id."'; ";
+        $sql = "DELETE FROM `kkmuni_street`.`tb_user` WHERE `u_Id` = '".$u_Id."'; ";
 
         if ($conn->query($sql) === TRUE) {
             $resp->set_message("ลบข้อมูลสำเร็จ");

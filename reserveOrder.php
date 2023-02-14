@@ -73,6 +73,12 @@ $active_reserveOrder = "active";
                     language: {
                         url: './src/assets/DataTables/LanguageTable/th.json'
                     },
+                    order: [
+                        [1, 'asc']
+                    ],
+                    rowGroup: {
+                        dataSrc: 'z_Name'
+                    },
                     columnDefs: [{
                             targets: 0,
                             title: "บล็อค",
@@ -116,6 +122,11 @@ $active_reserveOrder = "active";
                         },
                         {
                             targets: 8,
+                            title: "วันที่จอง",
+                            data: "r_DateTime",
+                        },
+                        {
+                            targets: 9,
                             title: "สถานะ",
                             data: null,
                             defaultContent: "",
@@ -140,7 +151,7 @@ $active_reserveOrder = "active";
                             }
                         },
                         {
-                            targets: 9,
+                            targets: 10,
                             title: "#",
                             data: null,
                             defaultContent: "",

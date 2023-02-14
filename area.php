@@ -91,6 +91,12 @@ $active_area = "active";
                     language: {
                         url: './src/assets/DataTables/LanguageTable/th.json'
                     },
+                    order: [
+                        [0, 'asc']
+                    ],
+                    rowGroup: {
+                        dataSrc: 'z_Name'
+                    },
                     columnDefs: [{
                             targets: 0,
                             title: "โซน",

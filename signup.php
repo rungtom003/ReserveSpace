@@ -235,11 +235,11 @@ $active_signup = "active";
                                     <img style="margin-top: 5px;" id="originalImage" crossorigin="anonymous" />
                                 </div>
 
-                                <div class="d-flex flex-column align-items-center">
-                                    <h2>Compressed Image</h2>
+                                <div class="d-flex flex-column align-items-center" id="content-submit">
+                                    <h2 hidden id="compimg">Compressed Image</h2>
                                     <!-- <div><b>Size:</b> <span id="size"></span></div> -->
                                     <img id="compressedImage" />
-                                    <button type="submit" class="btn btn-primary my-3" id="btn_signup">สร้างบัญชี</button>
+                                    <button type="submit" class="btn btn-primary my-3" id="btn_signup" hidden>สร้างบัญชี</button>
                                 </div>
                             </form>
                         </div>
@@ -273,6 +273,7 @@ $active_signup = "active";
                 $("#g-u_ShopName").prop('hidden', true);
                 $("#g-selectZoneName").prop('hidden', true);
                 $("#g-u_ProductName").prop('hidden', true);
+                $("#compimg").prop('hidden', true);
 
 
             } else if ($("#RadioAdmin").prop('checked') === true && $("#RadioUser").prop('checked') === false) {
@@ -322,6 +323,8 @@ $active_signup = "active";
                 $("#u_ShopName").prop("value", "");
                 $("#selectZoneName").prop("value", "");
                 $("#u_ProductName").prop("value", "");
+
+                $("#compimg").prop('hidden', false);
 
             } else {
                 $("#btn_signup").prop('hidden', false);
@@ -376,6 +379,8 @@ $active_signup = "active";
                 $("#u_ShopName").prop("value", "");
                 $("#selectZoneName").prop("value", "");
                 $("#u_ProductName").prop("value", "");
+
+                $("#compimg").prop('hidden', false);
             }
         }
 

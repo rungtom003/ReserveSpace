@@ -4,6 +4,7 @@
 // if ($order != null) {
 //     $count_order = count($order);
 // }
+include("./layout/static_path.php");
 ?>
 <!-- start: Navbar -->
 <nav class="px-3 py-2 bg-white rounded shadow">
@@ -28,7 +29,7 @@
         <!-- <a type="button" class="btn btn-primary position-relative" href="/ReserveSpace/cart.php">
             <i class="ri-shopping-cart-line"></i>
             <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                <span id="count-order"><?=$count_order?></span>
+                <span id="count-order"></span>
                 <span class="visually-hidden">unread messages</span>
             </span>
         </a> -->
@@ -36,11 +37,11 @@
     <div class="dropdown">
         <div class="d-flex align-items-center cursor-pointer dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
             <span class="me-2 d-none d-sm-block" style="font-family: kanit-Regular;"><?php echo isset($user["u_FirstName"]) ? $user["u_FirstName"] : "" ?> <?php echo isset($user["u_LastName"]) ? $user["u_LastName"] : "" ?></span>
-            <img class="navbar-profile-image" src="/ReserveSpace/src/img/user.jpg" alt="Image">
+            <img class="navbar-profile-image" src="<?=$host_path?>/src/img/user.jpg" alt="Image">
         </div>
         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-            <li><a class="dropdown-item" style="font-family: kanit-Regular;" href="/ReserveSpace/persionData.php">ข้อมูลส่วนตัว</a></li>
-            <li><a class="dropdown-item" style="font-family: kanit-Regular;" href="/ReserveSpace/backend/Service/logout_api.php">ออกจากระบบ</a></li>
+            <li><a class="dropdown-item" style="font-family: kanit-Regular;" href="<?=$host_path?>/persionData.php">ข้อมูลส่วนตัว</a></li>
+            <li><a class="dropdown-item" style="font-family: kanit-Regular;" href="<?=$host_path?>/backend/Service/logout_api.php">ออกจากระบบ</a></li>
         </ul>
     </div>
 </nav>
