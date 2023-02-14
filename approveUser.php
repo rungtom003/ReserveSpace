@@ -52,6 +52,7 @@ $active_approve = "active";
 
                                 <div class="row g-2 p-2">
                                     <div class="col-md-3">
+                                        <span id="u_Id" hidden></span>
                                         <label class="form-label">รหัสเจ้าหน้าที่</label>
                                         <input type="text" class="form-control" placeholder="ID" id="u_OfficerId" readonly>
                                         <!-- <div class="form-text">Enter your Full name</div> -->
@@ -79,6 +80,16 @@ $active_approve = "active";
                                     <div class="col-md">
                                         <label class="form-label">ชื่อผู้ใช้</label>
                                         <input type="Username" class="form-control" placeholder="Username" id="u_Username" readonly>
+                                        <!-- <div class="form-text">Enter your Full name</div> -->
+                                    </div>
+                                </div>
+                                <div class="row g-2 p-2">
+                                    <div class="col-md">
+                                        <input type="text" class="form-control" placeholder="********" id="u_Password">
+                                        <!-- <div class="form-text">Enter your Full name</div> -->
+                                    </div>
+                                    <div class="col-md-3">
+                                        <button type="button" class="btn btn-primary" id="btnEditPassword">แก้ไขรหัสผ่าน</button>
                                         <!-- <div class="form-text">Enter your Full name</div> -->
                                     </div>
                                 </div>
@@ -443,6 +454,9 @@ $active_approve = "active";
                     });
 
                     if (res.status == "success") {
+
+                        $('#u_Password').val("");
+                        $('#u_Id').html(res.data.u_Id);
                         $('#img').attr("src", u_Img);
                         $('#u_OfficerId').val(res.data.u_OfficerId);
                         $('#Prefix').val(res.data.u_Prefix);
@@ -479,6 +493,45 @@ $active_approve = "active";
                 }
             });
         }
+
+        $('#btnEditPassword').click(function () {
+            let u_Id = $('#u_Id').html();
+            let u_Password = $('#u_Password').val();
+            
+            $.ajax({
+                url: "/ReserveSpace/backend/Service/updatePassword_api.php",
+                type: "POST",
+                data: {
+                    u_Id: u_Id,
+                    u_Password: u_Password
+                },
+                dataType: "json",
+                success: function(res) {
+                    let message = res.message;
+                    let status = res.status;
+
+                    if (status == "success") {
+                        $('#detailModal').modal('hide');
+                        Swal.fire({
+                            icon: 'success',
+                            title: message,
+                            showConfirmButton: true,
+                            timer: 1500
+                        }).then((result) => {
+                            $('#table-users').DataTable().destroy();
+                            loadUser();
+                        })
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'เเจ้งเตือน',
+                            text: message
+                        })
+                    }
+                }
+            });
+        })
+
     </script>
 </body>
 
