@@ -18,7 +18,7 @@ $active_signup = "active";
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Index</title>
+    <title><?=$titleHead?></title>
     <?php include("./layout/css.php"); ?>
 </head>
 

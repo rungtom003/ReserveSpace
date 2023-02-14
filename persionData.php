@@ -13,7 +13,7 @@ $active_persionData = "active";
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title><?= $$titleHead ?></title>
+    <title><?=$titleHead?></title>
     <?php include("./layout/css.php"); ?>
 </head>
 
@@ -24,12 +24,12 @@ $active_persionData = "active";
         <div class="p-2">
             <?php include("./layout/navmain.php"); ?>
             <!-- start: Content -->
-            <div class="py-1">
+            <div class="py-1" style="font-family: kanit-Regular;">
                 <div class="content d-flex flex-column flex-column-fluid">
                     <div class="d-flex justify-content-center">
                         <div class="card">
                             <div class="card-header">
-                                Featured
+                                ข้อมูลส่วนตัว
                             </div>
                             <div class="card-body">
                                 <form>
