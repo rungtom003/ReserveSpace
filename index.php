@@ -5,8 +5,7 @@ if ($user == null) {
     header('location: /ReserveSpace/login.php');
 }
 
-if($user["ur_Id"] == "R002")
-{
+if ($user["ur_Id"] == "R002") {
     header('location: /ReserveSpace/dashboard.php');
 }
 
@@ -146,6 +145,7 @@ $active_index = "active";
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
+                    <div id="modal-body-load" class="d-flex justify-content-center"></div>
                     <ul id="ul-detail-content-1">
                     </ul>
 
@@ -174,7 +174,7 @@ $active_index = "active";
                     <div class="modal-body">
                         <h4>รายละเอียดการจอง</h4>
                         <div class="row g-2 p-2">
-                            <input type="text" class="form-control" placeholder="ล็อค" id="a_Id" readonly hidden >
+                            <input type="text" class="form-control" placeholder="ล็อค" id="a_Id" readonly hidden>
                             <input type="text" class="form-control" placeholder="ล็อคประจำ" id="area_static" readonly hidden>
                             <div class="col-md">
                                 <label class="form-label">ล็อค</label>
@@ -284,8 +284,16 @@ $active_index = "active";
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ปิด</button>
-                        <button type="submit" class="btn btn-primary" id="add-cart">จอง</button>
+                        <div id="btn-loadding" hidden>
+                            <button class="btn btn-primary" type="button" disabled>
+                                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                Loading...
+                            </button>
+                        </div>
+                        <div id="btn-unloadding">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ปิด</button>
+                            <button type="submit" class="btn btn-primary" id="add-cart">จอง</button>
+                        </div>
                     </div>
                 </form>
             </div>
@@ -307,36 +315,33 @@ $active_index = "active";
                     z_Id: z_Id,
                     a_Name: $("#input_find").val()
                 },
+                beforeSend: function() {
+                    let txtHTML = `<div class="spinner-border text-primary" role="status">
+                                    <span class="visually-hidden">Loading...</span>
+                                    </div>`;
+                    $("#reserve-content").html(txtHTML);
+                },
                 success: function(res) {
                     const data = res.data;
                     let txt_content = "";
                     $.each(data, function(key, val) {
-                        if(val.a_ReserveStatus === "0")
-                        {
+                        if (val.a_ReserveStatus === "0") {
                             txt_content += `<div class="d-flex justify-content-center align-items-center reserve-box-green" data-bs-toggle="modal" data-bs-target="#reserve-modal" data-bs-area_static="0" data-bs-whatever='${JSON.stringify(val)}'>
                                                 <span class="text-light">${val.a_Name}</span>
                                             </div>`;
-                        }
-                        else if(val.a_ReserveStatus === "1")
-                        {
+                        } else if (val.a_ReserveStatus === "1") {
                             txt_content += `<div class="d-flex justify-content-center align-items-center reserve-box-red" data-bs-toggle="modal" data-bs-target="#reserve-detail-modal" data-bs-whatever='${val.a_Id}'>
                                                 <span class="text-light">${val.a_Name}</span>
                                             </div>`;
-                        }
-                        else if(val.a_ReserveStatus === "2")
-                        {
+                        } else if (val.a_ReserveStatus === "2") {
                             txt_content += `<div class="d-flex justify-content-center align-items-center reserve-box-primary" data-bs-toggle="modal" data-bs-target="#reserve-detail-modal" data-bs-whatever='${val.a_Id}'>
                                                 <span class="text-light">${val.a_Name}</span>
                                             </div>`;
-                        }
-                        else if(val.a_ReserveStatus === "3")
-                        {
+                        } else if (val.a_ReserveStatus === "3") {
                             txt_content += `<div class="d-flex justify-content-center align-items-center reserve-box-yellow" data-bs-toggle="modal" data-bs-target="#reserve-modal" data-bs-area_static="1" data-bs-whatever='${JSON.stringify(val)}'>
                                                 <span class="text-light">${val.a_Name}</span>
                                             </div>`;
-                        }
-                        else
-                        {
+                        } else {
                             txt_content += `<div class="d-flex justify-content-center align-items-center reserve-box-red" data-bs-toggle="modal" data-bs-target="#reserve-detail-modal" data-bs-whatever='${val.a_Id}'>
                                                 <span class="text-light">${val.a_Name}</span>
                                             </div>`;
@@ -377,27 +382,31 @@ $active_index = "active";
                 data: {
                     a_Id: a_Id
                 },
+                beforeSend: function() {
+                    let txtHTML = `<div class="spinner-border text-primary" role="status">
+                                    <span class="visually-hidden">Loading...</span>
+                                    </div>`;
+                    $("#modal-body-load").html(txtHTML);
+                },
                 success: function(res) {
                     //console.log(res)
                     const data_arr = res.data;
                     if (res.status === "seccess") {
+                        $("#modal-body-load").html("");
                         let txtHTML = "";
                         let txtHTML2 = "";
-                        $.each(data_arr,function(key,val){
-                            if(val.r_Status === "1"){
+                        $.each(data_arr, function(key, val) {
+                            if (val.r_Status === "1") {
                                 txtHTML += `<li class="fw-bold">ชื่อผู้จอง : <span class="fw-normal" id="u_Name">${val.u_FirstName} ${val.u_LastName}</span></li>
                                         <li class="fw-bold">ชื่อร้าน : <span class="fw-normal" id="u_ShopName">${val.u_ShopName}</span></li>
                                         <li class="fw-bold">ล็อค : <span class="fw-normal" id="a_Name">${val.a_Name}</span></li>
                                         <li class="fw-bold">โซน : <span class="fw-normal" id="z_Name">${val.z_Name}</span></li>
                                         <li class="fw-bold">สินค้าที่ขาย : <span class="fw-normal" id="u_ProductName">${val.u_ProductName}</span></li>`;
-                            }
-                            else if(val.r_Status === "2"){
+                            } else if (val.r_Status === "2") {
                                 txtHTML2 += `<li class="fw-bold">เจ้าของล็อคประจำ : <span class="fw-normal" >${val.u_FirstName} ${val.u_LastName}</span></li>
                                         <li class="fw-bold">ชื่อร้าน : <span class="fw-normal" >${val.u_ShopName}</span></li>
                                         <li class="fw-bold">สินค้าที่ขาย : <span class="fw-normal" >${val.u_ProductName}</span></li>`;
-                            }
-                            else
-                            {
+                            } else {
                                 txtHTML += "";
                             }
                         });
@@ -414,18 +423,26 @@ $active_index = "active";
             $("#pt_Name").html("");
         });
 
-        document.getElementById("add-cart").addEventListener('click',(e) => {
+        document.getElementById("add-cart").addEventListener('click', (e) => {
             e.preventDefault();
             const data = {
                 a_Id: $("#a_Id").val(),
-                area_static:$("#area_static").val()
+                area_static: $("#area_static").val()
             }
             $.ajax({
                 url: "/ReserveSpace/backend/Service/confirmOrder.php",
                 type: "POST",
                 dataType: "json",
                 data: data,
+                beforeSend: function() {
+                    $("#btn-loadding").prop("hidden",false);
+                    $("#btn-unloadding").prop("hidden",true);
+                    $(".btn-close").prop("hidden",true);
+                },
                 success: function(res) {
+                    $("#btn-loadding").prop("hidden",true);
+                    $("#btn-unloadding").prop("hidden",false);
+                    $(".btn-close").prop("hidden",false);
                     if (res.status === "success") {
                         Swal.fire({
                             icon: 'success',

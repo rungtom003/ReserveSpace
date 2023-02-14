@@ -2,7 +2,16 @@
 include "../class/resp.php";
 include "connectdb.php";
 
-
+function uniqidReal($lenght = 13) {
+    if (function_exists("random_bytes")) {
+        $bytes = random_bytes(ceil($lenght / 2));
+    } elseif (function_exists("openssl_random_pseudo_bytes")) {
+        $bytes = openssl_random_pseudo_bytes(ceil($lenght / 2));
+    } else {
+        throw new Exception("no cryptographically secure random function available");
+    }
+    return substr(bin2hex($bytes), 0, $lenght);
+}
 
 $resp = new Resp();
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
@@ -23,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         //     }
         // }
 
-        $sql = "INSERT INTO `reserve_space`.`tb_area` (`z_Id`,`a_Name` ) VALUES ('" . $z_Id . "', '" . $a_Name . "');";
+        $sql = "INSERT INTO `reserve_space`.`tb_area` (`a_Id`,`z_Id`,`a_Name` ) VALUES ('" . uniqidReal() . "','" . $z_Id . "', '" . $a_Name . "');";
 
         if ($conn->query($sql) === TRUE) {
             $resp->set_message("บันทึกข้อมูลสำเร็จ");

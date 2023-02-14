@@ -307,6 +307,12 @@ $active_Dashboard = "active";
                     z_Id: $("#select-zone").val(),
                     a_Name: $("#input_find").val()
                 },
+                beforeSend:function(){
+                    let txtHTML = `<div class="spinner-border text-primary" role="status">
+                                    <span class="visually-hidden">Loading...</span>
+                                    </div>`;
+                    $("#reserve-content").html(txtHTML);
+                },
                 success: function(res) {
                     const data = res.data;
                     let txt_content = "";
