@@ -49,15 +49,14 @@ $active_approve = "active";
                                 <div class="d-flex justify-content-center">
                                     <img class="img-fluid" id="img" alt="" src="" style="height: 150px">
                                 </div>
-
+                                <span id="u_Id" hidden></span>
                                 <div class="row g-2 p-2">
-                                    <div class="col-md">
-                                        <span id="u_Id" hidden></span>
+                                    <div class="col-md" id="u_OfficerId-content">
                                         <label class="form-label">รหัสเจ้าหน้าที่</label>
                                         <input type="text" class="form-control" placeholder="" id="u_OfficerId" readonly>
                                         <!-- <div class="form-text">Enter your Full name</div> -->
                                     </div>
-                                    <div class="col-md">
+                                    <div class="col-md" id="u_IdWalkin-content">
                                         <label class="form-label">รหัส Walk in</label>
                                         <input type="text" class="form-control" placeholder="" id="u_IdWalkin" readonly>
                                         <!-- <div class="form-text">Enter your Full name</div> -->
@@ -108,7 +107,7 @@ $active_approve = "active";
                                         <label class="form-check-label" for="RadioUser">User</label>
                                     </div>
                                 </div>
-                                <div class="row g-2 p-2">
+                                <div class="row g-2 p-2" id="u_Shop-content">
                                     <div class="col-md">
                                         <label class="form-label">ชื่อร้าน</label>
                                         <input type="text" class="form-control" placeholder="" id="u_ShopName" readonly>
@@ -118,14 +117,14 @@ $active_approve = "active";
                                         <input type="text" class="form-control" id="ZoneName" readonly>
                                     </div>
                                 </div>
-                                <div class="row g-2 p-2">
+                                <div class="row g-2 p-2" id="shop_Detail-content">
                                     <div class="mb-3">
                                         <label for="u_ProductName" class="form-label">รายละเอียดสินค้า</label>
                                         <textarea class="form-control" id="u_ProductName" rows="3" readonly></textarea>
                                     </div>
                                 </div>
                                 <div class="row g-2 p-2">
-                                    <div class="col-md">
+                                    <div class="col-md" id="u_Position-content">
                                         <label class="form-label">ตำแหน่ง</label>
                                         <input type="text" class="form-control" placeholder="" id="u_Position" readonly>
                                         <!-- <div  class="form-text">Enter your Last name</div> -->
@@ -480,8 +479,18 @@ $active_approve = "active";
                         $('#u_Username').val(res.data.u_Username);
                         if (ur_Id == "R001") {
                             $('#RadioUser').prop("checked", true);
+                            $('#u_OfficerId-content').hide();
+                            $('#u_Position-content').hide();
+                            $('#u_IdWalkin-content').show();
+                            $('#u_Shop-content').show();
+                            $('#shop_Detail-content').show();
                         } else if (ur_Id == "R002") {
                             $('#RadioAdmin').prop("checked", true);
+                            $('#u_OfficerId-content').show();
+                            $('#u_Position-content').show();
+                            $('#u_IdWalkin-content').hide();
+                            $('#u_Shop-content').hide();
+                            $('#shop_Detail-content').hide();
                         }
                         $('#u_ShopName').val(res.data.u_ShopName);
 
@@ -566,6 +575,7 @@ $active_approve = "active";
                 }
             });
         })
+
     </script>
 </body>
 
