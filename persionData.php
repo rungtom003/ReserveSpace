@@ -1,8 +1,9 @@
 <?php
+include("./layout/static_path.php");
 session_start();
 $user = (isset($_SESSION['user'])) ? unserialize($_SESSION['user']) : null;
 if ($user == null) {
-    header('location: /ReserveSpace/login.php');
+    header('location: '.$host_path.'/login.php');
 }
 $titleHead = "ข้อมูลส่วนตัว";
 $active_persionData = "active";
@@ -34,7 +35,7 @@ $active_persionData = "active";
                             <div class="card-body">
                                 <form>
                                 <div class="d-flex justify-content-center">
-                                    <img class="img-fluid" id="img" alt="" src="/ReserveSpace/src/img/upload/<?=$user["u_Img"]?>" style="height: 150px" >
+                                    <img class="img-fluid" id="img" alt="" src="<?=$host_path?>/src/img/upload/<?=$user["u_Img"]?>" style="height: 150px" >
                                 </div>
                                     <span hidden id="ur_ID"><?= $user["ur_Id"] ?></span>
                                     <?php if ($user["ur_Id"] != "R001") { ?>
@@ -208,7 +209,7 @@ $active_persionData = "active";
         function loadZone() {
             let zoneID = $('#zoneID').html();
             $.ajax({
-                url: "/ReserveSpace/backend/Service/zone_api.php",
+                url: "<?=$host_path?>/backend/Service/zone_api.php",
                 type: "POST",
                 dataType: "json",
                 success: function(res) {
@@ -282,7 +283,7 @@ $active_persionData = "active";
             }
 
             $.ajax({
-                url: "/ReserveSpace/backend/Service/persionData_api.php",
+                url: "<?=$host_path?>/backend/Service/persionData_api.php",
                 type: "POST",
                 data: data,
                 dataType: "json",

@@ -1,12 +1,13 @@
 <?php
+include("./layout/static_path.php");
 session_start();
 $user = (isset($_SESSION['user'])) ? unserialize($_SESSION['user']) : null;
 if ($user == null) {
-    header('location: /ReserveSpace/login.php');
+    header('location: '.$host_path.'/login.php');
 }
 
 if ($user["ur_Id"] == "R002") {
-    header('location: /ReserveSpace/dashboard.php');
+    header('location: '.$host_path.'/dashboard.php');
 }
 
 $titleHead = "จองพื้นที่ขาย";
@@ -308,7 +309,7 @@ $active_index = "active";
 
         const fcFind = () => {
             $.ajax({
-                url: "/ReserveSpace/backend/Service/areaList_api.php",
+                url: "<?=$host_path?>/backend/Service/areaList_api.php",
                 type: "POST",
                 dataType: "json",
                 data: {
@@ -376,7 +377,7 @@ $active_index = "active";
             const a_Id = button.getAttribute('data-bs-whatever');
 
             $.ajax({
-                url: "/ReserveSpace/backend/Service/reserveFind.php",
+                url: "<?=$host_path?>/backend/Service/reserveFind.php",
                 type: "POST",
                 dataType: "json",
                 data: {
@@ -430,7 +431,7 @@ $active_index = "active";
                 area_static: $("#area_static").val()
             }
             $.ajax({
-                url: "/ReserveSpace/backend/Service/confirmOrder.php",
+                url: "<?=$host_path?>/backend/Service/confirmOrder.php",
                 type: "POST",
                 dataType: "json",
                 data: data,

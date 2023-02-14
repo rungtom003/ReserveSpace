@@ -1,8 +1,9 @@
 <?php
+include("./layout/static_path.php");
 session_start();
 $user = (isset($_SESSION['user'])) ? unserialize($_SESSION['user']) : null;
 if ($user == null) {
-    header('location: /ReserveSpace/login.php');
+    header('location: '.$host_path.'/login.php');
 }
 $titleHead = "ตระกล้าการจองพื้นที่ขาย";
 $active_index = "active";
@@ -106,7 +107,7 @@ $active_index = "active";
             }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({
-                        url: "/ReserveSpace/backend/Service/confirmOrder.php",
+                        url: "<?=$host_path?>/backend/Service/confirmOrder.php",
                         type: "POST",
                         dataType: "json",
                         success: function(res) {
@@ -138,7 +139,7 @@ $active_index = "active";
         const deleteSession = (elm) => {
             const a_Id = elm.value;
             $.ajax({
-                url: "/ReserveSpace/backend/Service/removeCart_api.php",
+                url: "<?=$host_path?>/backend/Service/removeCart_api.php",
                 type: "POST",
                 dataType: "json",
                 data: {

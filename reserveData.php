@@ -1,8 +1,9 @@
 <?php
+include("./layout/static_path.php");
 session_start();
 $user = (isset($_SESSION['user'])) ? unserialize($_SESSION['user']) : null;
 if ($user == null) {
-    header('location: /ReserveSpace/login.php');
+    header('location: '.$host_path.'/login.php');
 }
 $titleHead = "ข้อมูลการจอง";
 $active_reserveData = "active";
@@ -45,7 +46,7 @@ $active_reserveData = "active";
         const u_Id = "<?= $user["u_Id"] ?>";
         $('#table-Order').DataTable({
             ajax: {
-                url: '/ReserveSpace/backend/Service/reserveUser.php',
+                url: '<?=$host_path?>/backend/Service/reserveUser.php',
                 type: 'POST',
                 data: {
                     u_Id: u_Id
@@ -211,7 +212,7 @@ $active_reserveData = "active";
             }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({
-                        url: "/ReserveSpace/backend/Service/cancelReserve.php",
+                        url: "<?=$host_path?>/backend/Service/cancelReserve.php",
                         type: "POST",
                         dataType: "json",
                         data: {

@@ -1,8 +1,9 @@
 <?php
+include("./layout/static_path.php");
 session_start();
 $user = (isset($_SESSION['user'])) ? unserialize($_SESSION['user']) : null;
 if ($user == null) {
-    header('location: /ReserveSpace/login.php');
+    header('location: '.$host_path.'/login.php');
 }
 
 $titleHead = "Dashboard";
@@ -300,7 +301,7 @@ $active_Dashboard = "active";
 
         const fcFind = () => {
             $.ajax({
-                url: "/ReserveSpace/backend/Service/areaList_api.php",
+                url: "<?=$host_path?>/backend/Service/areaList_api.php",
                 type: "POST",
                 dataType: "json",
                 data: {
@@ -360,7 +361,7 @@ $active_Dashboard = "active";
             const a_Id = button.getAttribute('data-bs-whatever');
 
             $.ajax({
-                url: "/ReserveSpace/backend/Service/reserveFind.php",
+                url: "<?=$host_path?>/backend/Service/reserveFind.php",
                 type: "POST",
                 dataType: "json",
                 data: {
@@ -406,7 +407,7 @@ $active_Dashboard = "active";
 
         $(document).ready(function() {
             $.ajax({
-                url: "/ReserveSpace/backend/Service/zone_api.php",
+                url: "<?=$host_path?>/backend/Service/zone_api.php",
                 dataType: "json",
                 type: "POST",
                 success: function(res) {

@@ -1,8 +1,9 @@
 <?php
+include("./layout/static_path.php");
     session_start();
     $user = (isset($_SESSION['user'])) ? unserialize($_SESSION['user']) : null;
     if($user == null){
-        header('location: /ReserveSpace/login.php');
+        header('location: '.$host_path.'/login.php');
     }
     $titleHead = "Home";
 ?>
