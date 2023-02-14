@@ -51,7 +51,7 @@ $active_persionData = "active";
                                         <div class="row g-2 p-2">
                                             <div class="col-md-3">
                                                 <label class="form-label">รหัส Walk in</label>
-                                                <input type="text" class="form-control" placeholder="" id="u_IdWalkin" value="<?= $user["u_IdWalkin"] ?>" readonly>
+                                                <input type="text" class="form-control" placeholder="" id="u_IdWalkin" value="<?= $user["u_IdWalkin"] ?>">
                                                 <!-- <div class="form-text">Enter your Full name</div> -->
                                             </div>
                                         </div>
@@ -290,11 +290,13 @@ $active_persionData = "active";
             let z_Id = "";
             let u_ShopName = "";
             let u_ProductName = "";
+            let u_IdWalkin = "";
 
             if (role === "R001") {
                 z_Id = $('#selectZoneName').val();
                 u_ShopName = $('#u_ShopName').val();
                 u_ProductName = $('#u_ProductName').val();
+                u_IdWalkin = $('#u_IdWalkin').val();
             }
 
             let data = {
@@ -314,7 +316,8 @@ $active_persionData = "active";
                 u_Province: u_Province,
                 z_Id: z_Id,
                 u_ShopName: u_ShopName,
-                u_ProductName: u_ProductName
+                u_ProductName: u_ProductName,
+                u_IdWalkin: u_IdWalkin
             }
 
             $.ajax({
@@ -353,7 +356,7 @@ $active_persionData = "active";
             let u_Id = "<?= $user["u_Id"] ?>";
             let u_Username = $('#u_Username').val();
             $.ajax({
-                url: "/ReserveSpace/backend/Service/updateUser_api.php",
+                url: "<?=$host_path?>/backend/Service/updateUser_api.php",
                 type: "POST",
                 data: {
                     u_Id: u_Id,
@@ -370,7 +373,7 @@ $active_persionData = "active";
                             showConfirmButton: false,
                             timer: 1500
                         }).then((result) => {
-                            window.location.href = "/ReserveSpace/backend/Service/logout_api.php"
+                            window.location.href = "<?=$host_path?>/backend/Service/logout_api.php"
                         })
 
                     } else if (status == "Duplicate user") {
@@ -398,7 +401,7 @@ $active_persionData = "active";
             let u_PasswordNew = $('#u_PasswordNew').val();
 
             $.ajax({
-                url: "/ReserveSpace/backend/Service/updatePassword_api.php",
+                url: "<?=$host_path?>/backend/Service/updatePassword_api.php",
                 type: "POST",
                 data: {
                     status: "user",
@@ -418,7 +421,7 @@ $active_persionData = "active";
                             showConfirmButton: false,
                             timer: 1500
                         }).then((result) => {
-                            window.location.href = "/ReserveSpace/backend/Service/logout_api.php"
+                            window.location.href = "<?=$host_path?>/backend/Service/logout_api.php"
                         })
 
                     } else {
