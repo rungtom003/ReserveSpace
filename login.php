@@ -1,8 +1,9 @@
 <?php
+include("./layout/static_path.php");
 session_start();
 $user = (isset($_SESSION['user'])) ? unserialize($_SESSION['user']) : null;
 if($user != null){
-    header('location: /ReserveSpace/index.php');
+    header('location: '.$host_path.'/index.php');
 }
 ?>
 <!doctype html>
@@ -24,7 +25,7 @@ if($user != null){
   <main class="form-signin w-100 m-auto">
     <form>
       <div class="d-flex justify-content-center">
-      <img class="mb-4 w-50" alt="" class="img-fluid" src="/ReserveSpace/src/img/user.png">
+      <img class="mb-4 w-50" alt="" class="img-fluid" src="<?=$host_path?>/src/img/user.png">
       </div>
       
       <h1 class="h3 mb-3 fw-normal">เข้าสู่ระบบ</h1>
@@ -52,7 +53,7 @@ if($user != null){
       let user = $('#input_user').val();
       let password = $('#input_password').val();
       $.ajax({
-        url: "/ReserveSpace/backend/Service/loginapi.php",
+        url: "<?=$host_path?>/backend/Service/loginapi.php",
         type: "POST",
         data: {
           u_Username: user,
@@ -69,7 +70,7 @@ if($user != null){
               footer: 'ยังไม่มีบัญชีผู้ใช้?&nbsp; <a href="userSignup.php"> สร้างบัญชี</a>'
             })
           } else {
-            window.location.href = "/ReserveSpace/index.php"
+            window.location.href = "<?=$host_path?>/index.php"
           }
         }
 

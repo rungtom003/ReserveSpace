@@ -1,11 +1,12 @@
 <?php
+include("./layout/static_path.php");
 session_start();
 $user = (isset($_SESSION['user'])) ? unserialize($_SESSION['user']) : null;
 if ($user == null) {
-    header('location: /ReserveSpace/login.php');
+    header('location: '.$host_path.'/login.php');
 }
 if ($user["ur_Id"] == "R001") {
-    header('location: /ReserveSpace/noaccess.php');
+    header('location: '.$host_path.'/noaccess.php');
 }
 $titleHead = "Area";
 $active_area = "active";
@@ -72,7 +73,7 @@ $active_area = "active";
     <script>
         function loadArea() {
             $.ajax({
-                url: "/ReserveSpace/backend/Service/area_api.php",
+                url: "<?=$host_path?>/backend/Service/area_api.php",
                 type: "GET",
                 dataType: "json",
                 success: function(res) {
@@ -127,7 +128,7 @@ $active_area = "active";
 
         function loadZone() {
             $.ajax({
-                url: "/ReserveSpace/backend/Service/zone_api.php",
+                url: "<?=$host_path?>/backend/Service/zone_api.php",
                 type: "POST",
                 dataType: "json",
                 success: function(res) {
@@ -151,7 +152,7 @@ $active_area = "active";
             let a_Name = $('#inputAreaName').val();
             //console.log(`Zone ID: ${z_Id}, Area Name: ${a_Name}`);
             $.ajax({
-                url: "/ReserveSpace/backend/Service/areaAdd_api.php",
+                url: "<?=$host_path?>/backend/Service/areaAdd_api.php",
                 type: "POST",
                 data: {z_Id:z_Id, a_Name:a_Name},
                 //data: null,
@@ -246,7 +247,7 @@ $active_area = "active";
                 })
             } else {
                 $.ajax({
-                    url: "/ReserveSpace/backend/Service/areaUpdate_api.php",
+                    url: "<?=$host_path?>/backend/Service/areaUpdate_api.php",
                     type: "POST",
                     data: {
                         a_Id: a_Id,
@@ -306,7 +307,7 @@ $active_area = "active";
                 if (result.isConfirmed) {
 
                     $.ajax({
-                        url: "/ReserveSpace/backend/Service/areaDelete_api.php",
+                        url: "<?=$host_path?>/backend/Service/areaDelete_api.php",
                         type: "POST",
                         data: {
                             a_Id: a_Id

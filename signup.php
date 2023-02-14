@@ -1,12 +1,13 @@
 <?php
+include("./layout/static_path.php");
 session_start();
 $user = (isset($_SESSION['user'])) ? unserialize($_SESSION['user']) : null;
 if ($user == null) {
-    header('location: /ReserveSpace/login.php');
+    header('location: '.$host_path.'/login.php');
 }
 
 if ($user["ur_Id"] == "R001") {
-    header('location: /ReserveSpace/noaccess.php');
+    header('location: '.$host_path.'/noaccess.php');
 }
 
 $titleHead = "เพิ่มผู้ใช้งาน";
@@ -18,7 +19,7 @@ $active_signup = "active";
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Index</title>
+    <title><?=$titleHead?></title>
     <?php include("./layout/css.php"); ?>
 </head>
 
@@ -380,7 +381,7 @@ $active_signup = "active";
 
         function loadZone() {
             $.ajax({
-                url: "/ReserveSpace/backend/Service/zone_api.php",
+                url: "<?=$host_path?>/backend/Service/zone_api.php",
                 type: "POST",
                 dataType: "json",
                 success: function(res) {
@@ -477,7 +478,7 @@ $active_signup = "active";
             formData.append("u_IdWalkin", data.u_IdWalkin);
 
             $.ajax({
-                url: "/ReserveSpace/backend/Service/signup_api.php",
+                url: "<?=$host_path?>/backend/Service/signup_api.php",
                 type: "POST",
                 data: formData,
                 dataType: "json",
