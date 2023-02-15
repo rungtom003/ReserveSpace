@@ -6,6 +6,7 @@ $resp = new Resp();
 $dataUsers = array();
 if ($_SERVER['REQUEST_METHOD'] == "GET") {
     if ($connect_status == "success") {
+        
         $sql = "SELECT tb_zone.z_Id, tb_zone.z_Name,tb_area.a_Id, tb_area.a_Name, tb_area.a_Number, tb_area.a_Detail, tb_area.a_ReserveStatus FROM kkmuni_street.tb_area ";
         $sql .= "inner join kkmuni_street.tb_zone on kkmuni_street.tb_area.z_Id = kkmuni_street.tb_zone.z_Id ;";
         $result = $conn->query($sql);
