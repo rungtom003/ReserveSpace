@@ -129,6 +129,27 @@ $active_area = "active";
                         },
                         {
                             targets: 2,
+                            title: "เปิด - ปิด",
+                            data: null,
+                            defaultContent: "",
+                            render: function(data, type, row, meta) {
+                                let a_ReserveStatus = row.a_ReserveStatus;
+                                let txt = "";
+                                if(a_ReserveStatus == 0){
+                                    txt = `<div class="d-grid gap-2 d-md-block" >
+                                        <button class="btn btn-danger" type="button" onclick="area_Status(this)" value='${JSON.stringify(row)}' id="" >ปิด</button>
+                                    </div>`
+                                }else if(a_ReserveStatus == 5){
+                                    txt = `<div class="d-grid gap-2 d-md-block" >
+                                        <button class="btn btn-primary" type="button" onclick="area_Status(this)" value='${JSON.stringify(row)}' id="" >เปิด</button>
+                                    </div>`
+                                }
+                                
+                                return txt;
+                            }
+                        },
+                        {
+                            targets: 3,
                             title: "#",
                             data: null,
                             defaultContent: "",
@@ -164,9 +185,70 @@ $active_area = "active";
                 }
             });
         }
-
         loadArea();
         loadZone();
+
+        function area_Status(elm){
+            let obj = JSON.parse(elm.value);
+            let a_Id = obj.a_Id;
+            let a_ReserveStatus = obj.a_ReserveStatus;
+            let a_Name = obj.a_Name;
+            let txt = "";
+            if(a_ReserveStatus == 5){
+                txt = "เปิด"
+            }else if(a_ReserveStatus == 0){
+                txt = "ปิด"
+            }
+
+            Swal.fire({
+                title: 'แจ้งเตือน',
+                html: `ต้องการ${txt}บล็อค <b>${a_Name}</b> ใช่หรือไม่`,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'ยืนยัน',
+                cancelButtonText: 'ยกเลิก',
+            }).then((result) => {
+                if (result.isConfirmed) {
+
+                    $.ajax({
+                        url: "<?= $host_path ?>/backend/Service/areaStatus_api.php",
+                        type: "POST",
+                        data: {
+                            a_Id: a_Id,
+                            a_ReserveStatus: a_ReserveStatus
+                        },
+                        dataType: "json",
+                        success: function(res) {
+                            //console.log(res);
+                            let message = res.message;
+                            let status = res.status;
+
+                            if (status == "success") {
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: message,
+                                    showConfirmButton: true,
+                                    timer: 1500
+                                }).then((result) => {
+                                    $('#table-area').DataTable().destroy();
+                                    loadArea();
+                                })
+                            } else {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'เเจ้งเตือน',
+                                    text: message
+                                })
+                            }
+                        }
+                    });
+
+                }
+            })
+
+        }
 
         //Btn_Add
         $('#btn_Add').click(function(event) {
@@ -221,7 +303,7 @@ $active_area = "active";
 
             row.find("#btn_Edit").hide();
             row.find("#btn_Delete").hide();
-            row.find("#btn_Update").hide();
+            row.find("#btn_Update").prop('disabled', true).show();
             row.find("#btn_Cancel").show();
 
             let input = row.find("#inputA_Name").val();
@@ -229,9 +311,9 @@ $active_area = "active";
                 let val = row.find("#inputA_Name").val();
                 if (event.key != "Enter") {
                     if (val == input) {
-                        row.find("#btn_Update").hide();
+                        row.find("#btn_Update").prop('disabled', true).show();
                     } else {
-                        row.find("#btn_Update").show();
+                        row.find("#btn_Update").prop('disabled', false).show();
                     }
                 }
             })
@@ -367,6 +449,8 @@ $active_area = "active";
             })
 
         });
+
+
     </script>
 </body>
 
