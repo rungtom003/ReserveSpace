@@ -219,6 +219,23 @@ $active_approve = "active";
                     language: {
                         url: './src/assets/DataTables/LanguageTable/th.json'
                     },
+                    initComplete: function () {
+                        $("#table-users_filter").append(`<label id="select-group" class="my-2 w-100"></label>`);
+                        
+                        this.api().columns(5).every(function () {
+                            var column = this;
+                            var select = $('<select class="form-select form-select-sm w-50" aria-label="เลือกโซน" id="selectZone"><option value=""></option></select>').appendTo($("#select-group").empty()).on('change', function () {
+                                var val = $.fn.dataTable.util.escapeRegex($(this).val());
+                                column.search(val ? '^' + val + '$' : '', true, false).draw();
+                            });
+
+                            column.data().unique().sort().each(function (d, j) {
+                                select.append('<option value="' + d + '">' + d + '</option>')
+                            });
+                        })
+                        //$("#select-group").prepend(`<label for="selectZone" class="form-label">โซน : </label>`);
+                        $("#select-group").prepend(`โซน`);
+                    },
                     columnDefs: [{
                             targets: 0,
                             title: "ชื่อ",

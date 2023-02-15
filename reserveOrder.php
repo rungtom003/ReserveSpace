@@ -79,6 +79,23 @@ $active_reserveOrder = "active";
                     rowGroup: {
                         dataSrc: 'z_Name'
                     },
+                    initComplete: function () {
+                        $("#table-Order_filter").append(`<label id="select-group" class="my-2 w-100"></label>`);
+                        
+                        this.api().columns(1).every(function () {
+                            var column = this;
+                            var select = $('<select class="form-select form-select-sm w-50" aria-label="เลือกโซน" id="selectZone"><option value=""></option></select>').appendTo($("#select-group").empty()).on('change', function () {
+                                var val = $.fn.dataTable.util.escapeRegex($(this).val());
+                                column.search(val ? '^' + val + '$' : '', true, false).draw();
+                            });
+
+                            column.data().unique().sort().each(function (d, j) {
+                                select.append('<option value="' + d + '">' + d + '</option>')
+                            });
+                        })
+                        //$("#select-group").prepend(`<label for="selectZone" class="form-label">โซน : </label>`);
+                        $("#select-group").prepend(`โซน`);
+                    },
                     columnDefs: [{
                             targets: 0,
                             title: "บล็อค",
@@ -648,6 +665,7 @@ $active_reserveOrder = "active";
         //a_ReserveStatus 2 -> ล็อคประจำ
         //a_ReserveStatus 3 -> ปลดล็อคประจำให้จองได้ หรือ ล็อคประจำว่าง
         //a_ReserveStatus 4 -> จองล็อคประจำ
+        //a_ReserveStatus 5 -> จองล็อคประจำ
 
         //====================================  สถานะการจอง
         //r_Status 0 -> ยกเลิกการจอง

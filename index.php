@@ -3,11 +3,11 @@ include("./layout/static_path.php");
 session_start();
 $user = (isset($_SESSION['user'])) ? unserialize($_SESSION['user']) : null;
 if ($user == null) {
-    header('location: '.$host_path.'/login.php');
+    header('location: ' . $host_path . '/login.php');
 }
 
 if ($user["ur_Id"] == "R002") {
-    header('location: '.$host_path.'/dashboard.php');
+    header('location: ' . $host_path . '/dashboard.php');
 }
 
 $titleHead = "จองพื้นที่ขาย";
@@ -109,10 +109,10 @@ $active_index = "active";
                             <div class="d-flex justify-content-center align-items-center reserve-box-red">
                                 <span class="text-light text-center">จองเเล้ว</span>
                             </div>
-                            <!-- <div class="d-flex justify-content-center align-items-center reserve-box-yellow">
-                                <span class="text-light text-center">ล็อคประจำว่าง</span>
+                            <div class="d-flex justify-content-center align-items-center reserve-box-yellow">
+                                <span class="text-light text-center">ปิดล็อค</span>
                             </div>
-                            <div class="d-flex justify-content-center align-items-center reserve-box-primary">
+                            <!-- <div class="d-flex justify-content-center align-items-center reserve-box-primary">
                                 <span class="text-light text-center">ล็อคประจำ</span>
                             </div> -->
                         </div>
@@ -309,7 +309,7 @@ $active_index = "active";
 
         const fcFind = () => {
             $.ajax({
-                url: "<?=$host_path?>/backend/Service/areaList_api.php",
+                url: "<?= $host_path ?>/backend/Service/areaList_api.php",
                 type: "POST",
                 dataType: "json",
                 data: {
@@ -340,6 +340,10 @@ $active_index = "active";
                                             </div>`;
                         } else if (val.a_ReserveStatus === "3") {
                             txt_content += `<div class="d-flex justify-content-center align-items-center reserve-box-green" data-bs-toggle="modal" data-bs-target="#reserve-modal" data-bs-area_static="1" data-bs-whatever='${JSON.stringify(val)}'>
+                                                <span class="text-light">${val.a_Name}</span>
+                                            </div>`;
+                        } else if (val.a_ReserveStatus === "5") {
+                            txt_content += `<div class="d-flex justify-content-center align-items-center reserve-box-yellow">
                                                 <span class="text-light">${val.a_Name}</span>
                                             </div>`;
                         } else {
@@ -377,7 +381,7 @@ $active_index = "active";
             const a_Id = button.getAttribute('data-bs-whatever');
 
             $.ajax({
-                url: "<?=$host_path?>/backend/Service/reserveFind.php",
+                url: "<?= $host_path ?>/backend/Service/reserveFind.php",
                 type: "POST",
                 dataType: "json",
                 data: {
@@ -431,19 +435,19 @@ $active_index = "active";
                 area_static: $("#area_static").val()
             }
             $.ajax({
-                url: "<?=$host_path?>/backend/Service/confirmOrder.php",
+                url: "<?= $host_path ?>/backend/Service/confirmOrder.php",
                 type: "POST",
                 dataType: "json",
                 data: data,
                 beforeSend: function() {
-                    $("#btn-loadding").prop("hidden",false);
-                    $("#btn-unloadding").prop("hidden",true);
-                    $(".btn-close").prop("hidden",true);
+                    $("#btn-loadding").prop("hidden", false);
+                    $("#btn-unloadding").prop("hidden", true);
+                    $(".btn-close").prop("hidden", true);
                 },
                 success: function(res) {
-                    $("#btn-loadding").prop("hidden",true);
-                    $("#btn-unloadding").prop("hidden",false);
-                    $(".btn-close").prop("hidden",false);
+                    $("#btn-loadding").prop("hidden", true);
+                    $("#btn-unloadding").prop("hidden", false);
+                    $(".btn-close").prop("hidden", false);
                     if (res.status === "success") {
                         Swal.fire({
                             icon: 'success',
