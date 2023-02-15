@@ -20,9 +20,9 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         $z_Id = $_POST["z_Id"];
         $a_Name = $_POST["a_Name"];
 
-        // for($i = 0; $i <= 42; $i++){
+        // for($i = 0; $i <= 60; $i++){
         //     $name = $a_Name.$i;
-        //     $sql = "INSERT INTO `kkmuni_street`.`tb_area` (`z_Id`,`a_Name` ) VALUES ('".$z_Id."', '" . $name . "');";
+        //     $sql = "INSERT INTO `kkmuni_street`.`tb_area` (`a_Id`,`z_Id`,`a_Name` ) VALUES ('" . uniqidReal() . "','".$z_Id."', '" . $name . "');";
         //     if ($conn->query($sql) === TRUE) {
         //         $resp->set_message("บันทึกข้อมูลสำเร็จ > ".$i);
         //         $resp->set_status("success");
