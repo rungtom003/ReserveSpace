@@ -199,139 +199,125 @@ $active_approve = "active";
     <!-- end: Main -->
     <?php include("./layout/script.php"); ?>
     <script>
-        function loadUser() {
-            $.ajax({
-                url: "<?= $host_path ?>/backend/Service/usersList_api.php",
-                type: "GET",
-                dataType: "json",
-                success: function(res) {
-                    //console.log(res);
-                    LoadTable(res.data);
-                }
-            });
+        const dt_table = $('#table-users').DataTable({
+            ajax: "<?= $host_path ?>/backend/Service/usersList_api.php",
+            processing: true,
+            serverSide: true,
+            dom: 'Bfrtip',
+            buttons: ['copy', 'csv', 'excel', 'colvis'],
+            responsive: true,
+            language: {
+                url: './src/assets/DataTables/LanguageTable/th.json'
+            },
+            initComplete: function() {
+                $("#table-users_filter").append(`<label id="select-group" class="my-2 w-100"></label>`);
 
-            const LoadTable = (data) => {
-                $('#table-users').DataTable({
-                    data: data,
-                    dom: 'Bfrtip',
-                    buttons: ['copy', 'csv', 'excel', 'colvis'],
-                    responsive: true,
-                    language: {
-                        url: './src/assets/DataTables/LanguageTable/th.json'
-                    },
-                    initComplete: function () {
-                        $("#table-users_filter").append(`<label id="select-group" class="my-2 w-100"></label>`);
-                        
-                        this.api().columns(5).every(function () {
-                            var column = this;
-                            var select = $('<select class="form-select form-select-sm w-50" aria-label="เลือกโซน" id="selectZone"><option value=""></option></select>').appendTo($("#select-group").empty()).on('change', function () {
-                                var val = $.fn.dataTable.util.escapeRegex($(this).val());
-                                column.search(val ? '^' + val + '$' : '', true, false).draw();
-                            });
+                this.api().columns(5).every(function() {
+                    var column = this;
+                    var select = $('<select class="form-select form-select-sm w-50" aria-label="เลือกโซน" id="selectZone"><option value=""></option></select>').appendTo($("#select-group").empty()).on('change', function() {
+                        var val = $.fn.dataTable.util.escapeRegex($(this).val());
+                        column.search(val ? '^' + val + '$' : '', true, false).draw();
+                    });
 
-                            column.data().unique().sort().each(function (d, j) {
-                                select.append('<option value="' + d + '">' + d + '</option>')
-                            });
-                        })
-                        //$("#select-group").prepend(`<label for="selectZone" class="form-label">โซน : </label>`);
-                        $("#select-group").prepend(`โซน`);
-                    },
-                    columnDefs: [{
-                            targets: 0,
-                            title: "ชื่อ",
-                            data: "u_FirstName",
-                        },
-                        {
-                            targets: 1,
-                            title: "สกุล",
-                            data: "u_LastName",
-                        },
-                        {
-                            targets: 2,
-                            title: "สิทธิ์",
-                            data: "ur_Id",
-                            render: function(data, type, row, meta) {
-                                let role = data === "R001" ? "User" : "Admin"
-                                return role;
-                            }
-                        },
-                        {
-                            targets: 3,
-                            title: "Username",
-                            data: "u_Username",
-                        },
-                        {
-                            targets: 4,
-                            title: "เลขบัตรประชาชน",
-                            data: "u_CardNumber",
-                        },
-                        {
-                            targets: 5,
-                            title: "โซน",
-                            data: "z_Name",
-                        },
-                        {
-                            targets: 6,
-                            title: "Approve",
-                            data: "u_Approve",
-                            render: function(data, type, row, meta) {
-                                let txtHTML = "";
-                                if (data === "0") {
-                                    txtHTML = "<span class='text-danger'>ยังไม่อนุมัติ</span>";
-                                } else {
-                                    txtHTML = "<span class='text-success'>อนุมัติเเล้ว</span>";
-                                }
-                                return txtHTML;
-                            }
-                        },
-                        {
-                            targets: 7,
-                            title: "รายละเอียด",
-                            data: null,
-                            defaultContent: "",
-                            render: function(data, type, row, meta) {
-                                const u_Id = row.u_Id;
-                                return `<div class="d-grid gap-2 d-md-block" >
+                    column.data().unique().sort().each(function(d, j) {
+                        select.append('<option value="' + d + '">' + d + '</option>')
+                    });
+                })
+                //$("#select-group").prepend(`<label for="selectZone" class="form-label">โซน : </label>`);
+                $("#select-group").prepend(`โซน`);
+            },
+            columnDefs: [{
+                    targets: 0,
+                    title: "ชื่อ",
+                    data: "u_FirstName",
+                },
+                {
+                    targets: 1,
+                    title: "สกุล",
+                    data: "u_LastName",
+                },
+                {
+                    targets: 2,
+                    title: "สิทธิ์",
+                    data: "ur_Id",
+                    render: function(data, type, row, meta) {
+                        let role = data === "R001" ? "User" : "Admin"
+                        return role;
+                    }
+                },
+                {
+                    targets: 3,
+                    title: "Username",
+                    data: "u_Username",
+                },
+                {
+                    targets: 4,
+                    title: "เลขบัตรประชาชน",
+                    data: "u_CardNumber",
+                },
+                {
+                    targets: 5,
+                    title: "โซน",
+                    data: "z_Name",
+                },
+                {
+                    targets: 6,
+                    title: "Approve",
+                    data: "u_Approve",
+                    render: function(data, type, row, meta) {
+                        let txtHTML = "";
+                        if (data === "0") {
+                            txtHTML = "<span class='text-danger'>ยังไม่อนุมัติ</span>";
+                        } else {
+                            txtHTML = "<span class='text-success'>อนุมัติเเล้ว</span>";
+                        }
+                        return txtHTML;
+                    }
+                },
+                {
+                    targets: 7,
+                    title: "รายละเอียด",
+                    data: null,
+                    defaultContent: "",
+                    render: function(data, type, row, meta) {
+                        const u_Id = row.u_Id;
+                        return `<div class="d-grid gap-2 d-md-block" >
                                             <button class="btn btn-link" type="button" data-bs-toggle="modal" data-bs-target="#detailModal" onclick="detailUser(this)" value="${u_Id}">เพิ่มเติม</button>
                                             </div>`;
+                    }
+                },
+                {
+                    targets: 8,
+                    title: "#",
+                    data: null,
+                    defaultContent: "",
+                    render: function(data, type, row, meta) {
+                        let status = row.u_Approve;
+                        const u_Id = row.u_Id;
+                        const ur_Id = row.ur_Id;
+                        let txtBtn = "";
+                        let txtHTML = "";
+                        if (row.u_Username !== "admin") {
+                            if (status === "0") {
+                                txtBtn = `<button class="btn btn-primary" type="button" id="btn_Approve" onclick="fcApprove(this)" value="${u_Id}">อนุมัติ</button>`;
+                            } else {
+                                txtBtn = `<button class="btn btn-warning" type="button" id="btn_Cancel" onclick="cancelUser(this)" value="${u_Id}">ยกเลิก</button>`;
                             }
-                        },
-                        {
-                            targets: 8,
-                            title: "#",
-                            data: null,
-                            defaultContent: "",
-                            render: function(data, type, row, meta) {
-                                let status = row.u_Approve;
-                                const u_Id = row.u_Id;
-                                const ur_Id = row.ur_Id;
-                                let txtBtn = "";
-                                let txtHTML = "";
-                                if (row.u_Username !== "admin") {
-                                    if (status === "0") {
-                                        txtBtn = `<button class="btn btn-primary" type="button" id="btn_Approve" onclick="fcApprove(this)" value="${u_Id}">อนุมัติ</button>`;
-                                    } else {
-                                        txtBtn = `<button class="btn btn-warning" type="button" id="btn_Cancel" onclick="cancelUser(this)" value="${u_Id}">ยกเลิก</button>`;
-                                    }
-                                    txtHTML = `<div class="d-grid gap-2 d-md-block" >` + txtBtn + `
+                            txtHTML = `<div class="d-grid gap-2 d-md-block" >` + txtBtn + `
                                         <button class="btn btn-danger" type="button" id="btn_Delete" onclick="deleteUser(this)" value="${u_Id}">ลบ</button>
                                         </div>`
-                                }
-                                return txtHTML;
-                            }
                         }
-                    ],
-                    order: [
-                        [5, 'asc']
-                    ],
-                    rowGroup: {
-                        dataSrc: 'z_Name'
-                    },
-                });
-            }
-
-        }
-        loadUser();
+                        return txtHTML;
+                    }
+                }
+            ],
+            order: [
+                [5, 'asc']
+            ],
+            rowGroup: {
+                dataSrc: 'z_Name'
+            },
+        });
 
         const fcApprove = (elm) => {
             let u_Id = elm.value;
@@ -354,8 +340,7 @@ $active_approve = "active";
                             showConfirmButton: true,
                             timer: 1500
                         }).then((result) => {
-                            $('#table-users').DataTable().destroy();
-                            loadUser();
+                            dt_table.ajax.reload();
                         })
                     } else {
                         Swal.fire({
@@ -389,8 +374,7 @@ $active_approve = "active";
                             showConfirmButton: true,
                             timer: 1500
                         }).then((result) => {
-                            $('#table-users').DataTable().destroy();
-                            loadUser();
+                            dt_table.ajax.reload();
                         })
                     } else {
                         Swal.fire({
@@ -436,8 +420,7 @@ $active_approve = "active";
                                     showConfirmButton: false,
                                     timer: 1500
                                 }).then((result) => {
-                                    $('#table-users').DataTable().destroy();
-                                    loadUser();
+                                    dt_table.ajax.reload();
                                 })
                             } else {
                                 Swal.fire({
@@ -579,8 +562,7 @@ $active_approve = "active";
                             showConfirmButton: true,
                             timer: 1500
                         }).then((result) => {
-                            $('#table-users').DataTable().destroy();
-                            loadUser();
+                            dt_table.ajax.reload();
                         })
                     } else {
                         Swal.fire({
@@ -592,7 +574,6 @@ $active_approve = "active";
                 }
             });
         })
-
     </script>
 </body>
 

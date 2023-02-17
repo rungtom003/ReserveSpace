@@ -106,9 +106,9 @@ $active_Dashboard = "active";
                             <div class="d-flex justify-content-center align-items-center reserve-box-red">
                                 <span class="text-light text-center">จองเเล้ว</span>
                             </div>
-                            <div class="d-flex justify-content-center align-items-center reserve-box-yellow">
+                            <!-- <div class="d-flex justify-content-center align-items-center reserve-box-yellow">
                                 <span class="text-light text-center">ปิดล็อค</span>
-                            </div>
+                            </div> -->
                             <!-- <div class="d-flex justify-content-center align-items-center reserve-box-primary">
                                 <span class="text-light text-center">ล็อคประจำ</span>
                             </div> -->
@@ -335,9 +335,10 @@ $active_Dashboard = "active";
                                                 <span class="text-light">${val.a_Name}</span>
                                             </div>`;
                         } else if (val.a_ReserveStatus === "5") {
-                            txt_content += `<div class="d-flex justify-content-center align-items-center reserve-box-yellow">
-                                                <span class="text-light">${val.a_Name}</span>
-                                            </div>`;
+                            // txt_content += `<div class="d-flex justify-content-center align-items-center reserve-box-yellow">
+                            //                     <span class="text-light">${val.a_Name}</span>
+                            //                 </div>`;
+                            txt_content += "";
                         } else {
                             txt_content += `<div class="d-flex justify-content-center align-items-center reserve-box-red" data-bs-toggle="modal" data-bs-target="#reserve-detail-modal" data-bs-whatever='${val.a_Id}'>
                                                 <span class="text-light">${val.a_Name}</span>

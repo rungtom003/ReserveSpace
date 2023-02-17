@@ -109,9 +109,9 @@ $active_index = "active";
                             <div class="d-flex justify-content-center align-items-center reserve-box-red">
                                 <span class="text-light text-center">จองเเล้ว</span>
                             </div>
-                            <div class="d-flex justify-content-center align-items-center reserve-box-yellow">
+                            <!-- <div class="d-flex justify-content-center align-items-center reserve-box-yellow">
                                 <span class="text-light text-center">ปิดล็อค</span>
-                            </div>
+                            </div> -->
                             <!-- <div class="d-flex justify-content-center align-items-center reserve-box-primary">
                                 <span class="text-light text-center">ล็อคประจำ</span>
                             </div> -->
@@ -343,9 +343,10 @@ $active_index = "active";
                                                 <span class="text-light">${val.a_Name}</span>
                                             </div>`;
                         } else if (val.a_ReserveStatus === "5") {
-                            txt_content += `<div class="d-flex justify-content-center align-items-center reserve-box-yellow">
-                                                <span class="text-light">${val.a_Name}</span>
-                                            </div>`;
+                            // txt_content += `<div class="d-flex justify-content-center align-items-center reserve-box-yellow">
+                            //                     <span class="text-light">${val.a_Name}</span>
+                            //                 </div>`;
+                            txt_content += "";
                         } else {
                             txt_content += `<div class="d-flex justify-content-center align-items-center reserve-box-red" data-bs-toggle="modal" data-bs-target="#reserve-detail-modal" data-bs-whatever='${val.a_Id}'>
                                                 <span class="text-light">${val.a_Name}</span>
@@ -449,18 +450,26 @@ $active_index = "active";
                     $("#btn-unloadding").prop("hidden", false);
                     $(".btn-close").prop("hidden", false);
                     if (res.status === "success") {
+                        // Swal.fire({
+                        //     icon: 'success',
+                        //     title: res.message,
+                        //     showConfirmButton: false,
+                        //     timer: 1500
+                        // }).then((result) => {
+                        //     // $('#reserve-modal').modal('hide');
+                        //     // const myModalEl = document.getElementById('reserve-modal')
+                        //     // myModalEl.addEventListener('hidden.bs.modal', event => {
+                        //     //     window.location.reload();
+                        //     // });
+                        //     window.location.reload();
+                        // });
                         Swal.fire({
                             icon: 'success',
-                            title: res.message,
-                            showConfirmButton: false,
-                            timer: 1500
-                        }).then((result) => {
-                            // $('#reserve-modal').modal('hide');
-                            // const myModalEl = document.getElementById('reserve-modal')
-                            // myModalEl.addEventListener('hidden.bs.modal', event => {
-                            //     window.location.reload();
-                            // });
-                            window.location.reload();
+                            title: 'สำเร็จ',
+                            text: res.message,
+                            didClose:()=>{
+                                window.location.reload();
+                            }
                         });
                     } else {
                         // Swal.fire({
@@ -470,11 +479,11 @@ $active_index = "active";
                         // });
                         Swal.fire({
                             icon: 'warning',
-                            title: res.message,
-                            showConfirmButton: false,
-                            timer: 1500
-                        }).then((result) => {
-                            window.location.reload();
+                            //title: 'ข',
+                            text: res.message,
+                            didClose:()=>{
+                                window.location.reload();
+                            }
                         });
                     }
                 }

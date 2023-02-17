@@ -28,7 +28,7 @@ if($user != null){
       <img class="mb-4 w-50" alt="" class="img-fluid" src="<?=$host_path?>/src/img/user.png">
       </div>
       
-      <h1 class="h3 mb-3 fw-normal">เข้าสู่ระบบ</h1>
+      <h1 class="h3 mb-3 fw-normal">เข้าสู่ระบบจองล็อค Walk in ถนนคนเดินขอนแก่น</h1>
 
       <div class="form-floating">
         <input type="email" class="form-control" id="input_user" placeholder="User">
