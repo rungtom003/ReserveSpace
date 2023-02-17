@@ -33,6 +33,7 @@ $active_area = "active";
                     <div class="card-body">
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                             <button class="btn btn-primary me-md-2" type="button" data-bs-toggle="modal" data-bs-target="#addAreakModal">เพิ่มบล็อค</button>
+                            <button class="btn btn-primary me-md-2" type="button" data-bs-toggle="modal" data-bs-target="#updateModal">เปิด - ปิดบล็อคทั้งหมด</button>
                         </div>
                         <table id="table-area" class="table table-striped w-100"></table>
                     </div>
@@ -50,7 +51,7 @@ $active_area = "active";
                     <div class="modal-body">
                         <form>
                             <div class="mb-3">
-                                <label for="selectZoneName" class="col-form-label">โซน:</label>
+                                <label for="selectZoneName" class="col-form-label">โซน</label>
                                 <select class="form-select" aria-label="Default select example" id="selectZoneName">
                                     <option selected value="">เลือกโซน</option>
                                 </select>
@@ -63,6 +64,31 @@ $active_area = "active";
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-primary" id ="btn_Add">บันทึก</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="updateModal" tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="updateModalLabel">เปิด - ปิดบล็อค</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="mb-3">
+                                <label for="selectZoneName" class="col-form-label">โซน</label>
+                                <select class="form-select" aria-label="Default select example" id="selectZone">
+                                    <option selected value="">เลือกโซน</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                            <button class="btn btn-success me-md-2" type="button" onclick="area_StatusAll(this)" value = "5">เปิดบล็อคทั้งหมด</button>
+                            <button class="btn btn-danger me-md-2" type="button" onclick="area_StatusAll(this)" value = "0" >ปิดบล็อคทั้งหมด</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -165,6 +191,10 @@ $active_area = "active";
                     for (let i = 0; i < length; i++) {
                         $('#selectZoneName').append(`<option value="${res.data[i].z_Id}">${res.data[i].z_Name}</option>`);
                     }
+                    $('#selectZone').empty()
+                    for (let i = 0; i < length; i++) {
+                        $('#selectZone').append(`<option value="${res.data[i].z_Id}">${res.data[i].z_Name}</option>`);
+                    }
                 }
             });
         }
@@ -217,6 +247,67 @@ $active_area = "active";
                                 }).then((result) => {
                                     $('#table-area').DataTable().destroy();
                                     loadArea();
+                                })
+                            } else {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'เเจ้งเตือน',
+                                    text: message
+                                })
+                            }
+                        }
+                    });
+
+                }
+            })
+
+        }
+
+        function area_StatusAll(elm){
+            let z_Id = $('#selectZone').val();
+            let a_ReserveStatus = elm.value;
+            let txt = "";
+            if(a_ReserveStatus == 5){
+                txt = "เปิด"
+            }else if(a_ReserveStatus == 0){
+                txt = "ปิด"
+            }
+
+            Swal.fire({
+                title: 'แจ้งเตือน',
+                html: `ต้องการ${txt}บล็อคทั้งหมดใช่หรือไม่`,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'ยืนยัน',
+                cancelButtonText: 'ยกเลิก',
+            }).then((result) => {
+                if (result.isConfirmed) {
+
+                    $.ajax({
+                        url: "<?= $host_path ?>/backend/Service/areaUpdateStatusAll_api.php",
+                        type: "POST",
+                        data: {
+                            z_Id: z_Id,
+                            a_ReserveStatus: a_ReserveStatus
+                        },
+                        dataType: "json",
+                        success: function(res) {
+                            //console.log(res);
+                            let message = res.message;
+                            let status = res.status;
+
+                            if (status == "success") {
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: message,
+                                    showConfirmButton: true,
+                                    timer: 1500
+                                }).then((result) => {
+                                    $('#table-area').DataTable().destroy();
+                                    loadArea();
+                                    $('#updateModal').modal('hide');
                                 })
                             } else {
                                 Swal.fire({
