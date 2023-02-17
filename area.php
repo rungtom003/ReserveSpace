@@ -3,10 +3,10 @@ include("./layout/static_path.php");
 session_start();
 $user = (isset($_SESSION['user'])) ? unserialize($_SESSION['user']) : null;
 if ($user == null) {
-    header('location: '.$host_path.'/login.php');
+    header('location: ' . $host_path . '/login.php');
 }
 if ($user["ur_Id"] == "R001") {
-    header('location: '.$host_path.'/noaccess.php');
+    header('location: ' . $host_path . '/noaccess.php');
 }
 $titleHead = "Area";
 $active_area = "active";
@@ -63,7 +63,7 @@ $active_area = "active";
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" id ="btn_Add">บันทึก</button>
+                        <button type="button" class="btn btn-primary" id="btn_Add">บันทึก</button>
                     </div>
                 </div>
             </div>
@@ -80,13 +80,13 @@ $active_area = "active";
                         <form>
                             <div class="mb-3">
                                 <label for="selectZoneName" class="col-form-label">โซน</label>
-                                <select class="form-select" aria-label="Default select example" id="selectZone">
+                                <select class="form-select" aria-label="Default select example" id="selectZoneUpdateAll">
                                     <option selected value="">เลือกโซน</option>
                                 </select>
                             </div>
                             <div class="mb-3">
-                            <button class="btn btn-success me-md-2" type="button" onclick="area_StatusAll(this)" value = "5">เปิดบล็อคทั้งหมด</button>
-                            <button class="btn btn-danger me-md-2" type="button" onclick="area_StatusAll(this)" value = "0" >ปิดบล็อคทั้งหมด</button>
+                                <button class="btn btn-success me-md-2" type="button" onclick="area_StatusAll(this)" value="5">เปิดบล็อคทั้งหมด</button>
+                                <button class="btn btn-danger me-md-2" type="button" onclick="area_StatusAll(this)" value="0">ปิดบล็อคทั้งหมด</button>
                             </div>
                         </form>
                     </div>
@@ -97,73 +97,99 @@ $active_area = "active";
     <!-- end: Main -->
     <?php include("./layout/script.php"); ?>
     <script>
-        function loadArea() {
-            $.ajax({
-                url: "<?=$host_path?>/backend/Service/area_api.php",
-                type: "GET",
-                dataType: "json",
-                success: function(res) {
-                    //console.log(res);
-                    LoadTable(res.data);
-                }
-            });
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+        });
 
-            const LoadTable = (data) => {
-                $('#table-area').DataTable({
-                    data: data,
-                    dom: 'Bfrtip',
-                    buttons: ['copy', 'csv', 'excel', 'colvis'],
-                    responsive: true,
-                    language: {
-                        url: './src/assets/DataTables/LanguageTable/th.json'
-                    },
-                    order: [
-                        [0, 'asc']
-                    ],
-                    rowGroup: {
-                        dataSrc: 'z_Name'
-                    },
-                    columnDefs: [{
-                            targets: 0,
-                            title: "โซน",
-                            data: "z_Name",
-                        },
-                        {
-                            targets: 1,
-                            title: "บล็อค",
-                            data: "a_Name",
-                            render: function(data, type, row, meta) {
-                                return '<td class=""><span id="a_Name">' + data + '</span><input class="form-control" id="inputA_Name" type="text" value="' + data + '" style="display: none; width: 100 % "></td>';
-                            }
-                        },
-                        {
-                            targets: 2,
-                            title: "เปิด - ปิด",
-                            data: null,
-                            defaultContent: "",
-                            render: function(data, type, row, meta) {
-                                let a_ReserveStatus = row.a_ReserveStatus;
-                                let txt = "";
-                                if(a_ReserveStatus == 0){
-                                    txt = `<div class="d-grid gap-2 d-md-block" >
-                                        <button class="btn btn-danger" type="button" onclick="area_Status(this)" value='${JSON.stringify(row)}' id="" >ปิด</button>
-                                    </div>`
-                                }else if(a_ReserveStatus == 5){
-                                    txt = `<div class="d-grid gap-2 d-md-block" >
-                                        <button class="btn btn-primary" type="button" onclick="area_Status(this)" value='${JSON.stringify(row)}' id="" >เปิด</button>
-                                    </div>`
-                                }
-                                
-                                return txt;
-                            }
-                        },
-                        {
-                            targets: 3,
-                            title: "#",
-                            data: null,
-                            defaultContent: "",
-                            render: function(data, type, row, meta) {
-                                return `<div class="d-grid gap-2 d-md-block" >
+        const dt_table = $('#table-area').DataTable({
+            ajax: "<?= $host_path ?>/backend/Service/area_api.php",
+            //processing: true,
+            dom: 'Bfrtip',
+            buttons: ['copy', 'csv', 'excel', 'colvis'],
+            responsive: true,
+            language: {
+                url: './src/assets/DataTables/LanguageTable/th.json'
+            },
+            order: [
+                [0, 'asc']
+            ],
+            rowGroup: {
+                dataSrc: 'z_Name'
+            },
+            initComplete: function() {
+                $("#table-area_filter").append(`<label id="select-group" class="my-2 w-100"></label>`);
+
+                this.api().columns(0).every(function() {
+                    var column = this;
+                    var select = $('<select class="form-select form-select-sm w-50" aria-label="เลือกโซน" id="selectZone"><option value=""></option></select>').appendTo($("#select-group").empty()).on('change', function() {
+                        var val = $.fn.dataTable.util.escapeRegex($(this).val());
+                        column.search(val ? '^' + val + '$' : '', true, false).draw();
+                    });
+
+                    column.data().unique().sort().each(function(d, j) {
+                        select.append('<option value="' + d + '">' + d + '</option>')
+                    });
+                })
+                //$("#select-group").prepend(`<label for="selectZone" class="form-label">โซน : </label>`);
+                $("#select-group").prepend(`โซน`);
+            },
+            columnDefs: [{
+                    targets: 0,
+                    title: "โซน",
+                    data: "z_Name",
+                },
+                {
+                    targets: 1,
+                    title: "บล็อค",
+                    data: "a_Name",
+                    render: function(data, type, row, meta) {
+                        return '<td class=""><span id="a_Name">' + data + '</span><input class="form-control" id="inputA_Name" type="text" value="' + data + '" style="display: none; width: 100 % "></td>';
+                    }
+                },
+                {
+                    targets: 2,
+                    title: "เปิด - ปิด",
+                    data: null,
+                    defaultContent: "",
+                    render: function(data, type, row, meta) {
+                        let a_ReserveStatus = row.a_ReserveStatus;
+                        let txt = "";
+                        if (a_ReserveStatus == 0) {
+                            txt = `<div class="d-grid gap-2 d-md-block" >
+                                        <button class="btn btn-danger" type="button" onclick="area_Status(this)" value='${JSON.stringify(row)}' id="btn-status-close" >ปิด</button>
+                                    </div>
+                                    <button class="btn btn-danger" type="button" disabled hidden id="btn-status-load">
+                                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Loading...</span>
+                                    </button>`
+                        } else if (a_ReserveStatus == 5) {
+                            txt = `<div class="d-grid gap-2 d-md-block" >
+                                        <button class="btn btn-primary" type="button" onclick="area_Status(this)" value='${JSON.stringify(row)}' id="btn-status-open" >เปิด</button>
+                                    </div>
+                                    <button class="btn btn-primary" type="button" disabled hidden id="btn-status-load">
+                                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Loading...</span>
+                                    </button>`
+                        }
+
+                        return txt;
+                    }
+                },
+                {
+                    targets: 3,
+                    title: "#",
+                    data: null,
+                    defaultContent: "",
+                    render: function(data, type, row, meta) {
+                        return `<div class="d-grid gap-2 d-md-block" >
                                         <button class="btn btn-warning" type="button" id="btn_Edit" >แก้ไข</button>
                                         <button class="btn btn-danger" type="button" id="btn_Delete" >ลบ</button>
                                     </div>
@@ -171,108 +197,90 @@ $active_area = "active";
                                         <button class="btn btn-success" type="button" id="btn_Update" style='display: none' >ยืนยัน</button>
                                         <button class="btn btn-danger" type="button" id="btn_Cancel" style='display: none' >ยกเลิก</button>
                                     </div>`;
-                            }
-                        }
-                    ]
-                });
-            }
-
-        }
+                    }
+                }
+            ]
+        });
 
         function loadZone() {
             $.ajax({
-                url: "<?=$host_path?>/backend/Service/zone_api.php",
+                url: "<?= $host_path ?>/backend/Service/zone_api.php",
                 type: "POST",
                 dataType: "json",
                 success: function(res) {
                     let length = res.data.length;
-                    
+
                     $('#selectZoneName').empty()
                     for (let i = 0; i < length; i++) {
                         $('#selectZoneName').append(`<option value="${res.data[i].z_Id}">${res.data[i].z_Name}</option>`);
                     }
-                    $('#selectZone').empty()
+                    $('#selectZoneUpdateAll').empty()
                     for (let i = 0; i < length; i++) {
-                        $('#selectZone').append(`<option value="${res.data[i].z_Id}">${res.data[i].z_Name}</option>`);
+                        $('#selectZoneUpdateAll').append(`<option value="${res.data[i].z_Id}">${res.data[i].z_Name}</option>`);
                     }
                 }
             });
         }
-        loadArea();
         loadZone();
 
-        function area_Status(elm){
+        function area_Status(elm) {
             let obj = JSON.parse(elm.value);
             let a_Id = obj.a_Id;
             let a_ReserveStatus = obj.a_ReserveStatus;
             let a_Name = obj.a_Name;
             let txt = "";
-            if(a_ReserveStatus == 5){
+            if (a_ReserveStatus == 5) {
                 txt = "เปิด"
-            }else if(a_ReserveStatus == 0){
+            } else if (a_ReserveStatus == 0) {
                 txt = "ปิด"
             }
+            
+            $.ajax({
+                url: "<?= $host_path ?>/backend/Service/areaStatus_api.php",
+                type: "POST",
+                data: {
+                    a_Id: a_Id,
+                    a_ReserveStatus: a_ReserveStatus
+                },
+                dataType: "json",
+                beforeSend:function(){
+                    $("button#btn-status-close").hide();
+                    $("button#btn-status-open").hide();
+                    $("button#btn-status-load").prop('hidden',false);
+                },
+                success: function(res) {
+                    //console.log(res);
+                    let message = res.message;
+                    let status = res.status;
 
-            Swal.fire({
-                title: 'แจ้งเตือน',
-                html: `ต้องการ${txt}บล็อค <b>${a_Name}</b> ใช่หรือไม่`,
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'ยืนยัน',
-                cancelButtonText: 'ยกเลิก',
-            }).then((result) => {
-                if (result.isConfirmed) {
+                    if (status == "success") {
+                        Toast.fire({
+                            icon: 'success',
+                            title: message
+                        });
+                        dt_table.ajax.reload();
+                    } else {
+                        Toast.fire({
+                            icon: 'error',
+                            title: message
+                        });
+                        //dt_table.ajax.reload();
 
-                    $.ajax({
-                        url: "<?= $host_path ?>/backend/Service/areaStatus_api.php",
-                        type: "POST",
-                        data: {
-                            a_Id: a_Id,
-                            a_ReserveStatus: a_ReserveStatus
-                        },
-                        dataType: "json",
-                        success: function(res) {
-                            //console.log(res);
-                            let message = res.message;
-                            let status = res.status;
-
-                            if (status == "success") {
-                                Swal.fire({
-                                    icon: 'success',
-                                    title: message,
-                                    showConfirmButton: true,
-                                    timer: 1500
-                                }).then((result) => {
-                                    $('#table-area').DataTable().destroy();
-                                    loadArea();
-                                })
-                            } else {
-                                Swal.fire({
-                                    icon: 'error',
-                                    title: 'เเจ้งเตือน',
-                                    text: message
-                                })
-                            }
-                        }
-                    });
-
+                    }
                 }
-            })
+            });
 
         }
 
-        function area_StatusAll(elm){
-            let z_Id = $('#selectZone').val();
+        function area_StatusAll(elm) {
+            let z_Id = $('#selectZoneUpdateAll').val();
             let a_ReserveStatus = elm.value;
             let txt = "";
-            if(a_ReserveStatus == 5){
+            if (a_ReserveStatus == 5) {
                 txt = "เปิด"
-            }else if(a_ReserveStatus == 0){
+            } else if (a_ReserveStatus == 0) {
                 txt = "ปิด"
             }
-
             Swal.fire({
                 title: 'แจ้งเตือน',
                 html: `ต้องการ${txt}บล็อคทั้งหมดใช่หรือไม่`,
@@ -305,8 +313,7 @@ $active_area = "active";
                                     showConfirmButton: true,
                                     timer: 1500
                                 }).then((result) => {
-                                    $('#table-area').DataTable().destroy();
-                                    loadArea();
+                                    dt_table.ajax.reload();
                                     $('#updateModal').modal('hide');
                                 })
                             } else {
@@ -321,7 +328,6 @@ $active_area = "active";
 
                 }
             })
-
         }
 
         //Btn_Add
@@ -331,34 +337,36 @@ $active_area = "active";
             let a_Name = $('#inputAreaName').val();
             //console.log(`Zone ID: ${z_Id}, Area Name: ${a_Name}`);
             $.ajax({
-                url: "<?=$host_path?>/backend/Service/areaAdd_api.php",
+                url: "<?= $host_path ?>/backend/Service/areaAdd_api.php",
                 type: "POST",
-                data: {z_Id:z_Id, a_Name:a_Name},
+                data: {
+                    z_Id: z_Id,
+                    a_Name: a_Name
+                },
                 //data: null,
                 dataType: "json",
                 success: function(res) {
                     let message = res.message;
                     let status = res.status;
                     if (status == "success") {
-                            Swal.fire({
-                                icon: 'success',
-                                title: message,
-                                showConfirmButton: true,
-                                timer: 1500
-                            }).then((result) => {
-                                $('#table-area').DataTable().destroy();
-                                loadArea();
-                                $('#addAreakModal').modal('hide');
-                            })
+                        Swal.fire({
+                            icon: 'success',
+                            title: message,
+                            showConfirmButton: true,
+                            timer: 1500
+                        }).then((result) => {
+                            dt_table.ajax.reload();
+                            $('#addAreakModal').modal('hide');
+                        })
 
 
-                        } else {
-                            Swal.fire({
-                                icon: 'error',
-                                title: 'เเจ้งเตือน',
-                                text: message
-                            })
-                        }
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'เเจ้งเตือน',
+                            text: message
+                        })
+                    }
                 }
             });
         })
@@ -426,7 +434,7 @@ $active_area = "active";
                 })
             } else {
                 $.ajax({
-                    url: "<?=$host_path?>/backend/Service/areaUpdate_api.php",
+                    url: "<?= $host_path ?>/backend/Service/areaUpdate_api.php",
                     type: "POST",
                     data: {
                         a_Id: a_Id,
@@ -444,8 +452,7 @@ $active_area = "active";
                                 showConfirmButton: true,
                                 timer: 1500
                             }).then((result) => {
-                                $('#table-area').DataTable().destroy();
-                                loadArea();
+                                dt_table.ajax.reload();
                             })
 
 
@@ -486,7 +493,7 @@ $active_area = "active";
                 if (result.isConfirmed) {
 
                     $.ajax({
-                        url: "<?=$host_path?>/backend/Service/areaDelete_api.php",
+                        url: "<?= $host_path ?>/backend/Service/areaDelete_api.php",
                         type: "POST",
                         data: {
                             a_Id: a_Id
@@ -504,8 +511,7 @@ $active_area = "active";
                                     showConfirmButton: true,
                                     timer: 1500
                                 }).then((result) => {
-                                    $('#table-area').DataTable().destroy();
-                                    loadArea();
+                                    dt_table.ajax.reload();
                                 })
 
 
@@ -523,8 +529,6 @@ $active_area = "active";
             })
 
         });
-
-
     </script>
 </body>
 

@@ -3,7 +3,7 @@ include("./layout/static_path.php");
 session_start();
 $user = (isset($_SESSION['user'])) ? unserialize($_SESSION['user']) : null;
 if ($user == null) {
-    header('location: '.$host_path.'/login.php');
+    header('location: ' . $host_path . '/login.php');
 }
 
 $titleHead = "Dashboard";
@@ -107,9 +107,9 @@ $active_Dashboard = "active";
                                 <span class="text-light text-center">จองเเล้ว</span>
                             </div>
                             <!-- <div class="d-flex justify-content-center align-items-center reserve-box-yellow">
-                                <span class="text-light text-center">ล็อคประจำว่าง</span>
-                            </div>
-                            <div class="d-flex justify-content-center align-items-center reserve-box-primary">
+                                <span class="text-light text-center">ปิดล็อค</span>
+                            </div> -->
+                            <!-- <div class="d-flex justify-content-center align-items-center reserve-box-primary">
                                 <span class="text-light text-center">ล็อคประจำ</span>
                             </div> -->
                         </div>
@@ -175,7 +175,7 @@ $active_Dashboard = "active";
                     <div class="modal-body">
                         <h4>รายละเอียดการจอง</h4>
                         <div class="row g-2 p-2">
-                            <input type="text" class="form-control" placeholder="ล็อค" id="a_Id" readonly hidden >
+                            <input type="text" class="form-control" placeholder="ล็อค" id="a_Id" readonly hidden>
                             <input type="text" class="form-control" placeholder="ล็อคประจำ" id="area_static" readonly hidden>
                             <div class="col-md">
                                 <label class="form-label">ล็อค</label>
@@ -301,14 +301,14 @@ $active_Dashboard = "active";
 
         const fcFind = () => {
             $.ajax({
-                url: "<?=$host_path?>/backend/Service/areaList_api.php",
+                url: "<?= $host_path ?>/backend/Service/areaList_api.php",
                 type: "POST",
                 dataType: "json",
                 data: {
                     z_Id: $("#select-zone").val(),
                     a_Name: $("#input_find").val()
                 },
-                beforeSend:function(){
+                beforeSend: function() {
                     let txtHTML = `<div class="spinner-border text-primary" role="status">
                                     <span class="visually-hidden">Loading...</span>
                                     </div>`;
@@ -318,32 +318,28 @@ $active_Dashboard = "active";
                     const data = res.data;
                     let txt_content = "";
                     $.each(data, function(key, val) {
-                        if(val.a_ReserveStatus === "0")
-                        {
+                        if (val.a_ReserveStatus === "0") {
                             txt_content += `<div class="d-flex justify-content-center align-items-center reserve-box-green">
                                                 <span class="text-light">${val.a_Name}</span>
                                             </div>`;
-                        }
-                        else if(val.a_ReserveStatus === "1")
-                        {
+                        } else if (val.a_ReserveStatus === "1") {
                             txt_content += `<div class="d-flex justify-content-center align-items-center reserve-box-red" data-bs-toggle="modal" data-bs-target="#reserve-detail-modal" data-bs-whatever='${val.a_Id}'>
                                                 <span class="text-light">${val.a_Name}</span>
                                             </div>`;
-                        }
-                        else if(val.a_ReserveStatus === "2")
-                        {
+                        } else if (val.a_ReserveStatus === "2") {
                             txt_content += `<div class="d-flex justify-content-center align-items-center reserve-box-red" data-bs-toggle="modal" data-bs-target="#reserve-detail-modal" data-bs-whatever='${val.a_Id}'>
                                                 <span class="text-light">${val.a_Name}</span>
                                             </div>`;
-                        }
-                        else if(val.a_ReserveStatus === "3")
-                        {
+                        } else if (val.a_ReserveStatus === "3") {
                             txt_content += `<div class="d-flex justify-content-center align-items-center reserve-box-green" data-bs-toggle="modal" data-bs-target="#reserve-modal" data-bs-area_static="1" data-bs-whatever='${JSON.stringify(val)}'>
                                                 <span class="text-light">${val.a_Name}</span>
                                             </div>`;
-                        }
-                        else
-                        {
+                        } else if (val.a_ReserveStatus === "5") {
+                            // txt_content += `<div class="d-flex justify-content-center align-items-center reserve-box-yellow">
+                            //                     <span class="text-light">${val.a_Name}</span>
+                            //                 </div>`;
+                            txt_content += "";
+                        } else {
                             txt_content += `<div class="d-flex justify-content-center align-items-center reserve-box-red" data-bs-toggle="modal" data-bs-target="#reserve-detail-modal" data-bs-whatever='${val.a_Id}'>
                                                 <span class="text-light">${val.a_Name}</span>
                                             </div>`;
@@ -361,7 +357,7 @@ $active_Dashboard = "active";
             const a_Id = button.getAttribute('data-bs-whatever');
 
             $.ajax({
-                url: "<?=$host_path?>/backend/Service/reserveFind.php",
+                url: "<?= $host_path ?>/backend/Service/reserveFind.php",
                 type: "POST",
                 dataType: "json",
                 data: {
@@ -373,21 +369,18 @@ $active_Dashboard = "active";
                     if (res.status === "seccess") {
                         let txtHTML = "";
                         let txtHTML2 = "";
-                        $.each(data_arr,function(key,val){
-                            if(val.r_Status === "1"){
+                        $.each(data_arr, function(key, val) {
+                            if (val.r_Status === "1") {
                                 txtHTML += `<li class="fw-bold">ชื่อผู้จอง : <span class="fw-normal" id="u_Name">${val.u_FirstName} ${val.u_LastName}</span></li>
                                         <li class="fw-bold">ชื่อร้าน : <span class="fw-normal" id="u_ShopName">${val.u_ShopName}</span></li>
                                         <li class="fw-bold">ล็อค : <span class="fw-normal" id="a_Name">${val.a_Name}</span></li>
                                         <li class="fw-bold">โซน : <span class="fw-normal" id="z_Name">${val.z_Name}</span></li>
                                         <li class="fw-bold">สินค้าที่ขาย : <span class="fw-normal" id="u_ProductName">${val.u_ProductName}</span></li>`;
-                            }
-                            else if(val.r_Status === "2"){
+                            } else if (val.r_Status === "2") {
                                 txtHTML2 += `<li class="fw-bold">เจ้าของล็อคประจำ : <span class="fw-normal" >${val.u_FirstName} ${val.u_LastName}</span></li>
                                         <li class="fw-bold">ชื่อร้าน : <span class="fw-normal" >${val.u_ShopName}</span></li>
                                         <li class="fw-bold">สินค้าที่ขาย : <span class="fw-normal" >${val.u_ProductName}</span></li>`;
-                            }
-                            else
-                            {
+                            } else {
                                 txtHTML += "";
                             }
                         });
@@ -407,7 +400,7 @@ $active_Dashboard = "active";
 
         $(document).ready(function() {
             $.ajax({
-                url: "<?=$host_path?>/backend/Service/zone_api.php",
+                url: "<?= $host_path ?>/backend/Service/zone_api.php",
                 dataType: "json",
                 type: "POST",
                 success: function(res) {
@@ -423,7 +416,6 @@ $active_Dashboard = "active";
         $("#select-zone").change(function() {
             fcFind();
         });
-
     </script>
 </body>
 
