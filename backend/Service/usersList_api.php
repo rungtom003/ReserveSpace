@@ -16,6 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
             $resp->set_status("seccess");
         }
         else{
+            $resp->data = [];
             $resp->set_status("fail");
         }
     } else {

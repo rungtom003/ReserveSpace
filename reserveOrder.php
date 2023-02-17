@@ -55,8 +55,8 @@ $active_reserveOrder = "active";
     <script>
         const dt_table = $('#table-Order').DataTable({
             ajax: "<?= $host_path ?>/backend/Service/reserveList_api.php",
-            processing: true,
-            serverSide: true,
+            //processing: true,
+            //serverSide: true,
             dom: 'Bfrtip',
             buttons: ['copy', 'csv', 'excel', 'colvis'],
             responsive: true,

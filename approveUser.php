@@ -201,8 +201,7 @@ $active_approve = "active";
     <script>
         const dt_table = $('#table-users').DataTable({
             ajax: "<?= $host_path ?>/backend/Service/usersList_api.php",
-            processing: true,
-            serverSide: true,
+            //processing: true,
             dom: 'Bfrtip',
             buttons: ['copy', 'csv', 'excel', 'colvis'],
             responsive: true,
