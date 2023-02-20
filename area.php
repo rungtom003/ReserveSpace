@@ -164,7 +164,7 @@ $active_area = "active";
                         let txt = "";
                         if (a_ReserveStatus == 0) {
                             txt = `<div class="d-grid gap-2 d-md-block" >
-                                        <button class="btn btn-danger" type="button" onclick="area_Status(this)" value='${JSON.stringify(row)}' id="btn-status-close" >ปิด</button>
+                                        <button class="btn btn-danger" type="button" onclick="area_Status(this)" value='${JSON.stringify(row)}' id="btn-status-close" >ไม่ว่าง</button>
                                     </div>
                                     <button class="btn btn-danger" type="button" disabled hidden id="btn-status-load">
                                         <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
@@ -172,7 +172,7 @@ $active_area = "active";
                                     </button>`
                         } else if (a_ReserveStatus == 5) {
                             txt = `<div class="d-grid gap-2 d-md-block" >
-                                        <button class="btn btn-primary" type="button" onclick="area_Status(this)" value='${JSON.stringify(row)}' id="btn-status-open" >เปิด</button>
+                                        <button class="btn btn-primary" type="button" onclick="area_Status(this)" value='${JSON.stringify(row)}' id="btn-status-open" >ว่าง</button>
                                     </div>
                                     <button class="btn btn-primary" type="button" disabled hidden id="btn-status-load">
                                         <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>

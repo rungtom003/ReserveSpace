@@ -224,65 +224,65 @@ $active_index = "active";
 
                             </div>
                         </div>
-                        <div class="row g-2 p-2">
+                        <!-- <div class="row g-2 p-2">
                             <div class="col-md">
                                 <label class="form-label">เลขบัตรประจำตัวประชาชน</label>
-                                <input type="text" class="form-control" placeholder="" id="u_CardNumber" value="<?= $user["u_CardNumber"] ?>" readonly>
+                                <input type="text" class="form-control" placeholder="" id="u_CardNumber" value="" readonly>
 
                             </div>
                             <div class="col-md">
                                 <label class="form-label">วัน/เดือน/ปีเกิด</label>
-                                <input type="date" class="form-control" placeholder="" id="u_Birthday" value="<?= $user["u_Birthday"] ?>" readonly>
+                                <input type="date" class="form-control" placeholder="" id="u_Birthday" value="" readonly>
 
                             </div>
-                        </div>
+                        </div> -->
 
-                        <div class="row g-2 p-2">
+                        <!-- <div class="row g-2 p-2">
                             <div class="col-md">
                                 <div class="col-md">
                                     <label class="form-label">บ้านเลขที่/หมู่</label>
-                                    <input type="text" class="form-control" placeholder="" id="u_Address" value="<?= $user["u_Address"] ?>" readonly>
+                                    <input type="text" class="form-control" placeholder="" id="u_Address" value="" readonly>
 
                                 </div>
                             </div>
                             <div class="col-md">
                                 <div class="col-md">
                                     <label class="form-label">ถนน</label>
-                                    <input type="text" class="form-control" placeholder="" id="u_Road" value="<?= $user["u_Road"] ?>" readonly>
+                                    <input type="text" class="form-control" placeholder="" id="u_Road" value="" readonly>
                                 </div>
                             </div>
                             <div class="col-md">
                                 <div class="col-md">
                                     <label class="form-label">ตำบล</label>
-                                    <input type="text" class="form-control" placeholder="" id="u_SubDistrict" value="<?= $user["u_SubDistrict"] ?>" readonly>
+                                    <input type="text" class="form-control" placeholder="" id="u_SubDistrict" value="" readonly>
 
                                 </div>
                             </div>
 
-                        </div>
-                        <div class="row g-2 p-2">
+                        </div> -->
+                        <!-- <div class="row g-2 p-2">
                             <div class="col-md">
                                 <div class="col-md">
                                     <label class="form-label">อำเภอ</label>
-                                    <input type="text" class="form-control" placeholder="" id="u_District" value="<?= $user["u_District"] ?>" readonly>
+                                    <input type="text" class="form-control" placeholder="" id="u_District" value="" readonly>
 
                                 </div>
                             </div>
                             <div class="col-md">
                                 <div class="col-md">
                                     <label class="form-label">จังหวัด</label>
-                                    <input type="text" class="form-control" placeholder="" id="u_Province" value="<?= $user["u_Province"] ?>" readonly>
+                                    <input type="text" class="form-control" placeholder="" id="u_Province" value="" readonly>
 
                                 </div>
                             </div>
                             <div class="col-md">
                                 <div class="col-md">
                                     <label class="form-label">เบอร์โทรศัพท์</label>
-                                    <input type="text" class="form-control" placeholder="" id="u_Phone" value="<?= $user["u_Phone"] ?>" readonly>
+                                    <input type="text" class="form-control" placeholder="" id="u_Phone" value="" readonly>
 
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                     <div class="modal-footer">
                         <div id="btn-loadding" hidden>
