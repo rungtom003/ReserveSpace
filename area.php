@@ -32,8 +32,8 @@ $active_area = "active";
                 <div class="card">
                     <div class="card-body">
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                            <button class="btn btn-primary me-md-2" type="button" data-bs-toggle="modal" data-bs-target="#addAreakModal">เพิ่มบล็อค</button>
-                            <button class="btn btn-primary me-md-2" type="button" data-bs-toggle="modal" data-bs-target="#updateModal">เปิด - ปิดบล็อคทั้งหมด</button>
+                            <button class="btn btn-primary me-md-2" type="button" data-bs-toggle="modal" data-bs-target="#addAreakModal">เพิ่มล็อค</button>
+                            <button class="btn btn-primary me-md-2" type="button" data-bs-toggle="modal" data-bs-target="#updateModal">เปิด - ปิดล็อคทั้งหมด</button>
                         </div>
                         <table id="table-area" class="table table-striped w-100"></table>
                     </div>
@@ -45,7 +45,7 @@ $active_area = "active";
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="addAreakModalLabel">เพิ่มบล็อค</h1>
+                        <h1 class="modal-title fs-5" id="addAreakModalLabel">เพิ่มล็อค</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -57,7 +57,7 @@ $active_area = "active";
                                 </select>
                             </div>
                             <div class="mb-3">
-                                <label for="inputAreaName" class="col-form-label">บล็อค:</label>
+                                <label for="inputAreaName" class="col-form-label">ล็อค:</label>
                                 <input class="form-control" id="inputAreaName"></input>
                             </div>
                         </form>
@@ -73,7 +73,7 @@ $active_area = "active";
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="updateModalLabel">เปิด - ปิดบล็อค</h1>
+                        <h1 class="modal-title fs-5" id="updateModalLabel">เปิด - ปิดล็อค</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -85,8 +85,8 @@ $active_area = "active";
                                 </select>
                             </div>
                             <div class="mb-3">
-                                <button class="btn btn-success me-md-2" type="button" onclick="area_StatusAll(this)" value="5">เปิดบล็อคทั้งหมด</button>
-                                <button class="btn btn-danger me-md-2" type="button" onclick="area_StatusAll(this)" value="0">ปิดบล็อคทั้งหมด</button>
+                                <button class="btn btn-success me-md-2" type="button" onclick="area_StatusAll(this)" value="5">เปิดล็อคทั้งหมด</button>
+                                <button class="btn btn-danger me-md-2" type="button" onclick="area_StatusAll(this)" value="0">ปิดล็อคทั้งหมด</button>
                             </div>
                         </form>
                     </div>
@@ -148,7 +148,7 @@ $active_area = "active";
                 },
                 {
                     targets: 1,
-                    title: "บล็อค",
+                    title: "ล็อค",
                     data: "a_Name",
                     render: function(data, type, row, meta) {
                         return '<td class=""><span id="a_Name">' + data + '</span><input class="form-control" id="inputA_Name" type="text" value="' + data + '" style="display: none; width: 100 % "></td>';
@@ -164,7 +164,7 @@ $active_area = "active";
                         let txt = "";
                         if (a_ReserveStatus == 0) {
                             txt = `<div class="d-grid gap-2 d-md-block" >
-                                        <button class="btn btn-danger" type="button" onclick="area_Status(this)" value='${JSON.stringify(row)}' id="btn-status-close" >ปิด</button>
+                                        <button class="btn btn-danger" type="button" onclick="area_Status(this)" value='${JSON.stringify(row)}' id="btn-status-close" >ไม่ว่าง</button>
                                     </div>
                                     <button class="btn btn-danger" type="button" disabled hidden id="btn-status-load">
                                         <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
@@ -172,7 +172,7 @@ $active_area = "active";
                                     </button>`
                         } else if (a_ReserveStatus == 5) {
                             txt = `<div class="d-grid gap-2 d-md-block" >
-                                        <button class="btn btn-primary" type="button" onclick="area_Status(this)" value='${JSON.stringify(row)}' id="btn-status-open" >เปิด</button>
+                                        <button class="btn btn-primary" type="button" onclick="area_Status(this)" value='${JSON.stringify(row)}' id="btn-status-open" >ว่าง</button>
                                     </div>
                                     <button class="btn btn-primary" type="button" disabled hidden id="btn-status-load">
                                         <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
@@ -283,7 +283,7 @@ $active_area = "active";
             }
             Swal.fire({
                 title: 'แจ้งเตือน',
-                html: `ต้องการ${txt}บล็อคทั้งหมดใช่หรือไม่`,
+                html: `ต้องการ${txt}ล็อคทั้งหมดใช่หรือไม่`,
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
@@ -482,7 +482,7 @@ $active_area = "active";
 
             Swal.fire({
                 title: 'แจ้งเตือน',
-                text: `ต้องการลบข้อมูล ${z_Name} บล็อค ${a_Name} ใช่หรือไม่`,
+                text: `ต้องการลบข้อมูล ${z_Name} ล็อค ${a_Name} ใช่หรือไม่`,
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',

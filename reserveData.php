@@ -60,7 +60,7 @@ $active_reserveData = "active";
             },
             columnDefs: [{
                     targets: 0,
-                    title: "บล็อค",
+                    title: "ล็อค",
                     data: "a_Name",
                 },
                 {

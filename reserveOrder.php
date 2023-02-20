@@ -88,7 +88,7 @@ $active_reserveOrder = "active";
             },
             columnDefs: [{
                     targets: 0,
-                    title: "บล็อค",
+                    title: "ล็อค",
                     data: "a_Name",
                 },
                 {
@@ -119,7 +119,7 @@ $active_reserveOrder = "active";
                 },
                 {
                     targets: 6,
-                    title: "เลขประจำตัวประชาชนน",
+                    title: "เลขประจำตัวประชาชน",
                     data: "u_CardNumber",
                 },
                 {
@@ -140,7 +140,7 @@ $active_reserveOrder = "active";
                     render: function(data, type, row, meta) {
                         let txtHTML = "";
                         if (row.r_Status === "0") {
-                            txtHTML = "<span class='text-danger'>ยกเลิก</span>";
+                            txtHTML = "<span class='text-danger'>ยกเลิกการจอง</span>";
                         } else if (row.r_Status === "1" && row.a_ReserveStatus === "1") {
                             txtHTML = "<span class='text-success'>จองสำเร็จ</span>";
                         } else if (row.r_Status === "1" && row.a_ReserveStatus === "4") {
@@ -172,13 +172,13 @@ $active_reserveOrder = "active";
                             txtHTML = "";
                         } else if (row.r_Status === "1" && row.a_ReserveStatus === "1") {
                             txtHTML = `<div class="d-grid gap-2 d-md-block" >
-                                                <button class="btn btn-danger" type="button" onclick="fcCancel(this)" value='${JSON.stringify(obj)}'>ยกเลิก</button>
+                                                <button class="btn btn-danger" type="button" onclick="fcCancel(this)" value='${JSON.stringify(obj)}'>ยกเลิกการจอง</button>
                                                 <button class="btn btn-primary" type="button" onclick="fcStaticArea(this)" value='${JSON.stringify(obj)}'>ให้สถานะล็อคประจำ</button>
                                             </div>`;
                         } else if (row.r_Status === "2" && row.a_ReserveStatus === "2") {
                             txtHTML = `<div class="d-grid gap-2 d-md-block" >
                                                 <button class="btn btn-primary" type="button"  onclick="fcCancelTemporary(this)" value='${JSON.stringify(obj)}'>ยกเลิกช่วงคราว</button>
-                                                <button class="btn btn-danger" type="button"  onclick="fcCancel(this)" value='${JSON.stringify(obj)}'>ยกเลิก</button>
+                                                <button class="btn btn-danger" type="button"  onclick="fcCancel(this)" value='${JSON.stringify(obj)}'>ยกเลิกการจอง</button>
                                             </div>`;
                         } else if (row.r_Status === "1" && row.a_ReserveStatus === "4") {
                             txtHTML = `<div class="d-grid gap-2 d-md-block" >
@@ -648,7 +648,7 @@ $active_reserveOrder = "active";
         //====================================  สถานะการจอง
         //r_Status 0 -> ยกเลิกการจอง
         //r_Status 1 -> จองแบบปกติ
-        //r_Status 2 -> จองแบบล็อคประจำ
+        //r_Status 2 -> จองแล็อคประจำ
     </script>
 </body>
 

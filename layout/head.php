@@ -66,7 +66,13 @@
             <li class="sidebar-menu-item <?= isset($active_area) ? $active_area : "" ?>">
                 <a href="<?=$host_path?>/area.php">
                     <i class="ri-file-list-3-line sidebar-menu-item-icon"></i>
-                    บล็อก
+                    การจัดการล็อก
+                </a>
+            </li>
+            <li class="sidebar-menu-item <?= isset($active_reserve_history) ? $active_reserve_history : "" ?>">
+                <a href="<?=$host_path?>/history_reserve.php">
+                    <i class="ri-file-list-3-line sidebar-menu-item-icon"></i>
+                    ประวัติการจอง
                 </a>
             </li>
         <?php } ?>
