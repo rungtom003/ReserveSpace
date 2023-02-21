@@ -60,7 +60,7 @@ $active_reserveData = "active";
             },
             columnDefs: [{
                     targets: 0,
-                    title: "ล็อค",
+                    title: "ล็อก",
                     data: "a_Name",
                 },
                 {
@@ -111,13 +111,13 @@ $active_reserveData = "active";
                         } else if (row.r_Status === "1" && row.a_ReserveStatus === "1") {
                             txtHTML = "<span class='text-success'>จองสำเร็จ</span>";
                         } else if (row.r_Status === "1" && row.a_ReserveStatus === "4") {
-                            txtHTML = "<span class='text-success'>จองล็อคประจำสำเร็จ</span>";
+                            txtHTML = "<span class='text-success'>จองล็อกประจำสำเร็จ</span>";
                         } else if (row.r_Status === "2" && row.a_ReserveStatus === "2") {
-                            txtHTML = "<span class='text-primary'>ล็อคประจำ</span>";
+                            txtHTML = "<span class='text-primary'>ล็อกประจำ</span>";
                         } else if (row.r_Status === "2" && row.a_ReserveStatus === "3") {
-                            txtHTML = "<span class='text-danger'>ล็อคประจำ(ยกเลิกชั่วคราว)</span>";
+                            txtHTML = "<span class='text-danger'>ล็อกประจำ(ยกเลิกชั่วคราว)</span>";
                         } else if (row.r_Status === "2" && row.a_ReserveStatus === "4") {
-                            txtHTML = `<span class='text-danger'>ล็อคประจำถูกจอง</span>`;
+                            txtHTML = `<span class='text-danger'>ล็อกประจำถูกจอง</span>`;
                         } else {
                             txtHTML = "";
                         }
@@ -141,11 +141,11 @@ $active_reserveData = "active";
         //             if (val.r_Status === "0") {
         //                 txtContent += `<div class="card text-bg-danger my-2 w-100">
         //                 <div class="card-body">
-        //                     <h5 class="card-title text-center">ล็อค ${val.a_Name}</h5>
+        //                     <h5 class="card-title text-center">ล็อก ${val.a_Name}</h5>
         //                     <hr class="border border-primary border-3 opacity-75">
         //                     <ul class="list-group">
         //                         <li class="list-group-item"><span>ชื่อผู้จอง : ${val.u_FirstName} ${val.u_LastName}</span></li>
-        //                         <li class="list-group-item"><span>ล็อค : ${val.a_Name}</span></li>
+        //                         <li class="list-group-item"><span>ล็อก : ${val.a_Name}</span></li>
         //                         <li class="list-group-item"><span>โซน : ${val.z_Name}</span></li>
         //                         <li class="list-group-item"><span>ชื่อร้าน : ${val.u_ShopName}</span></li>
         //                         <li class="list-group-item"><span>สินค้าที่ขาย : ${val.u_ProductName}</span></li>
@@ -158,11 +158,11 @@ $active_reserveData = "active";
         //             } else if (val.r_Status === "1") {
         //                 txtContent += `<div class="card text-bg-success my-2 w-100">
         //                 <div class="card-body">
-        //                     <h5 class="card-title text-center">ล็อค ${val.a_Name}</h5>
+        //                     <h5 class="card-title text-center">ล็อก ${val.a_Name}</h5>
         //                     <hr class="border border-primary border-3 opacity-75">
         //                     <ul class="list-group">
         //                         <li class="list-group-item"><span>ชื่อผู้จอง : ${val.u_FirstName} ${val.u_LastName}</span></li>
-        //                         <li class="list-group-item"><span>ล็อค : ${val.a_Name}</span></li>
+        //                         <li class="list-group-item"><span>ล็อก : ${val.a_Name}</span></li>
         //                         <li class="list-group-item"><span>โซน : ${val.z_Name}</span></li>
         //                         <li class="list-group-item"><span>ชื่อร้าน : ${val.u_ShopName}</span></li>
         //                         <li class="list-group-item"><span>สินค้าที่ขาย : ${val.u_ProductName}</span></li>
@@ -175,17 +175,17 @@ $active_reserveData = "active";
         //             } else {
         //                 txtContent += `<div class="card text-bg-primary my-2 w-100">
         //                 <div class="card-body">
-        //                     <h5 class="card-title text-center">ล็อค ${val.a_Name}</h5>
+        //                     <h5 class="card-title text-center">ล็อก ${val.a_Name}</h5>
         //                     <hr class="border border-primary border-3 opacity-75">
         //                     <ul class="list-group">
         //                         <li class="list-group-item"><span>ชื่อผู้จอง : ${val.u_FirstName} ${val.u_LastName}</span></li>
-        //                         <li class="list-group-item"><span>ล็อค : ${val.a_Name}</span></li>
+        //                         <li class="list-group-item"><span>ล็อก : ${val.a_Name}</span></li>
         //                         <li class="list-group-item"><span>โซน : ${val.z_Name}</span></li>
         //                         <li class="list-group-item"><span>ชื่อร้าน : ${val.u_ShopName}</span></li>
         //                         <li class="list-group-item"><span>สินค้าที่ขาย : ${val.u_ProductName}</span></li>
         //                         <li class="list-group-item"><span>หมายเหตุ : ${val.r_Note===null?"":val.r_Note}</span></li>
         //                         <li class="list-group-item"><span>วันเวลาจอง : ${val.r_DateTime}</span></li>
-        //                         <li class="list-group-item"><span>สถานะการจอง : <span class="text-primary">สำเร็จ (ล็อคประจำ)</span></span></li>
+        //                         <li class="list-group-item"><span>สถานะการจอง : <span class="text-primary">สำเร็จ (ล็อกประจำ)</span></span></li>
         //                     </ul>
         //                 </div>
         //             </div>`;

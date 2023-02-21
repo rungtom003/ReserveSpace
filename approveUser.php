@@ -50,7 +50,7 @@ $active_approve = "active";
                                     <img class="img-fluid" id="img" alt="" src="" style="height: 150px">
                                 </div>
                                 <span id="u_Id" hidden></span>
-                                <div class="row g-2 p-2">
+                                <div class="row g-2 p-2 d-flex align-items-end">
                                     <div class="col-md" id="u_OfficerId-content">
                                         <label class="form-label">รหัสเจ้าหน้าที่</label>
                                         <input type="text" class="form-control" placeholder="" id="u_OfficerId" readonly>
@@ -61,6 +61,10 @@ $active_approve = "active";
                                         <input type="text" class="form-control" placeholder="" id="u_IdWalkin" readonly>
                                         <!-- <div class="form-text">Enter your Full name</div> -->
                                     </div>
+                                    <div class="col-md" id="">
+                                    <button type="button" class="btn btn-primary" onclick="update_IdWalkIn()" id="btn_Add">บันทึก</button>
+                                    </div>
+                                    
                                 </div>
                                 <div class="row g-2 p-2">
                                     <div class="col-md-2">
@@ -188,6 +192,9 @@ $active_approve = "active";
                                         </div>
                                     </div>
                                 </div>
+                                <div class="row g-2 p-2">
+                               
+                                </div>
                             </form>
                         </div>
                     </div>
@@ -287,7 +294,7 @@ $active_approve = "active";
                 },
                 {
                     targets: 8,
-                    title: "#",
+                    title: "ปุ่มสถานะ",
                     data: null,
                     defaultContent: "",
                     render: function(data, type, row, meta) {
@@ -486,6 +493,7 @@ $active_approve = "active";
                             $('#u_IdWalkin-content').show();
                             $('#u_Shop-content').show();
                             $('#shop_Detail-content').show();
+                            $('#btn_Add').show();
                         } else if (ur_Id == "R002") {
                             $('#RadioAdmin').prop("checked", true);
                             $('#u_OfficerId-content').show();
@@ -493,6 +501,7 @@ $active_approve = "active";
                             $('#u_IdWalkin-content').hide();
                             $('#u_Shop-content').hide();
                             $('#shop_Detail-content').hide();
+                            $('#btn_Add').hide();
                         }
                         $('#u_ShopName').val(res.data.u_ShopName);
 
@@ -510,8 +519,12 @@ $active_approve = "active";
 
                         if (res.data.u_Approve == 0) {
                             $("#password-content").prop('hidden', true);
+                            $('#btn_Add').prop('hidden', true);
+                            $("#u_IdWalkin").prop("readonly",true);
                         } else {
                             $("#password-content").prop('hidden', false);
+                            $('#btn_Add').prop('hidden', false);
+                            $("#u_IdWalkin").prop("readonly",false);
                         }
 
                         $('#btnEditPassword').prop('disabled', true);
@@ -522,6 +535,18 @@ $active_approve = "active";
                                     $('#btnEditPassword').prop('disabled', true);
                                 } else {
                                     $('#btnEditPassword').prop('disabled', false);
+                                }
+                            }
+                        })
+
+                        $('#btn_Add').prop('disabled', true);
+                        $('#u_IdWalkin').keyup(function() {
+                            let val = $("#u_IdWalkin").val();
+                            if (event.key != "Enter") {
+                                if (val == res.data.u_IdWalkin && val == "") {
+                                    $('#btn_Add').prop('disabled', true);
+                                } else {
+                                    $('#btn_Add').prop('disabled', false);
                                 }
                             }
                         })
@@ -576,6 +601,45 @@ $active_approve = "active";
                 }
             });
         })
+
+        const update_IdWalkIn = () => {
+            console.log('update_IdWalkIn')
+            let u_Id = $('#u_Id').html();
+            let u_IdWalkin = $('#u_IdWalkin').val();
+
+            $.ajax({
+                url: "/ReserveSpace/backend/Service/update _IdWalkIn_api.php",
+                type: "POST",
+                data: {
+                    u_Id: u_Id,
+                    u_IdWalkin: u_IdWalkin
+                },
+                dataType: "json",
+                success: function(res) {
+                    let message = res.message;
+                    let status = res.status;
+
+                    if (status == "success") {
+                        $('#detailModal').modal('hide');
+                        Swal.fire({
+                            icon: 'success',
+                            title: message,
+                            showConfirmButton: true,
+                            timer: 1500
+                        }).then((result) => {
+                            dt_table.ajax.reload();
+                        })
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'เเจ้งเตือน',
+                            text: message
+                        })
+                    }
+                }
+            });
+        }
+        
     </script>
 </body>
 
