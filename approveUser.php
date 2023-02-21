@@ -294,6 +294,7 @@ $active_approve = "active";
                         let status = row.u_Approve;
                         const u_Id = row.u_Id;
                         const ur_Id = row.ur_Id;
+                        const u_Img = row.u_Img;
                         let txtBtn = "";
                         let txtHTML = "";
                         if (row.u_Username !== "admin") {
@@ -303,7 +304,7 @@ $active_approve = "active";
                                 txtBtn = `<button class="btn btn-warning" type="button" id="btn_Cancel" onclick="cancelUser(this)" value="${u_Id}">ยกเลิก</button>`;
                             }
                             txtHTML = `<div class="d-grid gap-2 d-md-block" >` + txtBtn + `
-                                        <button class="btn btn-danger" type="button" id="btn_Delete" onclick="deleteUser(this)" value="${u_Id}">ลบ</button>
+                                        <button class="btn btn-danger" type="button" id="btn_Delete" onclick="deleteUser(this)" value="${u_Id}" data-u_Img="${u_Img}">ลบ</button>
                                         </div>`
                         }
                         return txtHTML;
@@ -388,6 +389,7 @@ $active_approve = "active";
 
         const deleteUser = (elm) => {
             let u_Id = elm.value;
+            let u_Img = $(elm).attr("data-u_Img");
             Swal.fire({
                 title: 'แจ้งเตือน',
                 text: `ต้องการลบข้อมูลผู้ใช้ใช่หรือไม่`,
@@ -404,7 +406,8 @@ $active_approve = "active";
                         url: "<?= $host_path ?>/backend/Service/userDelete_api.php",
                         type: "POST",
                         data: {
-                            u_Id: u_Id
+                            u_Id: u_Id,
+                            u_Img:u_Img
                         },
                         dataType: "json",
                         success: function(res) {
@@ -432,7 +435,7 @@ $active_approve = "active";
                     });
 
                 }
-            })
+            });
         }
 
         const detailUser = (elm) => {
