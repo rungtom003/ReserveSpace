@@ -3,7 +3,7 @@ include("./layout/static_path.php");
 session_start();
 $user = (isset($_SESSION['user'])) ? unserialize($_SESSION['user']) : null;
 if ($user == null) {
-    header('location: '.$host_path.'/login.php');
+    header('location: ' . $host_path . '/login.php');
 }
 $titleHead = "ข้อมูลส่วนตัว";
 $active_persionData = "active";
@@ -14,7 +14,7 @@ $active_persionData = "active";
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title><?=$titleHead?></title>
+    <title><?= $titleHead ?></title>
     <?php include("./layout/css.php"); ?>
 </head>
 
@@ -34,9 +34,9 @@ $active_persionData = "active";
                             </div>
                             <div class="card-body">
                                 <form>
-                                <div class="d-flex justify-content-center">
-                                    <img class="img-fluid" id="img" alt="" src="<?=$host_path?>/src/img/upload/<?=$user["u_Img"]?>" style="height: 150px" >
-                                </div>
+                                    <div class="d-flex justify-content-center">
+                                        <img class="img-fluid" id="img" alt="" src="<?= $host_path ?>/src/img/upload/<?= $user["u_Img"] ?>" style="height: 150px">
+                                    </div>
                                     <span hidden id="ur_ID"><?= $user["ur_Id"] ?></span>
                                     <?php if ($user["ur_Id"] != "R001") { ?>
                                         <div class="row g-2 p-2">
@@ -126,37 +126,37 @@ $active_persionData = "active";
                                         }
                                         ?>
                                     </div>
-                                    <?php if ($user["ur_Id"] == "R001") {?>
+                                    <?php if ($user["ur_Id"] == "R001") { ?>
                                         <div class="row g-2 p-2">
-                                        <div class="col-md">
-                                            <label class="form-label">ชื่อร้าน</label>
-                                            <input type="text" class="form-control" placeholder="" value="<?= $user["u_ShopName"] ?>" id="u_ShopName" required>
-                                            <div class="invalid-feedback">
-                                                กรุณากรอก ชื่อร้าน
+                                            <div class="col-md">
+                                                <label class="form-label">ชื่อร้าน</label>
+                                                <input type="text" class="form-control" placeholder="" value="<?= $user["u_ShopName"] ?>" id="u_ShopName" required>
+                                                <div class="invalid-feedback">
+                                                    กรุณากรอก ชื่อร้าน
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <span hidden id="zoneID"><?= $user["z_Id"] ?></span>
+                                                <label class="form-label">โซน</label>
+                                                <select class="form-select" aria-label="Default select example" id="selectZoneName" readonly required>
+                                                    <option selected value="<?= $user["z_Id"] ?>"></option>
+                                                </select>
+                                                <div class="invalid-feedback">
+                                                    กรุณาเลือก โซน
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-3">
-                                            <span hidden id="zoneID"><?= $user["z_Id"] ?></span>
-                                            <label class="form-label">โซน</label>
-                                            <select class="form-select" aria-label="Default select example" id="selectZoneName" readonly required>
-                                                <option selected value="<?= $user["z_Id"] ?>"></option>
-                                            </select>
+                                        <div class="row g-2 p-2">
+                                            <div class="mb-3">
+                                                <label for="u_ProductName" class="form-label">รายละเอียดสินค้า</label>
+                                                <textarea class="form-control" id="u_ProductName" rows="3" required><?= $user["u_ProductName"] ?></textarea>
+                                            </div>
                                             <div class="invalid-feedback">
-                                                กรุณาเลือก โซน
+                                                กรุณาเลือก รายละเอียดสินค้า
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="row g-2 p-2">
-                                        <div class="mb-3">
-                                            <label for="u_ProductName" class="form-label">รายละเอียดสินค้า</label>
-                                            <textarea class="form-control" id="u_ProductName" rows="3" required><?= $user["u_ProductName"] ?></textarea>
-                                        </div>
-                                        <div class="invalid-feedback">
-                                            กรุณาเลือก รายละเอียดสินค้า
-                                        </div>
-                                    </div>
                                     <?php } ?>
-                                    
+
                                     <div class="row g-2 p-2">
                                         <?php if ($user["ur_Id"] != "R001") { ?>
                                             <div class="col-md">
@@ -224,6 +224,20 @@ $active_persionData = "active";
                                             </div>
                                         </div>
                                     </div>
+
+                                    <!-- <div class="mb-3">
+                                        <label for="formFile" class="form-label">อัพโหลดรูป</label>
+                                        <input class="form-control" type="file" id="formFile">
+                                    </div>
+
+                                    <div hidden>
+                                        <h2>Original Image</h2>
+                                        <img style="margin-top: 5px;" id="originalImage" crossorigin="anonymous" />
+                                    </div>
+                                    <div class="d-flex flex-column align-items-center">
+                                        <img id="compressedImage" />
+                                    </div> -->
+
                                     <div class="row g-2 p-2">
                                         <button type="submit" class="btn btn-primary" id="btn_update">บันทึก</button>
                                     </div>
@@ -242,10 +256,13 @@ $active_persionData = "active";
     <!-- end: Main -->
     <?php include("./layout/script.php"); ?>
     <script>
+        let compressedImageBlob;
+        let fileIMG = null;
+
         function loadZone() {
             let zoneID = $('#zoneID').html();
             $.ajax({
-                url: "<?=$host_path?>/backend/Service/zone_api.php",
+                url: "<?= $host_path ?>/backend/Service/zone_api.php",
                 type: "POST",
                 dataType: "json",
                 success: function(res) {
@@ -269,7 +286,7 @@ $active_persionData = "active";
                 u_OfficerId = $('#u_OfficerId').val();
                 u_Position = $('#u_Position').val();
             }
-            
+
             let u_FirstName = $('#u_FullName').val();
             let u_LastName = $('#u_Last').val();
             let u_Username = $('#u_Username').val();
@@ -318,7 +335,7 @@ $active_persionData = "active";
             }
 
             $.ajax({
-                url: "<?=$host_path?>/backend/Service/persionData_api.php",
+                url: "<?= $host_path ?>/backend/Service/persionData_api.php",
                 type: "POST",
                 data: data,
                 dataType: "json",
@@ -353,7 +370,7 @@ $active_persionData = "active";
             let u_Id = "<?= $user["u_Id"] ?>";
             let u_Username = $('#u_Username').val();
             $.ajax({
-                url: "<?=$host_path?>/backend/Service/updateUser_api.php",
+                url: "<?= $host_path ?>/backend/Service/updateUser_api.php",
                 type: "POST",
                 data: {
                     u_Id: u_Id,
@@ -370,7 +387,7 @@ $active_persionData = "active";
                             showConfirmButton: false,
                             timer: 1500
                         }).then((result) => {
-                            window.location.href = "<?=$host_path?>/backend/Service/logout_api.php"
+                            window.location.href = "<?= $host_path ?>/backend/Service/logout_api.php"
                         })
 
                     } else if (status == "Duplicate user") {
@@ -398,7 +415,7 @@ $active_persionData = "active";
             let u_PasswordNew = $('#u_PasswordNew').val();
 
             $.ajax({
-                url: "<?=$host_path?>/backend/Service/updatePassword_api.php",
+                url: "<?= $host_path ?>/backend/Service/updatePassword_api.php",
                 type: "POST",
                 data: {
                     status: "user",
@@ -418,7 +435,7 @@ $active_persionData = "active";
                             showConfirmButton: false,
                             timer: 1500
                         }).then((result) => {
-                            window.location.href = "<?=$host_path?>/backend/Service/logout_api.php"
+                            window.location.href = "<?= $host_path ?>/backend/Service/logout_api.php"
                         })
 
                     } else {
@@ -488,6 +505,102 @@ $active_persionData = "active";
             event.preventDefault();
             update_Password()
         })
+
+        const fileInput = document.querySelector("#formFile");
+        const originalImage = document.querySelector("#originalImage");
+
+        const compressedImage = document.querySelector("#compressedImage");
+
+        let resizingFactor = 0.8;
+        let quality = 0.8;
+
+        fileInput.addEventListener("change", async (e) => {
+            const [file] = fileInput.files;
+
+            //storing the original image
+            originalImage.src = await fileToDataUri(file);
+
+            // compressing the uplodaded image
+            originalImage.addEventListener("load", () => {
+                compressImage(originalImage, resizingFactor, quality);
+            });
+
+            return false;
+        });
+
+        function compressImage(imgToCompress, resizingFactor, quality) {
+            // showing the compressed image
+            const canvas = document.createElement("canvas");
+            const context = canvas.getContext("2d");
+
+            const originalWidth = imgToCompress.width;
+            const originalHeight = imgToCompress.height;
+
+            let resizingFactor_fill = 100;
+
+            for (let i = 0; i < 100; i++) {
+                resizingFactor = parseInt(resizingFactor_fill) / 100;
+                const canvasWidth = originalWidth * resizingFactor;
+                const canvasHeight = originalHeight * resizingFactor;
+
+                if (canvasWidth <= 300) {
+                    canvas.width = canvasWidth;
+                    canvas.height = canvasHeight;
+
+                    context.drawImage(
+                        imgToCompress,
+                        0,
+                        0,
+                        originalWidth * resizingFactor,
+                        originalHeight * resizingFactor
+                    );
+
+                    const file = document.getElementById("formFile").files[0];
+
+                    // reducing the quality of the image
+                    canvas.toBlob(
+                        (blob) => {
+                            if (blob) {
+                                compressedImageBlob = blob;
+                                compressedImage.src = URL.createObjectURL(compressedImageBlob);
+                                //document.querySelector("#size").innerHTML = bytesToSize(blob.size);
+                                fileIMG = new File([blob], file.name, {
+                                    type: 'image/jpeg'
+                                });
+                            }
+                        },
+                        "image/jpeg",
+                        quality
+                    );
+                    break;
+                }
+                resizingFactor_fill = resizingFactor_fill - 1;
+            }
+        }
+
+        function fileToDataUri(field) {
+            return new Promise((resolve) => {
+                const reader = new FileReader();
+                reader.addEventListener("load", () => {
+                    resolve(reader.result);
+                });
+                reader.readAsDataURL(field);
+            });
+        }
+
+        function bytesToSize(bytes) {
+            var sizes = ["Bytes", "KB", "MB", "GB", "TB"];
+
+            if (bytes === 0) {
+                return "0 Byte";
+            }
+
+            const i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
+
+            return Math.round(bytes / Math.pow(1024, i), 2) + " " + sizes[i];
+        }
+
+
     </script>
 </body>
 
