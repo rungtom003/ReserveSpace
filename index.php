@@ -110,10 +110,10 @@ $active_index = "active";
                                 <span class="text-light text-center">จองเเล้ว</span>
                             </div>
                             <!-- <div class="d-flex justify-content-center align-items-center reserve-box-yellow">
-                                <span class="text-light text-center">ปิดล็อค</span>
+                                <span class="text-light text-center">ปิดล็อก</span>
                             </div> -->
                             <!-- <div class="d-flex justify-content-center align-items-center reserve-box-primary">
-                                <span class="text-light text-center">ล็อคประจำ</span>
+                                <span class="text-light text-center">ล็อกประจำ</span>
                             </div> -->
                         </div>
                         <div class="d-flex my-3">
@@ -175,11 +175,11 @@ $active_index = "active";
                     <div class="modal-body">
                         <h4>รายละเอียดการจอง</h4>
                         <div class="row g-2 p-2">
-                            <input type="text" class="form-control" placeholder="ล็อค" id="a_Id" readonly hidden>
-                            <input type="text" class="form-control" placeholder="ล็อคประจำ" id="area_static" readonly hidden>
+                            <input type="text" class="form-control" placeholder="ล็อก" id="a_Id" readonly hidden>
+                            <input type="text" class="form-control" placeholder="ล็อกประจำ" id="area_static" readonly hidden>
                             <div class="col-md">
-                                <label class="form-label">ล็อค</label>
-                                <input type="text" class="form-control" placeholder="ล็อค" id="a_Name-reserve-modal" readonly>
+                                <label class="form-label">ล็อก</label>
+                                <input type="text" class="form-control" placeholder="ล็อก" id="a_Name-reserve-modal" readonly>
                                 <!-- <div class="form-text">Enter your Full name</div> -->
                             </div>
                             <div class="col-md">
@@ -189,7 +189,7 @@ $active_index = "active";
                             </div>
                         </div>
                         <div class="row g-2 p-2">
-                            <input type="text" class="form-control" placeholder="ล็อค" id="a_Id" readonly hidden>
+                            <input type="text" class="form-control" placeholder="ล็อก" id="a_Id" readonly hidden>
                             <div class="col-md">
                                 <label class="form-label">ชื่อร้าน</label>
                                 <input type="text" class="form-control" placeholder="ชื่อร้าน" id="u_ShopName" value="<?= $user["u_ShopName"] ?>" readonly>
@@ -369,7 +369,7 @@ $active_index = "active";
             const area_static = button.getAttribute('data-bs-area_static');
             const modalTitle = reserve_modal.querySelector('.modal-title');
 
-            modalTitle.textContent = `ล็อค ${data.a_Name} # ${data.z_Name}`;
+            modalTitle.textContent = `ล็อก ${data.a_Name} # ${data.z_Name}`;
             $("#a_Id").val(data.a_Id);
             $("#area_static").val(area_static);
             $("#a_Name-reserve-modal").val(data.a_Name);
@@ -405,11 +405,11 @@ $active_index = "active";
                             if (val.r_Status === "1") {
                                 txtHTML += `<li class="fw-bold">ชื่อผู้จอง : <span class="fw-normal" id="u_Name">${val.u_FirstName} ${val.u_LastName}</span></li>
                                         <li class="fw-bold">ชื่อร้าน : <span class="fw-normal" id="u_ShopName">${val.u_ShopName}</span></li>
-                                        <li class="fw-bold">ล็อค : <span class="fw-normal" id="a_Name">${val.a_Name}</span></li>
+                                        <li class="fw-bold">ล็อก : <span class="fw-normal" id="a_Name">${val.a_Name}</span></li>
                                         <li class="fw-bold">โซน : <span class="fw-normal" id="z_Name">${val.z_Name}</span></li>
                                         <li class="fw-bold">สินค้าที่ขาย : <span class="fw-normal" id="u_ProductName">${val.u_ProductName}</span></li>`;
                             } else if (val.r_Status === "2") {
-                                txtHTML2 += `<li class="fw-bold">เจ้าของล็อคประจำ : <span class="fw-normal" >${val.u_FirstName} ${val.u_LastName}</span></li>
+                                txtHTML2 += `<li class="fw-bold">เจ้าของล็อกประจำ : <span class="fw-normal" >${val.u_FirstName} ${val.u_LastName}</span></li>
                                         <li class="fw-bold">ชื่อร้าน : <span class="fw-normal" >${val.u_ShopName}</span></li>
                                         <li class="fw-bold">สินค้าที่ขาย : <span class="fw-normal" >${val.u_ProductName}</span></li>`;
                             } else {

@@ -18,7 +18,7 @@
             <li class="sidebar-menu-item <?= isset($active_Dashboard) ? $active_Dashboard : "" ?>">
                 <a href="<?=$host_path?>/dashboard.php">
                     <i class="ri-dashboard-line sidebar-menu-item-icon"></i>
-                    Dashboard
+                    หน้าแรก
                 </a>
             </li>
         <?php } ?>

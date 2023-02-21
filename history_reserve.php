@@ -34,8 +34,8 @@ $active_reserve_history = "active";
                     <div class="card-body">
                         <div class="d-flex flex-wrap">
                             <button class="btn btn-primary m-1" id="reset-all" onclick="resetAll()">รีเซ็ตการจองทั้งหมด</button>
-                            <button class="btn btn-primary m-1" id="reset-static" onclick="resetStatic()">รีเซ็ตการจองล็อคประจำ</button>
-                            <button class="btn btn-primary m-1" id="reset-non-static" onclick="resetNonStatic()">รีเซ็ตการจองล็อคไม่ประจำ</button>
+                            <button class="btn btn-primary m-1" id="reset-static" onclick="resetStatic()">รีเซ็ตการจองล็อกประจำ</button>
+                            <button class="btn btn-primary m-1" id="reset-non-static" onclick="resetNonStatic()">รีเซ็ตการจองล็อกไม่ประจำ</button>
                         </div>
 
                     </div>
@@ -88,7 +88,7 @@ $active_reserve_history = "active";
             },
             columnDefs: [{
                     targets: 0,
-                    title: "ล็อค",
+                    title: "ล็อก",
                     data: "a_Name",
                 },
                 {
@@ -165,18 +165,18 @@ $active_reserve_history = "active";
             ]
         });
 
-        //====================================  สถานะล็อค
-        //a_ReserveStatus 0 -> ล็อคว่างปกติ
+        //====================================  สถานะล็อก
+        //a_ReserveStatus 0 -> ล็อกว่างปกติ
         //a_ReserveStatus 1 -> จองปกติ
-        //a_ReserveStatus 2 -> ล็อคประจำ
-        //a_ReserveStatus 3 -> ปลดล็อคประจำให้จองได้ หรือ ล็อคประจำว่าง
-        //a_ReserveStatus 4 -> จองล็อคประจำ
-        //a_ReserveStatus 5 -> จองล็อคประจำ
+        //a_ReserveStatus 2 -> ล็อกประจำ
+        //a_ReserveStatus 3 -> ปลดล็อกประจำให้จองได้ หรือ ล็อกประจำว่าง
+        //a_ReserveStatus 4 -> จองล็อกประจำ
+        //a_ReserveStatus 5 -> จองล็อกประจำ
 
         //====================================  สถานะการจอง
         //r_Status 0 -> ยกเลิกการจอง
         //r_Status 1 -> จองแบบปกติ
-        //r_Status 2 -> จองแล็อคประจำ
+        //r_Status 2 -> จองแล็อกประจำ
     </script>
 </body>
 
