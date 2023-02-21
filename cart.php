@@ -39,7 +39,7 @@ $active_index = "active";
                                                 <input class="form-control" type="text" value="<?= $item_order["a_Id"] ?>" id="input-a_Id" hidden />
                                                 <input class="form-control" type="text" value="<?= $item_order["pt_Id"] ?>" id="input-pt_Id" hidden />
                                                 <span class="fw-bold">ชื่อ : <span class="fw-normal"><?= $item_order["u_Name"] ?></span></span>
-                                                <span class="fw-bold">ล็อค : <span class="fw-normal"><?= $item_order["a_Name"] ?></span> </span>
+                                                <span class="fw-bold">ล็อก : <span class="fw-normal"><?= $item_order["a_Name"] ?></span> </span>
                                                 <span class="fw-bold">โซน : <span class="fw-normal"><?= $item_order["z_Name"] ?></span></span>
                                             </div>
                                             <div class="d-flex align-items-center justify-content-end w-100">
@@ -53,7 +53,7 @@ $active_index = "active";
                         </ul>
                         <div class="row my-3">
                             <div class="col-12">
-                                <h4>การจัดเก็บรายได้/ล็อค</h4>
+                                <h4>การจัดเก็บรายได้/ล็อก</h4>
                                 <ul>
                                     <li>ค่าเช่าแผงค้า และค่าบริการรักษาความสะอาด :
                                         <ul>

@@ -85,11 +85,10 @@ $active_persionData = "active";
                                             <input type="Username" class="form-control" placeholder="Username" id="u_Username" value="<?= $user["u_Username"] ?>">
                                             <!-- <div class="form-text">Enter your Full name</div> -->
                                         </div>
-                                        <div class="col-md-3">
+                                        <!-- <div class="col-md-3">
                                             <label class="form-label"></label>
                                             <button type="button" class="btn btn-primary" id="btnEditUser">แก้ไขชื่อผู้ใช้</button>
-                                            <!-- <div class="form-text">Enter your Full name</div> -->
-                                        </div>
+                                        </div> -->
                                     </div>
                                     <div class="row g-2 p-2 d-flex align-items-end">
                                         <div class="col-md">
@@ -257,8 +256,6 @@ $active_persionData = "active";
                         if (zoneID === res.data[i].z_Id) {
                             $('#selectZoneName').append(`<option selected value="${res.data[i].z_Id}">${res.data[i].z_Name}</option>`);
                         }
-
-
                     }
                 }
             });
