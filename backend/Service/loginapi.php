@@ -19,6 +19,15 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                     $resp->set_status("success");
                     $resp->data = $row;
                     $_SESSION["user"] = serialize($row);
+
+                    $sql = "SELECT * FROM kkmuni_street.tb_openSystem;";
+                    $result_os = $conn->query($sql);
+                    if ($result_os->num_rows > 0) {
+                        $row_os = $result_os->fetch_assoc();
+                        $_SESSION["os_StartDateTime"] = $row_os["os_StartDateTime"];
+                        $_SESSION["os_EndDateTime"] = $row_os["os_EndDateTime"];
+                    }
+
                 } else {
                     $resp->set_status("fail");
                     $resp->set_message("รหัสผ่านไม่ถูกต้อง ");

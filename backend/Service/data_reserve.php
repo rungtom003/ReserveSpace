@@ -11,25 +11,34 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
         if ($result->num_rows > 0) {
             while($row = $result->fetch_assoc()) {
                 $status = "";
-                if(($row['r_Status'] == "1" && $row['a_ReserveStatus'] == "1") || ($row['r_Status'] == "1" && $row['a_ReserveStatus'] == "4"))
+                // if(($row['r_Status'] == "1" && $row['a_ReserveStatus'] == "1") || ($row['r_Status'] == "1" && $row['a_ReserveStatus'] == "4"))
+                // {
+                //     $status = "จองสำเร็จ";
+                // }
+                // else if(($row['r_Status'] == "0" && $row['a_ReserveStatus'] == "1") || ($row['r_Status'] == "0" && $row['a_ReserveStatus'] == "0"))
+                // {
+                //     $status = "ยกเลิกการจอง";
+                // }
+                // else if(($row['r_Status'] == "2" && $row['a_ReserveStatus'] == "2"))
+                // {
+                //     $status = "จองล็อคประจำสำเร็จ";
+                // }
+                // else if(($row['r_Status'] == "2" && $row['a_ReserveStatus'] == "3"))
+                // {
+                //     $status = "ยกเลิกล็อคประจำชั่วคราว";
+                // }
+                // else if(($row['r_Status'] == "2" && $row['a_ReserveStatus'] == "4"))
+                // {
+                //     $status = "ล็อคประจำถูกจอง";
+                // }
+
+                if($row['r_Status'] == "1" || $row['r_Status'] == "2")
                 {
                     $status = "จองสำเร็จ";
                 }
-                else if(($row['r_Status'] == "0" && $row['a_ReserveStatus'] == "1") || ($row['r_Status'] == "0" && $row['a_ReserveStatus'] == "0"))
+                else
                 {
                     $status = "ยกเลิกการจอง";
-                }
-                else if(($row['r_Status'] == "2" && $row['a_ReserveStatus'] == "2"))
-                {
-                    $status = "จองล็อคประจำสำเร็จ";
-                }
-                else if(($row['r_Status'] == "2" && $row['a_ReserveStatus'] == "3"))
-                {
-                    $status = "ยกเลิกล็อคประจำชั่วคราว";
-                }
-                else if(($row['r_Status'] == "2" && $row['a_ReserveStatus'] == "4"))
-                {
-                    $status = "ล็อคประจำถูกจอง";
                 }
 
                 $arrCustom = array(

@@ -65,14 +65,20 @@
             </li>
             <li class="sidebar-menu-item <?= isset($active_area) ? $active_area : "" ?>">
                 <a href="<?=$host_path?>/area.php">
-                    <i class="ri-file-list-3-line sidebar-menu-item-icon"></i>
+                    <i class="ri-pencil-line sidebar-menu-item-icon"></i>
                     การจัดการล็อก
                 </a>
             </li>
             <li class="sidebar-menu-item <?= isset($active_reserve_history) ? $active_reserve_history : "" ?>">
                 <a href="<?=$host_path?>/history_reserve.php">
-                    <i class="ri-file-list-3-line sidebar-menu-item-icon"></i>
+                    <i class="ri-history-line sidebar-menu-item-icon"></i>
                     ประวัติการจอง
+                </a>
+            </li>
+            <li class="sidebar-menu-item <?= isset($active_opensystem) ? $active_opensystem : "" ?>">
+                <a href="<?=$host_path?>/settime_opensystem.php">
+                    <i class="ri-timer-line sidebar-menu-item-icon"></i>
+                    ตั้งเวลา เปิด/ปิด ระบบ
                 </a>
             </li>
         <?php } ?>

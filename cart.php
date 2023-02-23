@@ -1,7 +1,11 @@
 <?php
+date_default_timezone_set("Asia/Bangkok");
 include("./layout/static_path.php");
 session_start();
 $user = (isset($_SESSION['user'])) ? unserialize($_SESSION['user']) : null;
+$startDate = (isset($_SESSION['os_StartDateTime'])) ? $_SESSION['os_StartDateTime'] : null;
+$EndDate = (isset($_SESSION['os_EndDateTime'])) ? $_SESSION['os_EndDateTime'] : null;
+
 if ($user == null) {
     header('location: '.$host_path.'/login.php');
 }
