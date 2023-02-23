@@ -1,4 +1,5 @@
 <?php
+date_default_timezone_set("Asia/Bangkok");
 include("./layout/static_path.php");
 session_start();
 $user = (isset($_SESSION['user'])) ? unserialize($_SESSION['user']) : null;

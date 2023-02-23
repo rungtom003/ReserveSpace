@@ -1,14 +1,36 @@
 <?php
+date_default_timezone_set("Asia/Bangkok");
 include("./layout/static_path.php");
 session_start();
 $user = (isset($_SESSION['user'])) ? unserialize($_SESSION['user']) : null;
+$startDate = (isset($_SESSION['os_StartDateTime'])) ? $_SESSION['os_StartDateTime'] : null;
+$EndDate = (isset($_SESSION['os_EndDateTime'])) ? $_SESSION['os_EndDateTime'] : null;
+
 if ($user == null) {
     header('location: ' . $host_path . '/login.php');
+} else {
+    if ($startDate != null && $EndDate != null && $user["ur_Id"] != "R002") {
+
+        $StartTimestamp = strtotime(date('Y-m-d H:i:s', strtotime($startDate)));
+        $EndTimestamp = strtotime(date('Y-m-d H:i:s', strtotime($EndDate)));
+        $currentTimestamp = strtotime(date('Y-m-d H:i:s'));
+
+        // Check if the current timestamp is greater than or equal to the set timestamp
+        if ($currentTimestamp < $StartTimestamp) {
+            header('location: ' . $host_path . '/countdow_time.php');
+        }
+
+        if($currentTimestamp > $EndTimestamp)
+        {
+            header('location: ' . $host_path . '/close_system.php');
+        }
+    }
 }
 
 if ($user["ur_Id"] == "R002") {
     header('location: ' . $host_path . '/dashboard.php');
 }
+
 
 $titleHead = "จองพื้นที่ขาย";
 $active_index = "active";
@@ -467,7 +489,7 @@ $active_index = "active";
                             icon: 'success',
                             title: 'สำเร็จ',
                             text: res.message,
-                            didClose:()=>{
+                            didClose: () => {
                                 window.location.reload();
                             }
                         });
@@ -481,7 +503,7 @@ $active_index = "active";
                             icon: 'warning',
                             //title: 'ข',
                             text: res.message,
-                            didClose:()=>{
+                            didClose: () => {
                                 window.location.reload();
                             }
                         });
