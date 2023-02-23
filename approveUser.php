@@ -57,33 +57,30 @@ $active_approve = "active";
                                 <div class="row g-2 p-2 d-flex align-items-end">
                                     <div class="col-md" id="u_OfficerId-content">
                                         <label class="form-label">รหัสเจ้าหน้าที่</label>
-                                        <input type="text" class="form-control" placeholder="" id="u_OfficerId" readonly>
+                                        <input type="text" class="form-control" placeholder="" id="u_OfficerId">
                                         <!-- <div class="form-text">Enter your Full name</div> -->
                                     </div>
                                     <div class="col-md" id="u_IdWalkin-content">
                                         <label class="form-label">รหัส Walk in</label>
-                                        <input type="text" class="form-control" placeholder="" id="u_IdWalkin" readonly>
+                                        <input type="text" class="form-control" placeholder="" id="u_IdWalkin">
                                         <!-- <div class="form-text">Enter your Full name</div> -->
                                     </div>
-                                    <div class="col-md" id="">
-                                    <button type="button" class="btn btn-primary" onclick="update_IdWalkIn()" id="btn_Add">บันทึก</button>
-                                    </div>
-                                    
                                 </div>
                                 <div class="row g-2 p-2">
                                     <div class="col-md-2">
                                         <label class="form-label">คำนำหน้า</label>
-                                        <input type="text" class="form-control" id="Prefix" readonly>
+                                        <select class="form-select" aria-label="Default select example" id="Prefix">
+                                        </select>
                                         <!-- <div class="form-text">Enter your Full name</div> -->
                                     </div>
                                     <div class="col-md">
                                         <label class="form-label">ชื่อ</label>
-                                        <input type="text" class="form-control" placeholder="Full name" id="u_FullName" readonly>
+                                        <input type="text" class="form-control" placeholder="Full name" id="u_FullName">
                                         <!-- <div class="form-text">Enter your Full name</div> -->
                                     </div>
                                     <div class="col-md">
                                         <label class="form-label">นามสกุล</label>
-                                        <input type="text" class="form-control" placeholder="Last name" id="u_Last" readonly>
+                                        <input type="text" class="form-control" placeholder="Last name" id="u_Last">
                                         <!-- <div  class="form-text">Enter your Last name</div> -->
                                     </div>
                                 </div>
@@ -118,33 +115,34 @@ $active_approve = "active";
                                 <div class="row g-2 p-2" id="u_Shop-content">
                                     <div class="col-md">
                                         <label class="form-label">ชื่อร้าน</label>
-                                        <input type="text" class="form-control" placeholder="" id="u_ShopName" readonly>
+                                        <input type="text" class="form-control" placeholder="" id="u_ShopName">
                                     </div>
                                     <div class="col-md-4">
                                         <label class="form-label">โซน</label>
-                                        <input type="text" class="form-control" id="ZoneName" readonly>
+                                        <select class="form-select" aria-label="Default select example" id="zoneName">
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="row g-2 p-2" id="shop_Detail-content">
                                     <div class="mb-3">
                                         <label for="u_ProductName" class="form-label">รายละเอียดสินค้า</label>
-                                        <textarea class="form-control" id="u_ProductName" rows="3" readonly></textarea>
+                                        <textarea class="form-control" id="u_ProductName" rows="3"></textarea>
                                     </div>
                                 </div>
                                 <div class="row g-2 p-2">
                                     <div class="col-md" id="u_Position-content">
                                         <label class="form-label">ตำแหน่ง</label>
-                                        <input type="text" class="form-control" placeholder="" id="u_Position" readonly>
+                                        <input type="text" class="form-control" placeholder="" id="u_Position">
                                         <!-- <div  class="form-text">Enter your Last name</div> -->
                                     </div>
                                     <div class="col-md">
                                         <label class="form-label">เลขบัตรประจำตัวประชาชน</label>
-                                        <input type="text" class="form-control" placeholder="" id="u_CardNumber" readonly>
+                                        <input type="text" class="form-control" placeholder="" id="u_CardNumber">
                                         <!-- <div class="form-text">Enter your Full name</div> -->
                                     </div>
                                     <div class="col-md">
                                         <label class="form-label">วัน/เดือน/ปีเกิด</label>
-                                        <input type="date" class="form-control" placeholder="" id="u_Birthday" readonly>
+                                        <input type="date" class="form-control" placeholder="" id="u_Birthday">
                                         <!-- <div  class="form-text">Enter your Last name</div> -->
                                     </div>
                                 </div>
@@ -153,21 +151,21 @@ $active_approve = "active";
                                     <div class="col-md">
                                         <div class="col-md">
                                             <label class="form-label">บ้านเลขที่/หมู่</label>
-                                            <input type="text" class="form-control" placeholder="" id="u_Address" readonly>
+                                            <input type="text" class="form-control" placeholder="" id="u_Address">
                                             <!-- <div  class="form-text">Enter your Last name</div> -->
                                         </div>
                                     </div>
                                     <div class="col-md">
                                         <div class="col-md">
                                             <label class="form-label">ถนน</label>
-                                            <input type="text" class="form-control" placeholder="" id="u_Road" readonly>
+                                            <input type="text" class="form-control" placeholder="" id="u_Road">
                                             <!-- <div  class="form-text">Enter your Last name</div> -->
                                         </div>
                                     </div>
                                     <div class="col-md">
                                         <div class="col-md">
                                             <label class="form-label">ตำบล</label>
-                                            <input type="text" class="form-control" placeholder="" id="u_SubDistrict" readonly>
+                                            <input type="text" class="form-control" placeholder="" id="u_SubDistrict">
                                             <!-- <div  class="form-text">Enter your Last name</div> -->
                                         </div>
                                     </div>
@@ -177,27 +175,27 @@ $active_approve = "active";
                                     <div class="col-md">
                                         <div class="col-md">
                                             <label class="form-label">อำเภอ</label>
-                                            <input type="text" class="form-control" placeholder="" id="u_District" readonly>
+                                            <input type="text" class="form-control" placeholder="" id="u_District">
                                             <!-- <div  class="form-text">Enter your Last name</div> -->
                                         </div>
                                     </div>
                                     <div class="col-md">
                                         <div class="col-md">
                                             <label class="form-label">จังหวัด</label>
-                                            <input type="text" class="form-control" placeholder="" id="u_Province" readonly>
+                                            <input type="text" class="form-control" placeholder="" id="u_Province">
                                             <!-- <div  class="form-text">Enter your Last name</div> -->
                                         </div>
                                     </div>
                                     <div class="col-md">
                                         <div class="col-md">
                                             <label class="form-label">เบอร์โทรศัพท์</label>
-                                            <input type="text" class="form-control" placeholder="" id="u_Phone" readonly>
+                                            <input type="text" class="form-control" placeholder="" id="u_Phone">
                                             <!-- <div  class="form-text">Enter your Last name</div> -->
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row g-2 p-2">
-                               
+                                    <button type="button" class="btn btn-primary" onclick="updatePersionData()" id="btn_Add">บันทึก</button>
                                 </div>
                             </form>
                         </div>
@@ -427,7 +425,7 @@ $active_approve = "active";
                         type: "POST",
                         data: {
                             u_Id: u_Id,
-                            u_Img:u_Img
+                            u_Img: u_Img
                         },
                         dataType: "json",
                         success: function(res) {
@@ -458,6 +456,25 @@ $active_approve = "active";
             });
         }
 
+        const checkRole = (ur_Id) => {
+            if (ur_Id == "R001") {
+                $('#RadioUser').prop("checked", true);
+                $('#u_OfficerId-content').hide();
+                $('#u_Position-content').hide();
+                $('#u_IdWalkin-content').show();
+                $('#u_Shop-content').show();
+                $('#shop_Detail-content').show();
+                $('#btn_Add').show();
+            } else if (ur_Id == "R002") {
+                $('#RadioAdmin').prop("checked", true);
+                $('#u_OfficerId-content').show();
+                $('#u_Position-content').show();
+                $('#u_IdWalkin-content').hide();
+                $('#u_Shop-content').hide();
+                $('#shop_Detail-content').hide();
+                $('#btn_Add').hide();
+            }
+        }
         const detailUser = (elm) => {
             let u_Id = elm.value;
             $.ajax({
@@ -475,21 +492,30 @@ $active_approve = "active";
                     let zoneID = res.data.z_Id;
                     let u_Img = "<?= $host_path ?>/src/img/upload/" + res.data.u_Img;
 
-                    $.ajax({
-                        url: "<?= $host_path ?>/backend/Service/zone_api.php",
-                        type: "POST",
-                        dataType: "json",
-                        success: function(res_Zone) {
-                            let length = res_Zone.data.length;
-                            for (let i = 0; i < length; i++) {
-                                if (zoneID === res_Zone.data[i].z_Id) {
-                                    $('#ZoneName').val(res_Zone.data[i].z_Name);
+                    if (res.status == "success") {
+
+                        $.ajax({
+                            url: "<?= $host_path ?>/backend/Service/zone_api.php",
+                            type: "POST",
+                            dataType: "json",
+                            success: function(res_Zone) {
+                                let length = res_Zone.data.length;
+                                $('#zoneName').empty();
+                                for (let i = 0; i < length; i++) {
+                                    if (zoneID === res_Zone.data[i].z_Id) {
+                                        $('#zoneName').append(`<option selected value="${res_Zone.data[i].z_Id}">${res_Zone.data[i].z_Name}</option>`);
+                                    } else {
+                                        $('#zoneName').append(`<option value="${res_Zone.data[i].z_Id}">${res_Zone.data[i].z_Name}</option>`);
+                                    }
                                 }
                             }
-                        }
-                    });
+                        });
 
-                    if (res.status == "success") {
+                        $('#Prefix').empty();
+                        $('#Prefix').append(`<option selected value="${res.data.u_Prefix}">${res.data.u_Prefix}</option>`);
+                        $('#Prefix').append(`<option value="นาย">นาย</option>`);
+                        $('#Prefix').append(`<option value="นาง">นาง</option>`);
+                        $('#Prefix').append(`<option value="นางสาว">นางสาว</option>`);
 
                         $('#u_Password').val("");
                         $('#u_Id').html(res.data.u_Id);
@@ -499,25 +525,7 @@ $active_approve = "active";
                         $('#u_FullName').val(res.data.u_FirstName);
                         $('#u_Last').val(res.data.u_LastName);
                         $('#u_Username').val(res.data.u_Username);
-                        if (ur_Id == "R001") {
-                            $('#RadioUser').prop("checked", true);
-                            $('#u_OfficerId-content').hide();
-                            $('#u_Position-content').hide();
-                            $('#u_IdWalkin-content').show();
-                            $('#u_Shop-content').show();
-                            $('#shop_Detail-content').show();
-                            $('#btn_Add').show();
-                        } else if (ur_Id == "R002") {
-                            $('#RadioAdmin').prop("checked", true);
-                            $('#u_OfficerId-content').show();
-                            $('#u_Position-content').show();
-                            $('#u_IdWalkin-content').hide();
-                            $('#u_Shop-content').hide();
-                            $('#shop_Detail-content').hide();
-                            $('#btn_Add').hide();
-                        }
                         $('#u_ShopName').val(res.data.u_ShopName);
-
                         $('#u_ProductName').html(res.data.u_ProductName);
                         $('#u_Position').val(res.data.u_Position);
                         $('#u_CardNumber').val(res.data.u_CardNumber);
@@ -529,40 +537,13 @@ $active_approve = "active";
                         $('#u_Province').val(res.data.u_Province);
                         $('#u_Phone').val(res.data.u_Phone);
                         $('#u_IdWalkin').val(res.data.u_IdWalkin);
-
+                        checkRole(ur_Id);
                         if (res.data.u_Approve == 0) {
                             $("#password-content").prop('hidden', true);
-                            $('#btn_Add').prop('hidden', true);
-                            $("#u_IdWalkin").prop("readonly",true);
                         } else {
                             $("#password-content").prop('hidden', false);
-                            $('#btn_Add').prop('hidden', false);
-                            $("#u_IdWalkin").prop("readonly",false);
                         }
 
-                        $('#btnEditPassword').prop('disabled', true);
-                        $('#u_Password').keyup(function() {
-                            let val = $("#u_Password").val();
-                            if (event.key != "Enter") {
-                                if (val == "") {
-                                    $('#btnEditPassword').prop('disabled', true);
-                                } else {
-                                    $('#btnEditPassword').prop('disabled', false);
-                                }
-                            }
-                        })
-
-                        $('#btn_Add').prop('disabled', true);
-                        $('#u_IdWalkin').keyup(function() {
-                            let val = $("#u_IdWalkin").val();
-                            if (event.key != "Enter") {
-                                if (val == res.data.u_IdWalkin && val == "") {
-                                    $('#btn_Add').prop('disabled', true);
-                                } else {
-                                    $('#btn_Add').prop('disabled', false);
-                                }
-                            }
-                        })
                     } else {
                         Swal.fire({
                             icon: 'error',
@@ -570,12 +551,21 @@ $active_approve = "active";
                             text: message
                         })
                     }
-
-
                 }
             });
         }
 
+        $('#btnEditPassword').prop('disabled', true);
+        $('#u_Password').keyup(function() {
+            let val = $("#u_Password").val();
+            if (event.key != "Enter") {
+                if (val == "") {
+                    $('#btnEditPassword').prop('disabled', true);
+                } else {
+                    $('#btnEditPassword').prop('disabled', false);
+                }
+            }
+        })
         $('#btnEditPassword').click(function() {
             let u_Id = $('#u_Id').html();
             let u_PasswordNew = $('#u_Password').val();
@@ -615,18 +605,52 @@ $active_approve = "active";
             });
         })
 
-        const update_IdWalkIn = () => {
-            console.log('update_IdWalkIn')
+        const updatePersionData = () => {
             let u_Id = $('#u_Id').html();
+            let u_FirstName = $('#u_FullName').val();
+            let u_LastName = $('#u_Last').val();
+            let u_Username = $('#u_Username').val();
+            let u_CardNumber = $('#u_CardNumber').val();
+            let u_OfficerId = $('#u_OfficerId').val();
+            let u_Position = $('#u_Position').val();
+            let u_Phone = $('#u_Phone').val();
+            let u_Prefix = $('#Prefix').val();
+            let u_Birthday = $('#u_Birthday').val();
+            let u_Address = $('#u_Address').val();
+            let u_Road = $('#u_Road').val();
+            let u_SubDistrict = $('#u_SubDistrict').val();
+            let u_District = $('#u_District').val();
+            let u_Province = $('#u_Province').val();
+            let z_Id = $('#zoneName').val();
+            let u_ShopName = $('#u_ShopName').val();
+            let u_ProductName = $('#u_ProductName').val();
             let u_IdWalkin = $('#u_IdWalkin').val();
 
+            let data = {
+                u_Id: u_Id,
+                u_FirstName: u_FirstName,
+                u_LastName: u_LastName,
+                u_Username: u_Username,
+                u_CardNumber: u_CardNumber,
+                u_OfficerId: u_OfficerId,
+                u_Position: u_Position,
+                u_Phone: u_Phone,
+                u_Prefix: u_Prefix,
+                u_Birthday: u_Birthday,
+                u_Address: u_Address,
+                u_Road: u_Road,
+                u_SubDistrict: u_SubDistrict,
+                u_District: u_District,
+                u_Province: u_Province,
+                z_Id: z_Id,
+                u_ShopName: u_ShopName,
+                u_ProductName: u_ProductName,
+                u_IdWalkin: u_IdWalkin
+            }
             $.ajax({
-                url: "/ReserveSpace/backend/Service/update _IdWalkIn_api.php",
+                url: "<?= $host_path ?>/backend/Service/updatePersionData_api.php",
                 type: "POST",
-                data: {
-                    u_Id: u_Id,
-                    u_IdWalkin: u_IdWalkin
-                },
+                data: data,
                 dataType: "json",
                 success: function(res) {
                     let message = res.message;
@@ -652,7 +676,6 @@ $active_approve = "active";
                 }
             });
         }
-        
     </script>
 </body>
 

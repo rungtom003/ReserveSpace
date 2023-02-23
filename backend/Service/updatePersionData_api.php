@@ -6,6 +6,7 @@ session_start();
 $resp = new Resp();
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
     if ($connect_status == "success") {
+
         $u_Id = $_POST['u_Id'];
         $u_FirstName = $_POST["u_FirstName"];
         $u_LastName = $_POST["u_LastName"];
@@ -35,34 +36,19 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         $sql = "UPDATE `kkmuni_street`.`tb_user` SET `u_FirstName` = '" . $u_FirstName . "', u_LastName = '" . $u_LastName . "', `u_OfficerId` = '" . $u_OfficerId . "', ";
         $sql .= "`u_Position` = '" . $u_Position . "',  `u_Phone` = '" . $u_Phone . "', `u_Prefix` = '" . $u_Prefix . "', `u_Birthday` = " . $u_Birthday . ", `u_IdWalkin` = '".$u_IdWalkin."', ";
         $sql .= "`u_Address` = '" . $u_Address . "', `u_Road` = '" . $u_Road . "', `u_SubDistrict` = '" . $u_SubDistrict . "', `u_District` = '" . $u_District . "', `u_Province` = '" . $u_Province . "', ";
-        $sql .= "`z_Id` = '" . $z_Id . "', `u_ShopName` = '" . $u_ShopName . "', `u_ProductName` = '" . $u_ProductName . "',`u_Username` = '" . $u_Username . "',`u_CardNumber`='".$u_CardNumber."' ";
+        $sql .= "`z_Id` = '" . $z_Id . "', `u_ShopName` = '" . $u_ShopName . "', `u_ProductName` = '" . $u_ProductName . "',`u_Username` = '" . $u_Username . "',`u_CardNumber` = '" . $u_CardNumber . "' ";
         $sql .= "WHERE `u_Id` = '" . $u_Id . "';";
 
-        $sqlCheckUser = "SELECT * FROM kkmuni_street.tb_user where u_Username = '" . $u_Username . "' and u_Id != '".$u_Id."'; ";
-        $resultUser = $conn->query($sqlCheckUser);
+        $sqlCheckWalkIn  = "SELECT * FROM kkmuni_street.tb_user where u_IdWalkin = '" . $u_IdWalkin . "' and u_Id != '".$u_Id."' ;";
+        $resultWalkIn  = $conn->query($sqlCheckWalkIn);
 
-        $sqlCheckCardId = "SELECT * FROM kkmuni_street.tb_user where u_CardNumber = '" . $u_CardNumber . "' and u_Id != '".$u_Id."'; ";
-        $resultCardId = $conn->query($sqlCheckCardId);
-
-        if ($resultUser->num_rows > 0) {
-            $resp->set_message("ชื่อผู้ใช้นี้ มีผู้ใช้งานแล้ว");
-            $resp->set_status("Duplicate user");
-        } else if ($resultCardId->num_rows > 0) {
-            $resp->set_message("รหัสประจำตัวประชาชนมีผู้ใช้งานแล้ว");
-            $resp->set_status("Duplicate cardId");
-        }{
+        if ($resultWalkIn->num_rows > 0) {
+            $resp->set_message("รหัส Walk-in ซ้ำ");
+            $resp->set_status("Duplicate");
+        } else{
             if ($conn->query($sql) === TRUE) {
                 $resp->set_message("บันทึกข้อมูลสำเร็จ");
                 $resp->set_status("success");
-    
-                $sqlSelect = "SELECT * FROM kkmuni_street.tb_user where `u_Id` = '" . $u_Id . "' ;";
-                $result = $conn->query($sqlSelect);
-                if ($result->num_rows > 0) {
-                    $row = $result->fetch_assoc();
-                    $resp->data = $row;
-                    $_SESSION["user"] = serialize($row);
-                }
-    
             } else {
                 $resp->set_message("ไม่สามารถบันทึกข้อมูลได้");
                 $resp->set_status("fail");
