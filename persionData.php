@@ -167,7 +167,7 @@ $active_persionData = "active";
                                         <?php } ?>
                                         <div class="col-md">
                                             <label class="form-label">เลขบัตรประจำตัวประชาชน</label>
-                                            <input type="text" class="form-control" placeholder="" id="u_CardNumber" value="<?= $user["u_CardNumber"] ?>" readonly>
+                                            <input type="text" class="form-control" placeholder="" id="u_CardNumber" value="<?= $user["u_CardNumber"] ?>">
                                             <!-- <div class="form-text">Enter your Full name</div> -->
                                         </div>
                                         <div class="col-md">
@@ -279,6 +279,7 @@ $active_persionData = "active";
         }
 
         function UpdatePersionData() {
+            let u_Id = "<?= $user["u_Id"] ?>";
             let role = "<?= $user["ur_Id"] ?>";
             let u_OfficerId = "";
             let u_Position = "";
@@ -314,6 +315,7 @@ $active_persionData = "active";
             }
 
             let data = {
+                u_Id: u_Id,
                 u_FirstName: u_FirstName,
                 u_LastName: u_LastName,
                 u_Username: u_Username,
@@ -506,99 +508,99 @@ $active_persionData = "active";
             update_Password()
         })
 
-        const fileInput = document.querySelector("#formFile");
-        const originalImage = document.querySelector("#originalImage");
+        // const fileInput = document.querySelector("#formFile");
+        // const originalImage = document.querySelector("#originalImage");
 
-        const compressedImage = document.querySelector("#compressedImage");
+        // const compressedImage = document.querySelector("#compressedImage");
 
-        let resizingFactor = 0.8;
-        let quality = 0.8;
+        // let resizingFactor = 0.8;
+        // let quality = 0.8;
 
-        fileInput.addEventListener("change", async (e) => {
-            const [file] = fileInput.files;
+        // fileInput.addEventListener("change", async (e) => {
+        //     const [file] = fileInput.files;
 
-            //storing the original image
-            originalImage.src = await fileToDataUri(file);
+        //     //storing the original image
+        //     originalImage.src = await fileToDataUri(file);
 
-            // compressing the uplodaded image
-            originalImage.addEventListener("load", () => {
-                compressImage(originalImage, resizingFactor, quality);
-            });
+        //     // compressing the uplodaded image
+        //     originalImage.addEventListener("load", () => {
+        //         compressImage(originalImage, resizingFactor, quality);
+        //     });
 
-            return false;
-        });
+        //     return false;
+        // });
 
-        function compressImage(imgToCompress, resizingFactor, quality) {
-            // showing the compressed image
-            const canvas = document.createElement("canvas");
-            const context = canvas.getContext("2d");
+        // function compressImage(imgToCompress, resizingFactor, quality) {
+        //     // showing the compressed image
+        //     const canvas = document.createElement("canvas");
+        //     const context = canvas.getContext("2d");
 
-            const originalWidth = imgToCompress.width;
-            const originalHeight = imgToCompress.height;
+        //     const originalWidth = imgToCompress.width;
+        //     const originalHeight = imgToCompress.height;
 
-            let resizingFactor_fill = 100;
+        //     let resizingFactor_fill = 100;
 
-            for (let i = 0; i < 100; i++) {
-                resizingFactor = parseInt(resizingFactor_fill) / 100;
-                const canvasWidth = originalWidth * resizingFactor;
-                const canvasHeight = originalHeight * resizingFactor;
+        //     for (let i = 0; i < 100; i++) {
+        //         resizingFactor = parseInt(resizingFactor_fill) / 100;
+        //         const canvasWidth = originalWidth * resizingFactor;
+        //         const canvasHeight = originalHeight * resizingFactor;
 
-                if (canvasWidth <= 300) {
-                    canvas.width = canvasWidth;
-                    canvas.height = canvasHeight;
+        //         if (canvasWidth <= 300) {
+        //             canvas.width = canvasWidth;
+        //             canvas.height = canvasHeight;
 
-                    context.drawImage(
-                        imgToCompress,
-                        0,
-                        0,
-                        originalWidth * resizingFactor,
-                        originalHeight * resizingFactor
-                    );
+        //             context.drawImage(
+        //                 imgToCompress,
+        //                 0,
+        //                 0,
+        //                 originalWidth * resizingFactor,
+        //                 originalHeight * resizingFactor
+        //             );
 
-                    const file = document.getElementById("formFile").files[0];
+        //             const file = document.getElementById("formFile").files[0];
 
-                    // reducing the quality of the image
-                    canvas.toBlob(
-                        (blob) => {
-                            if (blob) {
-                                compressedImageBlob = blob;
-                                compressedImage.src = URL.createObjectURL(compressedImageBlob);
-                                //document.querySelector("#size").innerHTML = bytesToSize(blob.size);
-                                fileIMG = new File([blob], file.name, {
-                                    type: 'image/jpeg'
-                                });
-                            }
-                        },
-                        "image/jpeg",
-                        quality
-                    );
-                    break;
-                }
-                resizingFactor_fill = resizingFactor_fill - 1;
-            }
-        }
+        //             // reducing the quality of the image
+        //             canvas.toBlob(
+        //                 (blob) => {
+        //                     if (blob) {
+        //                         compressedImageBlob = blob;
+        //                         compressedImage.src = URL.createObjectURL(compressedImageBlob);
+        //                         //document.querySelector("#size").innerHTML = bytesToSize(blob.size);
+        //                         fileIMG = new File([blob], file.name, {
+        //                             type: 'image/jpeg'
+        //                         });
+        //                     }
+        //                 },
+        //                 "image/jpeg",
+        //                 quality
+        //             );
+        //             break;
+        //         }
+        //         resizingFactor_fill = resizingFactor_fill - 1;
+        //     }
+        // }
 
-        function fileToDataUri(field) {
-            return new Promise((resolve) => {
-                const reader = new FileReader();
-                reader.addEventListener("load", () => {
-                    resolve(reader.result);
-                });
-                reader.readAsDataURL(field);
-            });
-        }
+        // function fileToDataUri(field) {
+        //     return new Promise((resolve) => {
+        //         const reader = new FileReader();
+        //         reader.addEventListener("load", () => {
+        //             resolve(reader.result);
+        //         });
+        //         reader.readAsDataURL(field);
+        //     });
+        // }
 
-        function bytesToSize(bytes) {
-            var sizes = ["Bytes", "KB", "MB", "GB", "TB"];
+        // function bytesToSize(bytes) {
+        //     var sizes = ["Bytes", "KB", "MB", "GB", "TB"];
 
-            if (bytes === 0) {
-                return "0 Byte";
-            }
+        //     if (bytes === 0) {
+        //         return "0 Byte";
+        //     }
 
-            const i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
+        //     const i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
 
-            return Math.round(bytes / Math.pow(1024, i), 2) + " " + sizes[i];
-        }
+        //     return Math.round(bytes / Math.pow(1024, i), 2) + " " + sizes[i];
+        // }
 
 
     </script>
