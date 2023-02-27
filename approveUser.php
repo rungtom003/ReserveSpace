@@ -300,7 +300,12 @@ $active_approve = "active";
                     data: null,
                     defaultContent: "",
                     render: function(data, type, row, meta) {
-                        return `<a href="/ReserveSpace/document_signup.php">พิมพ์ใบสมัคร</a>`;
+                        let TXTHTML = "";
+                        if(row.ur_Id === "R001")
+                        {
+                            TXTHTML = `<a href="/ReserveSpace/document_signup.php">พิมพ์ใบสมัคร</a>`;
+                        }
+                        return TXTHTML;
                     }
                 },
                 {
