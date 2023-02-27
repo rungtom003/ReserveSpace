@@ -247,7 +247,7 @@ $active_persionData = "active";
                                         </div>
                                     </div>
 
-                                    <!-- <div class="mb-3">
+                                    <div class="mb-3">
                                         <label for="formFile" class="form-label">อัพโหลดรูป</label>
                                         <input class="form-control" type="file" id="formFile">
                                     </div>
@@ -258,7 +258,7 @@ $active_persionData = "active";
                                     </div>
                                     <div class="d-flex flex-column align-items-center">
                                         <img id="compressedImage" />
-                                    </div> -->
+                                    </div>
 
                                     <div class="row g-2 p-2">
                                         <button type="submit" class="btn btn-primary" id="btn_update">บันทึก</button>
@@ -336,6 +336,10 @@ $active_persionData = "active";
                 u_IdWalkin = $('#u_IdWalkin').val();
             }
 
+            if (fileIMG !== null) {
+                u_Img = fileIMG;
+            }
+
             let data = {
                 u_Id: u_Id,
                 u_FirstName: u_FirstName,
@@ -358,11 +362,37 @@ $active_persionData = "active";
                 u_IdWalkin: u_IdWalkin
             }
 
+            const formData = new FormData();
+            formData.append('u_Id',u_Id);
+            formData.append('u_FirstName',u_FirstName);
+            formData.append('u_LastName',u_LastName);
+            formData.append('u_Username',u_Username);
+            formData.append('u_CardNumber',u_CardNumber);
+            formData.append('u_OfficerId',u_OfficerId);
+            formData.append('u_Position',u_Position);
+            formData.append('u_Phone',u_Phone);
+            formData.append('u_Prefix',u_Prefix);
+            formData.append('u_Birthday',u_Birthday);
+            formData.append('u_Address',u_Address);
+            formData.append('u_Road',u_Road);
+            formData.append('u_SubDistrict',u_SubDistrict);
+            formData.append('u_District',u_District);
+            formData.append('u_Province',u_Province);
+            formData.append('z_Id',z_Id);
+            formData.append('u_ShopName',u_ShopName);
+            formData.append('u_ProductName',u_ProductName);
+            formData.append('u_IdWalkin',u_IdWalkin);
+            formData.append('u_Img',u_Img);
+            formData.append('deleteImg',"<?=$user["u_Img"]?>");
+
+
             $.ajax({
                 url: "<?= $host_path ?>/backend/Service/persionData_api.php",
                 type: "POST",
-                data: data,
+                data: formData,
                 dataType: "json",
+                contentType: false,
+                processData: false,
                 success: function(res) {
                     let message = res.message;
                     if (res.status == "success") {
@@ -530,99 +560,99 @@ $active_persionData = "active";
             update_Password()
         })
 
-        // const fileInput = document.querySelector("#formFile");
-        // const originalImage = document.querySelector("#originalImage");
+        const fileInput = document.querySelector("#formFile");
+        const originalImage = document.querySelector("#originalImage");
 
-        // const compressedImage = document.querySelector("#compressedImage");
+        const compressedImage = document.querySelector("#compressedImage");
 
-        // let resizingFactor = 0.8;
-        // let quality = 0.8;
+        let resizingFactor = 0.8;
+        let quality = 0.8;
 
-        // fileInput.addEventListener("change", async (e) => {
-        //     const [file] = fileInput.files;
+        fileInput.addEventListener("change", async (e) => {
+            const [file] = fileInput.files;
 
-        //     //storing the original image
-        //     originalImage.src = await fileToDataUri(file);
+            //storing the original image
+            originalImage.src = await fileToDataUri(file);
 
-        //     // compressing the uplodaded image
-        //     originalImage.addEventListener("load", () => {
-        //         compressImage(originalImage, resizingFactor, quality);
-        //     });
+            // compressing the uplodaded image
+            originalImage.addEventListener("load", () => {
+                compressImage(originalImage, resizingFactor, quality);
+            });
 
-        //     return false;
-        // });
+            return false;
+        });
 
-        // function compressImage(imgToCompress, resizingFactor, quality) {
-        //     // showing the compressed image
-        //     const canvas = document.createElement("canvas");
-        //     const context = canvas.getContext("2d");
+        function compressImage(imgToCompress, resizingFactor, quality) {
+            // showing the compressed image
+            const canvas = document.createElement("canvas");
+            const context = canvas.getContext("2d");
 
-        //     const originalWidth = imgToCompress.width;
-        //     const originalHeight = imgToCompress.height;
+            const originalWidth = imgToCompress.width;
+            const originalHeight = imgToCompress.height;
 
-        //     let resizingFactor_fill = 100;
+            let resizingFactor_fill = 100;
 
-        //     for (let i = 0; i < 100; i++) {
-        //         resizingFactor = parseInt(resizingFactor_fill) / 100;
-        //         const canvasWidth = originalWidth * resizingFactor;
-        //         const canvasHeight = originalHeight * resizingFactor;
+            for (let i = 0; i < 100; i++) {
+                resizingFactor = parseInt(resizingFactor_fill) / 100;
+                const canvasWidth = originalWidth * resizingFactor;
+                const canvasHeight = originalHeight * resizingFactor;
 
-        //         if (canvasWidth <= 300) {
-        //             canvas.width = canvasWidth;
-        //             canvas.height = canvasHeight;
+                if (canvasWidth <= 300) {
+                    canvas.width = canvasWidth;
+                    canvas.height = canvasHeight;
 
-        //             context.drawImage(
-        //                 imgToCompress,
-        //                 0,
-        //                 0,
-        //                 originalWidth * resizingFactor,
-        //                 originalHeight * resizingFactor
-        //             );
+                    context.drawImage(
+                        imgToCompress,
+                        0,
+                        0,
+                        originalWidth * resizingFactor,
+                        originalHeight * resizingFactor
+                    );
 
-        //             const file = document.getElementById("formFile").files[0];
+                    const file = document.getElementById("formFile").files[0];
 
-        //             // reducing the quality of the image
-        //             canvas.toBlob(
-        //                 (blob) => {
-        //                     if (blob) {
-        //                         compressedImageBlob = blob;
-        //                         compressedImage.src = URL.createObjectURL(compressedImageBlob);
-        //                         //document.querySelector("#size").innerHTML = bytesToSize(blob.size);
-        //                         fileIMG = new File([blob], file.name, {
-        //                             type: 'image/jpeg'
-        //                         });
-        //                     }
-        //                 },
-        //                 "image/jpeg",
-        //                 quality
-        //             );
-        //             break;
-        //         }
-        //         resizingFactor_fill = resizingFactor_fill - 1;
-        //     }
-        // }
+                    // reducing the quality of the image
+                    canvas.toBlob(
+                        (blob) => {
+                            if (blob) {
+                                compressedImageBlob = blob;
+                                compressedImage.src = URL.createObjectURL(compressedImageBlob);
+                                //document.querySelector("#size").innerHTML = bytesToSize(blob.size);
+                                fileIMG = new File([blob], file.name, {
+                                    type: 'image/jpeg'
+                                });
+                            }
+                        },
+                        "image/jpeg",
+                        quality
+                    );
+                    break;
+                }
+                resizingFactor_fill = resizingFactor_fill - 1;
+            }
+        }
 
-        // function fileToDataUri(field) {
-        //     return new Promise((resolve) => {
-        //         const reader = new FileReader();
-        //         reader.addEventListener("load", () => {
-        //             resolve(reader.result);
-        //         });
-        //         reader.readAsDataURL(field);
-        //     });
-        // }
+        function fileToDataUri(field) {
+            return new Promise((resolve) => {
+                const reader = new FileReader();
+                reader.addEventListener("load", () => {
+                    resolve(reader.result);
+                });
+                reader.readAsDataURL(field);
+            });
+        }
 
-        // function bytesToSize(bytes) {
-        //     var sizes = ["Bytes", "KB", "MB", "GB", "TB"];
+        function bytesToSize(bytes) {
+            var sizes = ["Bytes", "KB", "MB", "GB", "TB"];
 
-        //     if (bytes === 0) {
-        //         return "0 Byte";
-        //     }
+            if (bytes === 0) {
+                return "0 Byte";
+            }
 
-        //     const i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
+            const i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
 
-        //     return Math.round(bytes / Math.pow(1024, i), 2) + " " + sizes[i];
-        // }
+            return Math.round(bytes / Math.pow(1024, i), 2) + " " + sizes[i];
+        }
 
 
     </script>
