@@ -51,7 +51,6 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         isset($_FILES['u_Img']) ? $file = $_FILES['u_Img'] : $file = null;
         $file_name_custom = null;
 
-
         if (isset($file) && $file != null) {
 
             if (filesize($file["tmp_name"]) > 0) {
@@ -63,11 +62,9 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                 );
                 if ($checkupload) {
                     $u_Img = $file_name_custom;
-                    if($deleteImg != "")
-                    {
+                    if ($deleteImg != "") {
                         unlink("../../src/img/upload/" . $deleteImg);
                     }
-                    
                 }
             }
         }
@@ -86,8 +83,6 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
             $sql .= "WHERE `u_Id` = '" . $u_Id . "';";
         }
 
-
-
         $sqlCheckUser = "SELECT * FROM kkmuni_street.tb_user where u_Username = '" . $u_Username . "' and u_Id != '" . $u_Id . "'; ";
         $resultUser = $conn->query($sqlCheckUser);
 
@@ -97,16 +92,16 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         $sqlCheckWalkIn  = "SELECT * FROM kkmuni_street.tb_user where u_IdWalkin = '" . $u_IdWalkin . "' and u_Id != '" . $u_Id . "' ;";
         $resultWalkIn  = $conn->query($sqlCheckWalkIn);
 
-        if ($resultWalkIn->num_rows > 0 && $u_Walkin != "") {
+        if ($resultWalkIn->num_rows > 0 && $u_IdWalkin != "") {
             $resp->set_message("รหัส Walk-in ซ้ำ");
             $resp->set_status("Duplicate");
         } else if ($resultUser->num_rows > 0) {
             $resp->set_message("ชื่อผู้ใช้นี้ มีผู้ใช้งานแล้ว");
-            $resp->set_status("Duplicate user");
+            $resp->set_status("Duplicate");
         } else if ($resultCardId->num_rows > 0) {
             $resp->set_message("รหัสประจำตัวประชาชนมีผู้ใช้งานแล้ว");
-            $resp->set_status("Duplicate cardId");
-        } {
+            $resp->set_status("Duplicate");
+        } else {
             if ($conn->query($sql) === TRUE) {
                 $resp->set_message("บันทึกข้อมูลสำเร็จ");
                 $resp->set_status("success");
@@ -129,7 +124,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     }
 } else {
     $resp->set_message("Request method fail.");
-    $resp->set_status("");
+    $resp->set_status("fail");
 }
 
 echo json_encode($resp);
