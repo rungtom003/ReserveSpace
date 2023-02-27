@@ -42,7 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         $sqlCheckWalkIn  = "SELECT * FROM kkmuni_street.tb_user where u_IdWalkin = '" . $u_IdWalkin . "' and u_Id != '".$u_Id."' ;";
         $resultWalkIn  = $conn->query($sqlCheckWalkIn);
 
-        if ($resultWalkIn->num_rows > 0) {
+        if ($resultWalkIn->num_rows > 0 && $u_IdWalkin != "") {
             $resp->set_message("รหัส Walk-in ซ้ำ");
             $resp->set_status("Duplicate");
         } else{
