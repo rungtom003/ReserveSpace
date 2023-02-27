@@ -230,7 +230,7 @@ $active_signup = "active";
                                     </div>
                                 </div>
                                 <div class="mb-3" id="upload-content" hidden>
-                                    <label for="formFile" class="form-label">อัพโหลดรูป</label>
+                                    <label for="formFile" class="form-label">อัพโหลดรูปผู้ประกอบการ</label>
                                     <input class="form-control" type="file" id="formFile">
                                 </div>
 
