@@ -75,11 +75,16 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         $sql .= " '" . $u_Road . "', '" . $u_SubDistrict . "', '" . $u_District . "', '" . $u_Province . "', '".$z_Id."', '".$u_ShopName."', '".$u_ProductName."', '".$u_IdWalkin."' );";
 
         $sqlCheckUser = "SELECT * FROM kkmuni_street.tb_user where u_Username = '" . $u_Username . "';";
-        $sqlCheckCardNumber = "SELECT * FROM kkmuni_street.tb_user where u_CardNumber = '" . $u_CardNumber . "';";
         $resultUser = $conn->query($sqlCheckUser);
+        $sqlCheckCardNumber = "SELECT * FROM kkmuni_street.tb_user where u_CardNumber = '" . $u_CardNumber . "';";
         $result = $conn->query($sqlCheckCardNumber);
+        $sqlCheckWalkIn  = "SELECT * FROM kkmuni_street.tb_user where u_IdWalkin = '" . $u_IdWalkin . "';";
+        $resultWalkIn  = $conn->query($sqlCheckWalkIn);
 
-        if ($resultUser->num_rows > 0) {
+        if ($resultWalkIn->num_rows > 0) {
+            $resp->set_message("รหัส Walk-in ซ้ำ");
+            $resp->set_status("Duplicate");
+        } else if ($resultUser->num_rows > 0) {
             $resp->set_message("ชื่อผู้ใช้นี้ มีผู้ใช้งานแล้ว");
             $resp->set_status("Duplicate user");
         } else if ($result->num_rows > 0) {

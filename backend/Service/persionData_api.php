@@ -44,7 +44,13 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         $sqlCheckCardId = "SELECT * FROM kkmuni_street.tb_user where u_CardNumber = '" . $u_CardNumber . "' and u_Id != '".$u_Id."'; ";
         $resultCardId = $conn->query($sqlCheckCardId);
 
-        if ($resultUser->num_rows > 0) {
+        $sqlCheckWalkIn  = "SELECT * FROM kkmuni_street.tb_user where u_IdWalkin = '" . $u_IdWalkin . "' and u_Id != '".$u_Id."' ;";
+        $resultWalkIn  = $conn->query($sqlCheckWalkIn);
+
+        if ($resultWalkIn->num_rows > 0 && $u_Walkin != "") {
+            $resp->set_message("รหัส Walk-in ซ้ำ");
+            $resp->set_status("Duplicate");
+        } else if ($resultUser->num_rows > 0) {
             $resp->set_message("ชื่อผู้ใช้นี้ มีผู้ใช้งานแล้ว");
             $resp->set_status("Duplicate user");
         } else if ($resultCardId->num_rows > 0) {
