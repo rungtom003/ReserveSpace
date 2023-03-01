@@ -9,22 +9,22 @@ $EndDate = (isset($_SESSION['os_EndDateTime'])) ? $_SESSION['os_EndDateTime'] : 
 if ($user == null) {
     header('location: '.$host_path.'/login.php');
 }else {
-    if ($startDate != null && $EndDate != null && $user["ur_Id"] != "R002") {
+    // if ($startDate != null && $EndDate != null && $user["ur_Id"] != "R002") {
 
-        $StartTimestamp = strtotime(date('Y-m-d H:i:s', strtotime($startDate)));
-        $EndTimestamp = strtotime(date('Y-m-d H:i:s', strtotime($EndDate)));
-        $currentTimestamp = strtotime(date('Y-m-d H:i:s'));
+    //     $StartTimestamp = strtotime(date('Y-m-d H:i:s', strtotime($startDate)));
+    //     $EndTimestamp = strtotime(date('Y-m-d H:i:s', strtotime($EndDate)));
+    //     $currentTimestamp = strtotime(date('Y-m-d H:i:s'));
 
-        // Check if the current timestamp is greater than or equal to the set timestamp
-        if ($currentTimestamp < $StartTimestamp) {
-            header('location: ' . $host_path . '/countdow_time.php');
-        }
+    //     // Check if the current timestamp is greater than or equal to the set timestamp
+    //     if ($currentTimestamp < $StartTimestamp) {
+    //         header('location: ' . $host_path . '/countdow_time.php');
+    //     }
 
-        if($currentTimestamp > $EndTimestamp)
-        {
-            header('location: ' . $host_path . '/close_system.php');
-        }
-    }
+    //     if($currentTimestamp > $EndTimestamp)
+    //     {
+    //         header('location: ' . $host_path . '/close_system.php');
+    //     }
+    // }
 }
 
 $titleHead = "ข้อมูลการจอง";

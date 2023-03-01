@@ -117,7 +117,8 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                 $resp->set_message("ไม่สามารถบันทึกข้อมูลได้");
                 $resp->set_status("fail");
             }
-        }
+        }       
+
     } else {
         $resp->set_message("connection database fail.");
         $resp->set_status("fail");

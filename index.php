@@ -9,22 +9,21 @@ $EndDate = (isset($_SESSION['os_EndDateTime'])) ? $_SESSION['os_EndDateTime'] : 
 if ($user == null) {
     header('location: ' . $host_path . '/login.php');
 } else {
-    if ($startDate != null && $EndDate != null && $user["ur_Id"] != "R002") {
+    // if ($startDate != null && $EndDate != null && $user["ur_Id"] != "R002") {
 
-        $StartTimestamp = strtotime(date('Y-m-d H:i:s', strtotime($startDate)));
-        $EndTimestamp = strtotime(date('Y-m-d H:i:s', strtotime($EndDate)));
-        $currentTimestamp = strtotime(date('Y-m-d H:i:s'));
+    //     $StartTimestamp = strtotime(date('Y-m-d H:i:s', strtotime($startDate)));
+    //     $EndTimestamp = strtotime(date('Y-m-d H:i:s', strtotime($EndDate)));
+    //     $currentTimestamp = strtotime(date('Y-m-d H:i:s'));
 
-        // Check if the current timestamp is greater than or equal to the set timestamp
-        if ($currentTimestamp < $StartTimestamp) {
-            header('location: ' . $host_path . '/countdow_time.php');
-        }
+    //     // Check if the current timestamp is greater than or equal to the set timestamp
+    //     if ($currentTimestamp < $StartTimestamp) {
+    //         header('location: ' . $host_path . '/countdow_time.php');
+    //     }
 
-        if($currentTimestamp > $EndTimestamp)
-        {
-            header('location: ' . $host_path . '/close_system.php');
-        }
-    }
+    //     if ($currentTimestamp > $EndTimestamp) {
+    //         header('location: ' . $host_path . '/close_system.php');
+    //     }
+    // }
 }
 
 if ($user["ur_Id"] == "R002") {
@@ -114,7 +113,7 @@ $active_index = "active";
         <div class="p-2">
             <?php include("./layout/navmain.php"); ?>
             <!-- start: Content -->
-            <div class="py-1">
+            <div class="py-1" style="font-family: kanit-Regular;">
                 <!-- start: Graph -->
                 <div class="card">
                     <div class="card-body">
@@ -144,14 +143,46 @@ $active_index = "active";
                         </div>
                     </div>
                 </div>
-                <div class="card my-1">
-                    <div class="card-body">
-                        <div class="d-flex justify-content-center flex-wrap" id="reserve-content">
+                <?php
+                if ($startDate != null && $EndDate != null && $user["ur_Id"] != "R002") {
 
+                    $StartTimestamp = strtotime(date('Y-m-d H:i:s', strtotime($startDate)));
+                    $EndTimestamp = strtotime(date('Y-m-d H:i:s', strtotime($EndDate)));
+                    $currentTimestamp = strtotime(date('Y-m-d H:i:s'));
 
+                    // Check if the current timestamp is greater than or equal to the set timestamp
+                    if ($currentTimestamp < $StartTimestamp) {
+                ?>
+                        <div class="card my-1">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-center flex-wrap" id="">
+                                    <h1>ระบบจะเปิดให้บริการในเวลา <?=date_format(date_create($startDate),"d/m/Y H:i:s")?></h1>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
+                    <?php
+                    } else if ($currentTimestamp > $EndTimestamp) {
+                    ?>
+                        <div class="card my-1">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-center flex-wrap" id="">
+                                    <h1>ระบบปิดให้บริการ</h1>
+                                </div>
+                            </div>
+                        </div>
+                    <?php
+                    } else {
+                    ?>
+                        <div class="card my-1">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-center flex-wrap" id="reserve-content">
+                                </div>
+                            </div>
+                        </div>
+                <?php
+                    }
+                }
+                ?>
                 <!-- end: Graph -->
             </div>
             <!-- end: Content -->
