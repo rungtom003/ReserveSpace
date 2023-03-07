@@ -303,7 +303,7 @@ $active_approve = "active";
                         let TXTHTML = "";
                         if(row.ur_Id === "R001")
                         {
-                            TXTHTML = `<a href="/ReserveSpace/document_signup.php">พิมพ์ใบสมัคร</a>`;
+                            TXTHTML = `<a href="<?=$host_path?>/document_signup.php?u_Id=${row.u_Id}">พิมพ์ใบสมัคร</a>`;
                         }
                         return TXTHTML;
                     }
