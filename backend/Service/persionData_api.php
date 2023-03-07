@@ -51,6 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         isset($_FILES['u_Img']) ? $file = $_FILES['u_Img'] : $file = null;
         $file_name_custom = null;
 
+
         if (isset($file) && $file != null) {
 
             if (filesize($file["tmp_name"]) > 0) {
@@ -82,6 +83,8 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
             $sql .= "`z_Id` = '" . $z_Id . "', `u_ShopName` = '" . $u_ShopName . "', `u_ProductName` = '" . $u_ProductName . "',`u_Username` = '" . $u_Username . "',`u_CardNumber`='" . $u_CardNumber . "', `u_Img` = '" . $u_Img . "' ";
             $sql .= "WHERE `u_Id` = '" . $u_Id . "';";
         }
+
+
 
         $sqlCheckUser = "SELECT * FROM kkmuni_street.tb_user where u_Username = '" . $u_Username . "' and u_Id != '" . $u_Id . "'; ";
         $resultUser = $conn->query($sqlCheckUser);
@@ -117,8 +120,8 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                 $resp->set_message("ไม่สามารถบันทึกข้อมูลได้");
                 $resp->set_status("fail");
             }
-        }       
-
+        }
+        
     } else {
         $resp->set_message("connection database fail.");
         $resp->set_status("fail");
