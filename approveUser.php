@@ -301,7 +301,7 @@ $active_approve = "active";
                 },
                 {
                     targets: 9,
-                    title: "ใบสมัคร",
+                    title: "ประวัติผู้ประกอบการ",
                     data: null,
                     defaultContent: "",
                     render: function(data, type, row, meta) {
