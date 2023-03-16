@@ -35,7 +35,7 @@ $active_approve = "active";
             <div class="py-1" style="font-family: kanit-Regular;">
                 <div class="card">
                     <div class="card-body">
-                        <table id="table-users" class="table table-striped w-100"></table>
+                        <table id="table-users" class="table table-striped w-100 text-nowrap"></table>
                     </div>
                 </div>
             </div>
@@ -220,7 +220,7 @@ $active_approve = "active";
             initComplete: function() {
                 $("#table-users_filter").append(`<label id="select-group" class="my-2 w-100"></label>`);
 
-                this.api().columns(5).every(function() {
+                this.api().columns(6).every(function() {
                     var column = this;
                     var select = $('<select class="form-select form-select-sm w-50" aria-label="เลือกโซน" id="selectZone"><option value=""></option></select>').appendTo($("#select-group").empty()).on('change', function() {
                         var val = $.fn.dataTable.util.escapeRegex($(this).val());
@@ -234,18 +234,23 @@ $active_approve = "active";
                 //$("#select-group").prepend(`<label for="selectZone" class="form-label">โซน : </label>`);
                 $("#select-group").prepend(`โซน`);
             },
-            columnDefs: [{
+            columnDefs: [
+                {
                     targets: 0,
+                    title: "รหัส Walkin",
+                    data: "u_IdWalkin",
+                },{
+                    targets: 1,
                     title: "ชื่อ",
                     data: "u_FirstName",
                 },
                 {
-                    targets: 1,
+                    targets: 2,
                     title: "สกุล",
                     data: "u_LastName",
                 },
                 {
-                    targets: 2,
+                    targets: 3,
                     title: "สิทธิ์",
                     data: "ur_Id",
                     render: function(data, type, row, meta) {
@@ -254,22 +259,22 @@ $active_approve = "active";
                     }
                 },
                 {
-                    targets: 3,
+                    targets: 4,
                     title: "Username",
                     data: "u_Username",
                 },
                 {
-                    targets: 4,
+                    targets: 5,
                     title: "เลขบัตรประชาชน",
                     data: "u_CardNumber",
                 },
                 {
-                    targets: 5,
+                    targets: 6,
                     title: "โซน",
                     data: "z_Name",
                 },
                 {
-                    targets: 6,
+                    targets: 7,
                     title: "Approve",
                     data: "u_Approve",
                     render: function(data, type, row, meta) {
@@ -283,7 +288,7 @@ $active_approve = "active";
                     }
                 },
                 {
-                    targets: 7,
+                    targets: 8,
                     title: "รายละเอียด",
                     data: null,
                     defaultContent: "",
@@ -295,21 +300,23 @@ $active_approve = "active";
                     }
                 },
                 {
-                    targets: 8,
-                    title: "ใบสมัคร",
+                    targets: 9,
+                    title: "ประวัติผู้ประกอบการ",
                     data: null,
                     defaultContent: "",
                     render: function(data, type, row, meta) {
                         let TXTHTML = "";
                         if(row.ur_Id === "R001")
                         {
-                            TXTHTML = `<a href="<?=$host_path?>/document_signup.php?u_Id=${row.u_Id}">พิมพ์ใบสมัคร</a>`;
+
+                            TXTHTML = `<a class="btn btn-link" href="<?=$host_path?>/document_signup.php?u_Id=${row.u_Id}">พิมพ์ประวัติ</a>`;
+
                         }
                         return TXTHTML;
                     }
                 },
                 {
-                    targets: 9,
+                    targets: 10,
                     title: "ปุ่มสถานะ",
                     data: null,
                     defaultContent: "",
@@ -335,7 +342,7 @@ $active_approve = "active";
                 }
             ],
             order: [
-                [5, 'asc']
+                [6, 'asc']
             ],
             rowGroup: {
                 dataSrc: 'z_Name'
@@ -576,7 +583,7 @@ $active_approve = "active";
             let u_PasswordNew = $('#u_Password').val();
 
             $.ajax({
-                url: "/ReserveSpace/backend/Service/updatePassword_api.php",
+                url: "<?=$host_path?>/backend/Service/updatePassword_api.php",
                 type: "POST",
                 data: {
                     status: "admin",

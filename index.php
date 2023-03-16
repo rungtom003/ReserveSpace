@@ -155,8 +155,9 @@ $active_index = "active";
                 ?>
                         <div class="card my-1">
                             <div class="card-body">
-                                <div class="d-flex justify-content-center flex-wrap" id="">
-                                    <h1>ระบบจะเปิดให้บริการในเวลา <?=date_format(date_create($startDate),"d/m/Y H:i:s")?></h1>
+                                <div class="d-flex align-items-center flex-column">
+                                    <h1>ระบบจะเปิดให้จองล็อค Wlak in</h1>
+                                    <h1>วันที่ <?=date_format(date_create($startDate),"d/m/Y")?> เวลา <?=date_format(date_create($startDate),"H:i:s")?> น.</h1>
                                 </div>
                             </div>
                         </div>
@@ -165,7 +166,7 @@ $active_index = "active";
                     ?>
                         <div class="card my-1">
                             <div class="card-body">
-                                <div class="d-flex justify-content-center flex-wrap" id="">
+                                <div class="d-flex justify-content-center flex-wrap">
                                     <h1>ระบบปิดให้บริการ</h1>
                                 </div>
                             </div>

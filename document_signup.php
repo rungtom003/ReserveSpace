@@ -65,7 +65,7 @@ if ($user["ur_Id"] == "R001") {
                 width: calc(100% - var(--bleeding) * 2);
                 height: calc(100% - var(--bleeding) * 2);
                 margin: var(--bleeding);
-                outline: thin dashed black;
+                /* outline: thin dashed black; */
                 pointer-events: none;
                 z-index: 9999;
             }
@@ -92,7 +92,9 @@ if ($user["ur_Id"] == "R001") {
             </tr>
             <tr>
                 <td></td>
-                <td>โซน <span style="font-style: italic;" id="z_Name"></span> </td>
+
+                <td><span id="z_Name"></span> </td>
+
                 <td rowspan="3" style="position: absolute;top: 100px; right: 80px;"><img height="151px" width="113px" id="u_Img"></img></td>
             </tr>
             <tr>
@@ -105,10 +107,12 @@ if ($user["ur_Id"] == "R001") {
         </table>
         <table style="width:100%;">
             <tr>
-                <td>รหัส Walk in : <span style="font-style: italic;" id="u_IdWalkin"></span></td>
+
+                <td>รหัส Walk in : <span id="u_IdWalkin"></span></td>
             </tr>
             <tr>
-                <td>ชื่อ-สกุล : <span style="font-style: italic;" id="u_FullName"></span></td>
+                <td>ชื่อ-สกุล : <span id="u_FullName"></span></td>
+
             </tr>
         </table>
         <table style="width:100%;margin-bottom: 20px;">
@@ -116,15 +120,17 @@ if ($user["ur_Id"] == "R001") {
                 <td>Name-Sumane</td>
             </tr>
             <tr>
-                <td>วัน เดือน ปีเกิด : <span style="font-style: italic;" id="u_Birthday"></span></td>
-                <td>อายุ <span style="font-style: italic;" id="u_Ageth"></span> ปี</td>
+
+                <td>วัน เดือน ปีเกิด : <span id="u_Birthday"></span></td>
+                <td>อายุ <span id="u_Ageth"></span> ปี</td>
             </tr>
             <tr>
                 <td>Date of brith</td>
-                <td>Age <span style="font-style: italic;" id="u_Ageen"></span> rrs</td>
+                <td>Age <span id="u_Ageen"></span> years</td>
             </tr>
             <tr>
-                <td>บัตรประชาชนเลขที่ : <span style="font-style: italic;" id="u_CardNumber"></span></td>
+                <td>บัตรประชาชนเลขที่ : <span id="u_CardNumber"></span></td>
+
             </tr>
             <tr>
                 <td>Identity card no.</td>
@@ -133,9 +139,11 @@ if ($user["ur_Id"] == "R001") {
 
         <table style="width:100%;margin-bottom: 20px;">
             <tr>
-                <td>ที่อยู่ : <span style="font-style: italic;" id="u_Address"></span></td>
-                <td>ถนน : <span style="font-style: italic;" id="u_Road"></span></td>
-                <td>ตำบล/แขวง : <span style="font-style: italic;" id="u_SubDistrict"></span></td>
+
+                <td>ที่อยู่ : <span id="u_Address"></span></td>
+                <td>ถนน : <span id="u_Road"></span></td>
+                <td>ตำบล/แขวง : <span id="u_SubDistrict"></span></td>
+
             </tr>
             <tr>
                 <td>address</td>
@@ -143,9 +151,11 @@ if ($user["ur_Id"] == "R001") {
                 <td>Disteict</td>
             </tr>
             <tr>
-                <td>อำเภอ/เขต : <span style="font-style: italic;" id="u_District"></span></td>
-                <td>จังหวัด : <span style="font-style: italic;" id="u_Province"></span></td>
-                <td>รหัสไปรษณีย์ : <span style="font-style: italic;" id=""></span></td>
+
+                <td>อำเภอ/เขต : <span id="u_District"></span></td>
+                <td>จังหวัด : <span id="u_Province"></span></td>
+                <td>รหัสไปรษณีย์ : <span id=""></span></td>
+
             </tr>
             <tr>
                 <td>Amphur</td>
@@ -153,28 +163,36 @@ if ($user["ur_Id"] == "R001") {
                 <td>Post code</td>
             </tr>
         </table>
-        
+
+
         <table style="width:100%;margin-bottom: 20px;">
             <tr>
-                <td>เบอร์โทรศัพท์ : <span style="font-style: italic;" id="u_Phone"></span></td>
+                <td>เบอร์โทรศัพท์ : <span id="u_Phone"></span></td>
+
             </tr>
             <tr>
                 <td>Tel.</td>
             </tr>
             <tr>
-                <td>อีเมล์ : <span style="font-style: italic;" id=""></span></td>
+
+                <td>อีเมล์ : <span id=""></span></td>
+
             </tr>
             <tr>
                 <td>E-mail</td>
             </tr>
             <tr>
-                <td>ชื่อร้านค้า : <span style="font-style: italic;" id="u_ShopName"></span></td>
+
+                <td>ชื่อร้านค้า : <span id="u_ShopName"></span></td>
+
             </tr>
             <tr>
                 <td>Store</td>
             </tr>
             <tr>
-                <td>สินค้าที่จำหน่าย : <span style="font-style: italic;" id="u_ProductName"></span></td>
+
+                <td>สินค้าที่จำหน่าย : <span id="u_ProductName"></span></td>
+
             </tr>
             <tr>
                 <td>Product</td>
@@ -184,18 +202,23 @@ if ($user["ur_Id"] == "R001") {
         <table style="width:100%;text-align: center;">
             <tr>
                 <td></td>
-                <td>ข้าพเจ้าขอรับว่า ข้อความดังกล่าวทั้งหมดต้นนี้เป็นความจริงทุกประการ</td>
+                <td>ข้าพเจ้าขอรับรองว่า ข้อความดังกล่าวทั้งหมดข้างต้นนี้เป็นความจริง</td>
                 <td></td>
             </tr>
         </table>
 
         <table style="width: 100%;">
             <tr style="width: 100%;">
-                <td style="display: flex;flex-direction: column;align-items: center;width: 100%;">
-                    <span style="font-style: italic;" id="u_FullNamesen"></span>
-                    <span>ลายมือชื่อผู้ประกอบการ</span>
-                    <span>(Appficants stgnaturg)</span>
-                    <span style="font-style: italic;" id="nowdt"></span>
+
+                <td style="display: flex; flex-direction: row; align-items: center; justify-content: flex-end ;width: 90%;">
+                    <div style="display: flex;flex-direction: column;align-items: center;">
+                        <br><br><br><br>
+                        <span id="u_FullNamesen"></span><br>
+                        <span>ลายมือชื่อผู้ประกอบการ</span>
+                        <span>(Appficants stgnaturg)</span>
+                        <span id="nowdt"></span>
+                    </div>
+
                 </td>
             </tr>
         </table>
