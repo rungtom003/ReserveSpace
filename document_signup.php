@@ -92,7 +92,9 @@ if ($user["ur_Id"] == "R001") {
             </tr>
             <tr>
                 <td></td>
+
                 <td><span id="z_Name"></span> </td>
+
                 <td rowspan="3" style="position: absolute;top: 100px; right: 80px;"><img height="151px" width="113px" id="u_Img"></img></td>
             </tr>
             <tr>
@@ -105,10 +107,12 @@ if ($user["ur_Id"] == "R001") {
         </table>
         <table style="width:100%;">
             <tr>
+
                 <td>รหัส Walk in : <span id="u_IdWalkin"></span></td>
             </tr>
             <tr>
                 <td>ชื่อ-สกุล : <span id="u_FullName"></span></td>
+
             </tr>
         </table>
         <table style="width:100%;margin-bottom: 20px;">
@@ -116,6 +120,7 @@ if ($user["ur_Id"] == "R001") {
                 <td>Name-Sumane</td>
             </tr>
             <tr>
+
                 <td>วัน เดือน ปีเกิด : <span id="u_Birthday"></span></td>
                 <td>อายุ <span id="u_Ageth"></span> ปี</td>
             </tr>
@@ -125,6 +130,7 @@ if ($user["ur_Id"] == "R001") {
             </tr>
             <tr>
                 <td>บัตรประชาชนเลขที่ : <span id="u_CardNumber"></span></td>
+
             </tr>
             <tr>
                 <td>Identity card no.</td>
@@ -133,9 +139,11 @@ if ($user["ur_Id"] == "R001") {
 
         <table style="width:100%;margin-bottom: 20px;">
             <tr>
+
                 <td>ที่อยู่ : <span id="u_Address"></span></td>
                 <td>ถนน : <span id="u_Road"></span></td>
                 <td>ตำบล/แขวง : <span id="u_SubDistrict"></span></td>
+
             </tr>
             <tr>
                 <td>address</td>
@@ -143,9 +151,11 @@ if ($user["ur_Id"] == "R001") {
                 <td>Disteict</td>
             </tr>
             <tr>
+
                 <td>อำเภอ/เขต : <span id="u_District"></span></td>
                 <td>จังหวัด : <span id="u_Province"></span></td>
                 <td>รหัสไปรษณีย์ : <span id=""></span></td>
+
             </tr>
             <tr>
                 <td>Amphur</td>
@@ -154,27 +164,35 @@ if ($user["ur_Id"] == "R001") {
             </tr>
         </table>
 
+
         <table style="width:100%;margin-bottom: 20px;">
             <tr>
                 <td>เบอร์โทรศัพท์ : <span id="u_Phone"></span></td>
+
             </tr>
             <tr>
                 <td>Tel.</td>
             </tr>
             <tr>
+
                 <td>อีเมล์ : <span id=""></span></td>
+
             </tr>
             <tr>
                 <td>E-mail</td>
             </tr>
             <tr>
+
                 <td>ชื่อร้านค้า : <span id="u_ShopName"></span></td>
+
             </tr>
             <tr>
                 <td>Store</td>
             </tr>
             <tr>
+
                 <td>สินค้าที่จำหน่าย : <span id="u_ProductName"></span></td>
+
             </tr>
             <tr>
                 <td>Product</td>
@@ -191,6 +209,7 @@ if ($user["ur_Id"] == "R001") {
 
         <table style="width: 100%;">
             <tr style="width: 100%;">
+
                 <td style="display: flex; flex-direction: row; align-items: center; justify-content: flex-end ;width: 90%;">
                     <div style="display: flex;flex-direction: column;align-items: center;">
                         <br><br><br><br>
@@ -199,6 +218,7 @@ if ($user["ur_Id"] == "R001") {
                         <span>(Appficants stgnaturg)</span>
                         <span id="nowdt"></span>
                     </div>
+
                 </td>
             </tr>
         </table>

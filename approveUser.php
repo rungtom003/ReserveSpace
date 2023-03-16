@@ -308,7 +308,9 @@ $active_approve = "active";
                         let TXTHTML = "";
                         if(row.ur_Id === "R001")
                         {
+
                             TXTHTML = `<a class="btn btn-link" href="<?=$host_path?>/document_signup.php?u_Id=${row.u_Id}">พิมพ์ประวัติ</a>`;
+
                         }
                         return TXTHTML;
                     }
