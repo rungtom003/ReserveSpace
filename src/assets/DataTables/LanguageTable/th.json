@@ -1,9 +1,9 @@
 {
     "emptyTable": "ไม่มีข้อมูลในตาราง",
-    "info": "แสดง _START_ ถึง _END_ จาก _TOTAL_ แถว",
+    "info": "แสดง _START_ ถึง _END_ จาก _TOTAL_ รายการ",
     "infoFiltered": "(กรองข้อมูล _MAX_ ทุกแถว)",
     "infoThousands": ",",
-    "lengthMenu": "แสดง _MENU_ แถว",
+    "lengthMenu": "แสดง _MENU_ รายการ",
     "loadingRecords": "กำลังโหลดข้อมูล...",
     "processing": "กำลังดำเนินการ...",
     "zeroRecords": "ไม่พบข้อมูล",

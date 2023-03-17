@@ -47,7 +47,10 @@ $active_reserve_history = "active";
 
                 <div class="card">
                     <div class="card-body">
-                        <table id="table-Order" class="table table-striped w-100 text-nowrap"></table>
+                        <div class="d-flex justify-content-end">
+                            <button class="btn btn-primary" onclick="btndelete()">ลบ</button>
+                        </div>
+                        <table id="table-Order" class="table w-100 text-nowrap"></table>
                     </div>
                 </div>
             </div>
@@ -63,7 +66,7 @@ $active_reserve_history = "active";
             //serverSide: true,
             dom: 'Bfrtip',
             buttons: ['copy', 'csv', 'excel', 'colvis'],
-            responsive: true,
+            //responsive: true,
             language: {
                 url: './src/assets/DataTables/LanguageTable/th.json'
             },
@@ -90,84 +93,157 @@ $active_reserve_history = "active";
                 //$("#select-group").prepend(`<label for="selectZone" class="form-label">โซน : </label>`);
                 $("#select-group").prepend(`โซน`);
             },
+            select: {
+                style: 'multi',
+                selector: 'td:first-child'
+            },
+            "scrollX": true,
             columnDefs: [{
                     targets: 0,
+                    title: "เลือก",
+                    orderable: false,
+                    className: 'select-checkbox',
+                    data: null,
+                    defaultContent: "",
+                },
+                {
+                    targets: 1,
                     title: "ล็อก",
                     data: "a_Name",
                 },
                 {
-                    targets: 1,
+                    targets: 2,
                     title: "โซน",
                     data: "z_Name",
 
                 },
                 {
-                    targets: 2,
+                    targets: 3,
                     title: "ชื่อร้าน",
                     data: "u_ShopName",
                 },
                 {
-                    targets: 3,
+                    targets: 4,
                     title: "สินค้า",
                     data: "u_ProductName",
                 },
                 {
-                    targets: 4,
+                    targets: 5,
                     title: "คำนำหน้า",
                     data: "u_Prefix",
                 },
                 {
-                    targets: 5,
+                    targets: 6,
                     title: "ชื่อ",
                     data: "u_FirstName",
                 },
                 {
-                    targets: 6,
+                    targets: 7,
                     title: "สกุล",
                     data: "u_LastName",
                 },
                 {
-                    targets: 7,
+                    targets: 8,
                     title: "เลขประจำตัวประชาชนน",
                     data: "u_CardNumber",
                 },
                 {
-                    targets: 8,
+                    targets: 9,
                     title: "เบอร์โทร",
                     data: "u_Phone",
                 },
                 {
-                    targets: 9,
+                    targets: 10,
                     title: "ที่อยู่",
                     data: "u_Address",
                 },
                 {
-                    targets: 10,
+                    targets: 11,
                     title: "ถนน",
                     data: "u_Road",
                 },
                 {
-                    targets: 11,
+                    targets: 12,
                     title: "ตำบล",
                     data: "u_SubDistrict",
                 },
                 {
-                    targets: 12,
+                    targets: 13,
                     title: "อำเภอ",
                     data: "u_District",
                 },
                 {
-                    targets: 13,
+                    targets: 14,
                     title: "จังหวัด",
                     data: "u_Province",
                 },
                 {
-                    targets: 14,
+                    targets: 15,
                     title: "วันที่จอง",
                     data: "r_DateTime",
                 }
             ]
         });
+
+        const btndelete = () => {
+            //alert(dt_table.rows('.selected').data().length + ' row(s) selected');
+            let Arrr_Id = [];
+            const data = dt_table.rows('.selected').data();
+            $.each(data, function(key, val) {
+                Arrr_Id.push(val.r_Id);
+            });
+
+            Swal.fire({
+                title: 'ลบข้อมูล?',
+                text: "ยืนยันการลบข้อมูล!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'ใช่',
+                cancelButtonText: 'ไม่'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    if (Arrr_Id.length === 0) {
+                        Swal.fire({
+                            icon: 'warning',
+                            title: 'เลือก',
+                            text: 'กรุณาเลือกรายการที่จะลบ'
+                        });
+                    } else {
+                        $.ajax({
+                            url: "<?= $host_path ?>/backend/Service/api_delete_history.php",
+                            type: "POST",
+                            dataType: "json",
+                            data: {
+                                arrr_Id: Arrr_Id
+                            },
+                            success: function(res) {
+                                if (res.status === "success") {
+                                    Swal.fire({
+                                        icon: 'success',
+                                        title: 'สำเร็จ',
+                                        text: res.message,
+                                        didClose: () => {
+                                            dt_table.ajax.reload();
+                                        }
+                                    })
+                                } else {
+                                    Swal.fire({
+                                        icon: 'warning',
+                                        title: 'ไม่สำเร็จ',
+                                        text: res.message
+                                    });
+                                }
+                            }
+                        });
+                    }
+
+                }
+            })
+
+
+        }
 
         //====================================  สถานะล็อก
         //a_ReserveStatus 0 -> ล็อกว่างปกติ

@@ -5,7 +5,6 @@ session_start();
 $user = (isset($_SESSION['user'])) ? unserialize($_SESSION['user']) : null;
 $startDate = (isset($_SESSION['os_StartDateTime'])) ? $_SESSION['os_StartDateTime'] : null;
 $EndDate = (isset($_SESSION['os_EndDateTime'])) ? $_SESSION['os_EndDateTime'] : null;
-echo $_SESSION['os_StartDateTime'];
 if ($user == null) {
     header('location: ' . $host_path . '/login.php');
 }
@@ -37,17 +36,13 @@ $active_opensystem = "active";
                 <div class="card my-2">
                     <div class="card-body">
                         <div>
-                            <h1>เวลาเปิดระบบ : <?=$_SESSION['os_StartDateTime']?></h1>
-                            <h1>เวลาปิดระบบ : <?=$_SESSION['os_EndDateTime']?></h1>
+                            <h1 id="time-open"></h1>
+                            <h1 id="time-close"></h1>
                         </div>
                     </div>
                 </div>
                 <div class="card">
                     <div class="card-body">
-                        <!-- <div>
-                            <h1>เวลาเปิดระบบ : <?= $startDate ?></h1>
-                            <h1>เวลาปิดระบบ : <?= $EndDate ?></h1>
-                        </div> -->
                         <div class="my-3 d-flex align-items-center flex-column">
                             <h1>ตั้งเวลา เปิด/ปิด ระบบ</h1>
                             <input class="form-control text-center" type="text" name="daterange" id="daterange" value="" />
@@ -105,6 +100,9 @@ $active_opensystem = "active";
                 }
             })
         }
+
+        document.getElementById("time-open").innerHTML = `เวลาเปิดระบบ : ${moment("<?=$_SESSION["os_StartDateTime"]?>").format('DD/MM/YYYY HH:mm:ss')}`;
+        document.getElementById("time-close").innerHTML = `เวลาปิดระบบ : ${moment("<?=$_SESSION["os_EndDateTime"]?>").format('DD/MM/YYYY HH:mm:ss')}`;
     </script>
 </body>
 
