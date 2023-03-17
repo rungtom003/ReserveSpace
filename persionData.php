@@ -357,7 +357,6 @@ $active_persionData = "active";
                 u_ProductName: u_ProductName,
                 u_IdWalkin: u_IdWalkin
             }
-
             $.ajax({
                 url: "<?= $host_path ?>/backend/Service/persionData_api.php",
                 type: "POST",
