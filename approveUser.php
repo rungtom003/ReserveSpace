@@ -239,7 +239,7 @@ $active_approve = "active";
                     targets: 0,
                     title: "รหัส Walkin",
                     data: "u_IdWalkin",
-                },{
+                }, {
                     targets: 1,
                     title: "ชื่อ",
                     data: "u_FirstName",
@@ -306,9 +306,10 @@ $active_approve = "active";
                     defaultContent: "",
                     render: function(data, type, row, meta) {
                         let TXTHTML = "";
-                        if(row.ur_Id === "R001")
-                        {
-                            TXTHTML = `<a class="btn btn-link" href="<?=$host_path?>/document_signup.php?u_Id=${row.u_Id}">พิมพ์ประวัติ</a>`;
+                        if (row.ur_Id === "R001") {
+
+                            TXTHTML = `<a class="btn btn-link" href="<?= $host_path ?>/document_signup.php?u_Id=${row.u_Id}">พิมพ์ประวัติ</a>`;
+
                         }
                         return TXTHTML;
                     }
@@ -495,7 +496,6 @@ $active_approve = "active";
                 },
                 dataType: "json",
                 success: function(res) {
-
                     let message = res.message;
                     let status = res.status;
                     let ur_Id = res.data.ur_Id;
@@ -536,7 +536,7 @@ $active_approve = "active";
                         $('#u_Last').val(res.data.u_LastName);
                         $('#u_Username').val(res.data.u_Username);
                         $('#u_ShopName').val(res.data.u_ShopName);
-                        $('#u_ProductName').html(res.data.u_ProductName);
+                        $('#u_ProductName').val(res.data.u_ProductName);
                         $('#u_Position').val(res.data.u_Position);
                         $('#u_CardNumber').val(res.data.u_CardNumber);
                         $('#u_Birthday').val(res.data.u_Birthday);
@@ -581,7 +581,7 @@ $active_approve = "active";
             let u_PasswordNew = $('#u_Password').val();
 
             $.ajax({
-                url: "<?=$host_path?>/backend/Service/updatePassword_api.php",
+                url: "<?= $host_path ?>/backend/Service/updatePassword_api.php",
                 type: "POST",
                 data: {
                     status: "admin",
@@ -686,6 +686,8 @@ $active_approve = "active";
                 }
             });
         }
+
+        
     </script>
 </body>
 
