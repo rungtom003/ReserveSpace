@@ -153,8 +153,10 @@ $active_reserveOrder = "active";
                             txtHTML = "<span class='text-primary'>ล็อกประจำ</span>";
                         } else if (row.r_Status === "2" && row.a_ReserveStatus === "3") {
                             txtHTML = "<span class='text-danger'>ล็อกประจำ(ยกเลิกชั่วคราว)</span>";
-                        } else if (row.r_Status === "2" && row.a_ReserveStatus === "4") {
+                        } else if ((row.r_Status === "2" && row.a_ReserveStatus === "4") || (row.r_Status === "2" && row.a_ReserveStatus === "8")) {
                             txtHTML = `<span class='text-danger'>ล็อกประจำถูกจอง</span>`;
+                        } else if ((row.r_Status === "9" && row.a_ReserveStatus === "9") || (row.r_Status === "8" && row.a_ReserveStatus === "8")) {
+                            txtHTML = `<span class='text-warning'>รอชำระเงิน</span>`;
                         } else {
                             txtHTML = "";
                         }
@@ -170,6 +172,10 @@ $active_reserveOrder = "active";
                         const obj = {
                             r_Id: row.r_Id,
                             a_Id: row.a_Id
+                        }
+                        const obj_pay = {
+                            u_CardNumber: row.u_CardNumber,
+                            a_Name: row.a_Name
                         }
                         let txtHTML = "";
                         if (row.r_Status === "0") {
@@ -191,6 +197,16 @@ $active_reserveOrder = "active";
                         } else if (row.r_Status === "2" && row.a_ReserveStatus === "3") {
                             txtHTML = `<div class="d-grid gap-2 d-md-block" >
                                                 <button class="btn btn-primary" type="button" onclick="fcReturnNoReserve(this)" value='${JSON.stringify(obj)}'>คืนล็อกประจำ</button>
+                                            </div>`;
+                        } else if ((row.r_Status === "9" && row.a_ReserveStatus === "9")) {
+                            txtHTML = `<div class="d-grid gap-2 d-md-block" >
+                                                <button class="btn btn-danger" type="button" onclick="fcCancel(this)" value='${JSON.stringify(obj)}'>ยกเลิกการจอง</button>
+                                                <button class="btn btn-primary" type="button" onclick="confirm_pay(this)" value='${JSON.stringify(obj_pay)}'>ชำระเงินแล้ว</button>
+                                            </div>`;
+                        } else if ((row.r_Status === "8" && row.a_ReserveStatus === "8")) {
+                            txtHTML = `<div class="d-grid gap-2 d-md-block" >
+                                                <button class="btn btn-danger" type="button" onclick="fcCancel_static(this)" value='${JSON.stringify(obj)}'>ยกเลิกการจอง</button>
+                                                <button class="btn btn-primary" type="button" onclick="confirm_pay(this)" value='${JSON.stringify(obj_pay)}'>ชำระเงินแล้ว</button>
                                             </div>`;
                         } else {
                             txtHTML = "";
@@ -640,6 +656,112 @@ $active_reserveOrder = "active";
             });
         }
 
+        const fcCancel_static = (elm) => {
+            const obj_json = elm.value;
+            const obj = JSON.parse(obj_json);
+
+            let r_Id = obj.r_Id;
+            let a_Id = obj.a_Id;
+
+            Swal.fire({
+                title: 'ยืนยันการยกเลิก?',
+                text: "คุณต้องการยืนยันการยกเลิกหรือไม่",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'ใช่',
+                cancelButtonText: 'ไม่'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: "<?= $host_path ?>/backend/Service/cancelReserve_static.php",
+                        type: "POST",
+                        data: {
+                            r_Id: r_Id,
+                            a_Id: a_Id
+                        },
+                        dataType: "json",
+                        success: function(res) {
+                            let message = res.message;
+                            let status = res.status;
+
+                            if (status == "success") {
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: message,
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                }).then((result) => {
+                                    dt_table.ajax.reload();
+                                })
+                            } else {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'เเจ้งเตือน',
+                                    text: message
+                                })
+                            }
+                        }
+                    });
+                }
+            });
+        }
+
+        const confirm_pay = (elm) => {
+            const obj_json = elm.value;
+            const obj = JSON.parse(obj_json);
+
+            let u_CardNumber = obj.u_CardNumber;
+            let a_Name = obj.a_Name;
+            console.log(obj)
+
+            Swal.fire({
+                title: 'ยืนยันการชำระเงิน?',
+                text: "คุณต้องการยืนยันการชำระเงินหรือไม่",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'ใช่',
+                cancelButtonText: 'ไม่'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: "<?= $host_path ?>/backend/Service/api_pay_confirm.php",
+                        type: "POST",
+                        data: {
+                            u_CardNumber: u_CardNumber,
+                            a_Name: a_Name
+                        },
+                        dataType: "json",
+                        success: function(res) {
+                            let message = res.message;
+                            let status = res.status;
+
+                            if (status == "success") {
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: message,
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                }).then((result) => {
+                                    dt_table.ajax.reload();
+                                })
+                            } else {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'เเจ้งเตือน',
+                                    text: message
+                                })
+                            }
+                        }
+                    });
+                }
+            });
+        }
+
+
 
         //====================================  สถานะล็อก
         //a_ReserveStatus 0 -> ล็อกว่างปกติ
@@ -648,11 +770,15 @@ $active_reserveOrder = "active";
         //a_ReserveStatus 3 -> ปลดล็อกประจำให้จองได้ หรือ ล็อกประจำว่าง
         //a_ReserveStatus 4 -> จองล็อกประจำ
         //a_ReserveStatus 5 -> จองล็อกประจำ
+        //a_ReserveStatus 9 -> รอชำระเงิน
+        //a_ReserveStatus 8 -> รอชำระเงินล็อคประจำ
 
         //====================================  สถานะการจอง
         //r_Status 0 -> ยกเลิกการจอง
         //r_Status 1 -> จองแบบปกติ
-        //r_Status 2 -> จองแล็อกประจำ
+        //r_Status 2 -> จองล็อกประจำ
+        //r_Status 9 -> รอชำระเงิน
+        //r_Status 8 -> รอชำระเงินล็อคประจำ
     </script>
 </body>
 

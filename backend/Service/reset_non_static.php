@@ -9,10 +9,15 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         $sql = "UPDATE kkmuni_street.tb_reserve SET r_Status = '0' WHERE r_Status = '1';";
         $sql .= "UPDATE kkmuni_street.tb_area SET a_ReserveStatus = '0' WHERE a_ReserveStatus = '1';";
 
-        if ($conn->multi_query($sql) === TRUE) {
+        $sql2 = "UPDATE kkmuni_street.tb_area SET a_ReserveStatus = '2' WHERE a_ReserveStatus = '4';";
 
-            $resp->set_message("รีเซ็ตการจองสำเร็จ");
-            $resp->set_status("success");
+        if ($conn->multi_query($sql) === TRUE) {
+            $conn->next_result();
+            if ($conn->query($sql2) === TRUE) {
+                $resp->set_message("รีเซ็ตการจองสำเร็จ");
+                $resp->set_status("success");
+    
+            }
 
         } else {
             $resp->set_message("ไม่สามารถรีเซ็ตการจองได้");

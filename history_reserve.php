@@ -79,7 +79,7 @@ $active_reserve_history = "active";
             initComplete: function() {
                 $("#table-Order_filter").append(`<label id="select-group" class="my-2 w-100"></label>`);
 
-                this.api().columns(1).every(function() {
+                this.api().columns(2).every(function() {
                     var column = this;
                     var select = $('<select class="form-select form-select-sm w-50" aria-label="เลือกโซน" id="selectZone"><option value=""></option></select>').appendTo($("#select-group").empty()).on('change', function() {
                         var val = $.fn.dataTable.util.escapeRegex($(this).val());

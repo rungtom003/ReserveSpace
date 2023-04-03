@@ -136,10 +136,12 @@ $active_reserveData = "active";
                             txtHTML = "<span class='text-success'>จองล็อกประจำสำเร็จ</span>";
                         } else if (row.r_Status === "2" && row.a_ReserveStatus === "2") {
                             txtHTML = "<span class='text-primary'>ล็อกประจำ</span>";
-                        } else if (row.r_Status === "2" && row.a_ReserveStatus === "3") {
+                        } else if ((row.r_Status === "2" && row.a_ReserveStatus === "3")) {
                             txtHTML = "<span class='text-danger'>ล็อกประจำ(ยกเลิกชั่วคราว)</span>";
-                        } else if (row.r_Status === "2" && row.a_ReserveStatus === "4") {
+                        } else if ((row.r_Status === "2" && row.a_ReserveStatus === "4") || (row.r_Status === "2" && row.a_ReserveStatus === "8")) {
                             txtHTML = `<span class='text-danger'>ล็อกประจำถูกจอง</span>`;
+                        }else if ((row.r_Status === "9" && row.a_ReserveStatus === "9") || (row.r_Status === "8" && row.a_ReserveStatus === "8")) {
+                            txtHTML = `<span class='text-warning'>รอชำระเงิน</span>`;
                         } else {
                             txtHTML = "";
                         }
