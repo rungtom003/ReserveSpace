@@ -25,7 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         $a_Id = $_POST["a_Id"];
         $area_static = $_POST["area_static"]; // 0 >> ล็อคประจำ  1 >> ล็อคไม่ประจำ
 
-        $sql_select_area = "SELECT * FROM kkmuni_street.tb_area where (a_ReserveStatus = '1' OR a_ReserveStatus = '4') AND a_Id = '" . $a_Id . "'";
+        $sql_select_area = "SELECT * FROM kkmuni_street.tb_area where (a_ReserveStatus = '1' OR a_ReserveStatus = '4' OR a_ReserveStatus = '9') AND a_Id = '" . $a_Id . "'";
         $result_select_area = $conn->query($sql_select_area);
         if ($result_select_area->num_rows > 0) {
             //ถ้ามีจองอยู่เเล้ว
@@ -34,14 +34,14 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         } else {
             if ($z_Id == "2dacd150-9b8b-11ed-8054-0242ac110004" && $area_static == "0") //โซนอาหาร
             {
-                $sql_select_reserve = "SELECT * FROM kkmuni_street.tb_reserve as a   INNER JOIN kkmuni_street.tb_area as b ON a.a_Id = b.a_Id  INNER JOIN kkmuni_street.tb_zone as c ON b.z_Id = c.z_Id  INNER JOIN kkmuni_street.tb_user as d ON d.u_Id = a.u_Id  WHERE c.z_Id = '2dacd150-9b8b-11ed-8054-0242ac110004' AND d.u_Id = '".$user["u_Id"]."' AND (a.r_Status = '1' OR a.r_Status = '2');";
+                $sql_select_reserve = "SELECT * FROM kkmuni_street.tb_reserve as a   INNER JOIN kkmuni_street.tb_area as b ON a.a_Id = b.a_Id  INNER JOIN kkmuni_street.tb_zone as c ON b.z_Id = c.z_Id  INNER JOIN kkmuni_street.tb_user as d ON d.u_Id = a.u_Id  WHERE c.z_Id = '2dacd150-9b8b-11ed-8054-0242ac110004' AND d.u_Id = '".$user["u_Id"]."' AND (a.r_Status = '1' OR a.r_Status = '2' OR a.r_Status = '9');";
                 $result = $conn->query($sql_select_reserve);
                 if ($result->num_rows > 0) {
                     $resp->set_message("ไม่สามารถจองพื้นที่เพิ่มได้เนื่องจาก 1 คน ต่อ 1 ล็อค ในโซนอาหาร");
                     $resp->set_status("fail");
                 } else {
-                    $sql_insert_TBreserve = "INSERT INTO `kkmuni_street`.`tb_reserve` (`r_Id`, `u_Id`, `a_Id`, `r_Status`) VALUES ('" . $uuid_order . "', '" . $user["u_Id"] . "', '" . $a_Id . "', '1');";
-                    $sql_insert_TBreserve .= "UPDATE `kkmuni_street`.`tb_area` SET `a_ReserveStatus` = '1' WHERE (`a_Id` = '" . $a_Id . "');";
+                    $sql_insert_TBreserve = "INSERT INTO `kkmuni_street`.`tb_reserve` (`r_Id`, `u_Id`, `a_Id`, `r_Status`) VALUES ('" . $uuid_order . "', '" . $user["u_Id"] . "', '" . $a_Id . "', '9');";
+                    $sql_insert_TBreserve .= "UPDATE `kkmuni_street`.`tb_area` SET `a_ReserveStatus` = '9' WHERE (`a_Id` = '" . $a_Id . "');";
                     //สถานะ 1 จองสำเร็จ
                     if ($conn->multi_query($sql_insert_TBreserve) === TRUE) {
                         $resp->set_message("จองพื้นที่สำเร็จ.");
@@ -61,8 +61,8 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                         $resp->set_message("คุณมีล็อคนี้เป็นล็อคประจำอยู่เเล้วโปรดแจ้งเจ้าหน้าที่");
                         $resp->set_status("fail");
                     } else {
-                        $sql_insert_TBreserve = "INSERT INTO `kkmuni_street`.`tb_reserve` (`r_Id`, `u_Id`, `a_Id`, `r_Status`) VALUES ('" . $uuid_order . "', '" . $user["u_Id"] . "', '" . $a_Id . "', '1');";
-                        $sql_insert_TBreserve .= "UPDATE `kkmuni_street`.`tb_area` SET `a_ReserveStatus` = '4' WHERE (`a_Id` = '" . $a_Id . "');";
+                        $sql_insert_TBreserve = "INSERT INTO `kkmuni_street`.`tb_reserve` (`r_Id`, `u_Id`, `a_Id`, `r_Status`) VALUES ('" . $uuid_order . "', '" . $user["u_Id"] . "', '" . $a_Id . "', '8');";
+                        $sql_insert_TBreserve .= "UPDATE `kkmuni_street`.`tb_area` SET `a_ReserveStatus` = '8' WHERE (`a_Id` = '" . $a_Id . "');";
                         //สถานะ 3 จองล็อคประจำที่ว่างสำเร็จ
                         if ($conn->multi_query($sql_insert_TBreserve) === TRUE) {
                             $resp->set_message("จองพื้นที่สำเร็จ.");
@@ -73,8 +73,8 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                         }
                     }
                 } else {
-                    $sql_insert_TBreserve = "INSERT INTO `kkmuni_street`.`tb_reserve` (`r_Id`, `u_Id`, `a_Id`, `r_Status`) VALUES ('" . $uuid_order . "', '" . $user["u_Id"] . "', '" . $a_Id . "', '1');";
-                    $sql_insert_TBreserve .= "UPDATE `kkmuni_street`.`tb_area` SET `a_ReserveStatus` = '1' WHERE (`a_Id` = '" . $a_Id . "');";
+                    $sql_insert_TBreserve = "INSERT INTO `kkmuni_street`.`tb_reserve` (`r_Id`, `u_Id`, `a_Id`, `r_Status`) VALUES ('" . $uuid_order . "', '" . $user["u_Id"] . "', '" . $a_Id . "', '9');";
+                    $sql_insert_TBreserve .= "UPDATE `kkmuni_street`.`tb_area` SET `a_ReserveStatus` = '9' WHERE (`a_Id` = '" . $a_Id . "');";
                     //สถานะ 1 จองสำเร็จ
                     if ($conn->multi_query($sql_insert_TBreserve) === TRUE) {
                         $resp->set_message("จองพื้นที่สำเร็จ.");

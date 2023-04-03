@@ -110,9 +110,9 @@ $active_Dashboard = "active";
                             <div class="d-flex justify-content-center align-items-center reserve-box-red">
                                 <span class="text-light text-center">จองเเล้ว</span>
                             </div>
-                            <!-- <div class="d-flex justify-content-center align-items-center reserve-box-yellow">
-                                <span class="text-light text-center">ปิดล็อก</span>
-                            </div> -->
+                            <div class="d-flex justify-content-center align-items-center reserve-box-yellow">
+                                <span class="text-light text-center">รอชำระเงิน</span>
+                            </div>
                             <!-- <div class="d-flex justify-content-center align-items-center reserve-box-primary">
                                 <span class="text-light text-center">ล็อกประจำ</span>
                             </div> -->
@@ -343,6 +343,11 @@ $active_Dashboard = "active";
                             //                     <span class="text-light">${val.a_Name}</span>
                             //                 </div>`;
                             txt_content += "";
+                        }else if (val.a_ReserveStatus === "9" || val.a_ReserveStatus === "8") {
+                            txt_content += `<div class="d-flex justify-content-center align-items-center reserve-box-yellow" data-bs-toggle="modal" data-bs-target="#reserve-detail-modal" data-bs-whatever='${val.a_Id}'>
+                                                <span class="text-light">${val.a_Name}</span>
+                                            </div>`;
+                            txt_content += "";
                         } else {
                             txt_content += `<div class="d-flex justify-content-center align-items-center reserve-box-red" data-bs-toggle="modal" data-bs-target="#reserve-detail-modal" data-bs-whatever='${val.a_Id}'>
                                                 <span class="text-light">${val.a_Name}</span>
@@ -374,13 +379,13 @@ $active_Dashboard = "active";
                         let txtHTML = "";
                         let txtHTML2 = "";
                         $.each(data_arr, function(key, val) {
-                            if (val.r_Status === "1") {
+                            if (val.r_Status === "1" || val.r_Status === "9" || val.r_Status === "8") {
                                 txtHTML += `<li class="fw-bold">ชื่อผู้จอง : <span class="fw-normal" id="u_Name">${val.u_FirstName} ${val.u_LastName}</span></li>
                                         <li class="fw-bold">ชื่อร้าน : <span class="fw-normal" id="u_ShopName">${val.u_ShopName}</span></li>
                                         <li class="fw-bold">ล็อก : <span class="fw-normal" id="a_Name">${val.a_Name}</span></li>
                                         <li class="fw-bold">โซน : <span class="fw-normal" id="z_Name">${val.z_Name}</span></li>
                                         <li class="fw-bold">สินค้าที่ขาย : <span class="fw-normal" id="u_ProductName">${val.u_ProductName}</span></li>`;
-                            } else if (val.r_Status === "2") {
+                            } else if (val.r_Status === "2" || val.r_Status === "9" || val.r_Status === "8") {
                                 txtHTML2 += `<li class="fw-bold">เจ้าของล็อกประจำ : <span class="fw-normal" >${val.u_FirstName} ${val.u_LastName}</span></li>
                                         <li class="fw-bold">ชื่อร้าน : <span class="fw-normal" >${val.u_ShopName}</span></li>
                                         <li class="fw-bold">สินค้าที่ขาย : <span class="fw-normal" >${val.u_ProductName}</span></li>`;

@@ -234,7 +234,8 @@ $active_approve = "active";
                 //$("#select-group").prepend(`<label for="selectZone" class="form-label">โซน : </label>`);
                 $("#select-group").prepend(`โซน`);
             },
-            columnDefs: [{
+            columnDefs: [
+                {
                     targets: 0,
                     title: "รหัส Walkin",
                     data: "u_IdWalkin",

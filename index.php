@@ -130,9 +130,9 @@ $active_index = "active";
                             <div class="d-flex justify-content-center align-items-center reserve-box-red">
                                 <span class="text-light text-center">จองเเล้ว</span>
                             </div>
-                            <!-- <div class="d-flex justify-content-center align-items-center reserve-box-yellow">
-                                <span class="text-light text-center">ปิดล็อก</span>
-                            </div> -->
+                            <div class="d-flex justify-content-center align-items-center reserve-box-yellow">
+                                <span class="text-light text-center">รอชำระเงิน</span>
+                            </div>
                             <!-- <div class="d-flex justify-content-center align-items-center reserve-box-primary">
                                 <span class="text-light text-center">ล็อกประจำ</span>
                             </div> -->
@@ -156,8 +156,8 @@ $active_index = "active";
                         <div class="card my-1">
                             <div class="card-body">
                                 <div class="d-flex align-items-center flex-column">
-                                    <h1>ระบบจะเปิดให้จองล็อค Wlak in</h1>
-                                    <h1>วันที่ <?=date_format(date_create($startDate),"d/m/Y")?> เวลา <?=date_format(date_create($startDate),"H:i:s")?> น.</h1>
+                                    <h1>ระบบจะเปิดให้จองล็อค walk in</h1>
+                                    <h1>วันที่ <?= date_format(date_create($startDate), "d/m/Y") ?> เวลา <?= date_format(date_create($startDate), "H:i:s") ?> น.</h1>
                                 </div>
                             </div>
                         </div>
@@ -378,6 +378,7 @@ $active_index = "active";
                 },
                 success: function(res) {
                     const data = res.data;
+                    //console.log(data)
                     let txt_content = "";
                     $.each(data, function(key, val) {
                         if (val.a_ReserveStatus === "0") {
@@ -388,7 +389,7 @@ $active_index = "active";
                             txt_content += `<div class="d-flex justify-content-center align-items-center reserve-box-red" data-bs-toggle="modal" data-bs-target="#reserve-detail-modal" data-bs-whatever='${val.a_Id}'>
                                                 <span class="text-light">${val.a_Name}</span>
                                             </div>`;
-                        } else if (val.a_ReserveStatus === "2") {
+                        }  else if (val.a_ReserveStatus === "2") {
                             txt_content += `<div class="d-flex justify-content-center align-items-center reserve-box-red" data-bs-toggle="modal" data-bs-target="#reserve-detail-modal" data-bs-whatever='${val.a_Id}'>
                                                 <span class="text-light">${val.a_Name}</span>
                                             </div>`;
@@ -400,6 +401,11 @@ $active_index = "active";
                             // txt_content += `<div class="d-flex justify-content-center align-items-center reserve-box-yellow">
                             //                     <span class="text-light">${val.a_Name}</span>
                             //                 </div>`;
+                            txt_content += "";
+                        }else if (val.a_ReserveStatus === "9" || val.a_ReserveStatus === "8") {
+                            txt_content += `<div class="d-flex justify-content-center align-items-center reserve-box-yellow" data-bs-toggle="modal" data-bs-target="#reserve-detail-modal" data-bs-whatever='${val.a_Id}'>
+                                                <span class="text-light">${val.a_Name}</span>
+                                            </div>`;
                             txt_content += "";
                         } else {
                             txt_content += `<div class="d-flex justify-content-center align-items-center reserve-box-red" data-bs-toggle="modal" data-bs-target="#reserve-detail-modal" data-bs-whatever='${val.a_Id}'>
@@ -456,13 +462,13 @@ $active_index = "active";
                         let txtHTML = "";
                         let txtHTML2 = "";
                         $.each(data_arr, function(key, val) {
-                            if (val.r_Status === "1") {
+                            if (val.r_Status === "1" || val.r_Status === "9" || val.r_Status === "8") {
                                 txtHTML += `<li class="fw-bold">ชื่อผู้จอง : <span class="fw-normal" id="u_Name">${val.u_FirstName} ${val.u_LastName}</span></li>
                                         <li class="fw-bold">ชื่อร้าน : <span class="fw-normal" id="u_ShopName">${val.u_ShopName}</span></li>
                                         <li class="fw-bold">ล็อก : <span class="fw-normal" id="a_Name">${val.a_Name}</span></li>
                                         <li class="fw-bold">โซน : <span class="fw-normal" id="z_Name">${val.z_Name}</span></li>
                                         <li class="fw-bold">สินค้าที่ขาย : <span class="fw-normal" id="u_ProductName">${val.u_ProductName}</span></li>`;
-                            } else if (val.r_Status === "2") {
+                            } else if (val.r_Status === "2" || val.r_Status === "9" || val.r_Status === "8") {
                                 txtHTML2 += `<li class="fw-bold">เจ้าของล็อกประจำ : <span class="fw-normal" >${val.u_FirstName} ${val.u_LastName}</span></li>
                                         <li class="fw-bold">ชื่อร้าน : <span class="fw-normal" >${val.u_ShopName}</span></li>
                                         <li class="fw-bold">สินค้าที่ขาย : <span class="fw-normal" >${val.u_ProductName}</span></li>`;
@@ -517,14 +523,41 @@ $active_index = "active";
                         //     // });
                         //     window.location.reload();
                         // });
+
+                        // const date_send_pay = {
+                        //     tra_code:"",
+                        //     lock_name:$("#a_Name-reserve-modal").val(),
+                        //     wa_date:"",
+                        //     wa_code:"",
+                        //     Zone:$("#z_Name-reserve-modal").val(),
+                        // }
+                        // $.ajax({
+                        //     url: "",
+                        //     dataType: "json",
+                        //     type: "post",
+                        //     data: date_send_pay,
+                        //     success: function(res) {
+                        //         Swal.fire({
+                        //             icon: 'success',
+                        //             title: 'สำเร็จ',
+                        //             text: res.message,
+                        //             didClose: () => {
+                        //                 window.location.reload();
+                        //             }
+                        //         });
+                        //     }
+                        // });
+
                         Swal.fire({
                             icon: 'success',
                             title: 'สำเร็จ',
                             text: res.message,
                             didClose: () => {
+                                window.open("https://db2.kkmuni.go.th/kkmuni_market/tra.php");
                                 window.location.reload();
                             }
                         });
+
                     } else {
                         // Swal.fire({
                         //     icon: 'warning',
@@ -543,6 +576,22 @@ $active_index = "active";
                 }
             });
         });
+
+        //====================================  สถานะล็อก
+        //a_ReserveStatus 0 -> ล็อกว่างปกติ
+        //a_ReserveStatus 1 -> จองปกติ
+        //a_ReserveStatus 2 -> ล็อกประจำ
+        //a_ReserveStatus 3 -> ปลดล็อกประจำให้จองได้ หรือ ล็อกประจำว่าง
+        //a_ReserveStatus 4 -> จองล็อกประจำ
+        //a_ReserveStatus 5 -> จองล็อกประจำ
+        //a_ReserveStatus 9 -> รอชำระเงิน
+
+        //====================================  สถานะการจอง
+        //r_Status 0 -> ยกเลิกการจอง
+        //r_Status 1 -> จองแบบปกติ
+        //r_Status 2 -> จองแล็อกประจำ
+        //r_Status 9 -> รอชำระเงิน
+
     </script>
 </body>
 

@@ -20,3 +20,24 @@ Body :
     u_Password: "",
 }
 ================================= BEGIN Signup ======================================
+
+================================= BEGIN Pay ======================================
+URL : https://db2.kkmuni.go.th/kkmuni_street/backend/Service/api_pay_confirm.php
+URL TEST : https://rung-n.com/ReserveSpace/backend/Service/api_pay_confirm.php
+Method : POST
+Data : 
+{
+  a_Name : "ชื่อล็อค",
+  u_CardNumber : "เลขบัตรประชาชน"
+}
+
+Response (การตอบกลับ) : 
+{
+    "ref": "f2150e26fbac55a31b",
+    "data": null,
+    "message": "จองพื้นที่สำเร็จ.",
+    "status": "success",
+    "status_code": null,
+    "date": "2023-03-18 07:55:41"
+}
+================================= BEGIN Pay ======================================
