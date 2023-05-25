@@ -22,8 +22,7 @@ Body :
 ================================= BEGIN Signup ======================================
 
 ================================= BEGIN Pay ======================================
-URL : https://db2.kkmuni.go.th/kkmuni_street/backend/Service/api_pay_confirm.php
-URL TEST : https://rung-n.com/ReserveSpace/backend/Service/api_pay_confirm.php
+URL TEST : http://45.144.164.52//ReserveSpace/backend/Service/api_pay_confirm.php
 Method : POST
 Data : 
 {

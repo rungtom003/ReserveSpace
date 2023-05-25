@@ -46,6 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                     if ($conn->multi_query($sql_insert_TBreserve) === TRUE) {
                         $resp->set_message("จองพื้นที่สำเร็จ.");
                         $resp->set_status("success");
+                        $resp->data = $uuid_order;
                     } else {
                         $resp->set_message("มีข้อผิดพลาดเกิดขึ้น.");
                         $resp->set_status("fail");
@@ -67,6 +68,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                         if ($conn->multi_query($sql_insert_TBreserve) === TRUE) {
                             $resp->set_message("จองพื้นที่สำเร็จ.");
                             $resp->set_status("success");
+                            $resp->data = $uuid_order;
                         } else {
                             $resp->set_message("มีข้อผิดพลาดเกิดขึ้น.");
                             $resp->set_status("fail");
@@ -79,6 +81,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                     if ($conn->multi_query($sql_insert_TBreserve) === TRUE) {
                         $resp->set_message("จองพื้นที่สำเร็จ.");
                         $resp->set_status("success");
+                        $resp->data = $uuid_order;
                     } else {
                         $resp->set_message("มีข้อผิดพลาดเกิดขึ้น.");
                         $resp->set_status("fail");
@@ -93,7 +96,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     }
 } else {
     $resp->set_message("Request method fail.");
-    $resp->set_status("");
+    $resp->set_status("fail");
 }
 
 echo json_encode($resp);
