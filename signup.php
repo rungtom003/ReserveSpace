@@ -483,7 +483,7 @@ $active_signup = "active";
             formData.append("u_Img", data.u_Img);
             formData.append("z_Id", data.z_Id);
             formData.append("u_ShopName", data.u_ShopName);
-            formData.append("u_ProductName", data.u_ProductName);
+            formData.append("u_ProductName", data.u_ProductName.trim());
             formData.append("u_IdWalkin", data.u_IdWalkin);
 
             $.ajax({

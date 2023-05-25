@@ -495,6 +495,18 @@ $active_index = "active";
                 a_Id: $("#a_Id").val(),
                 area_static: $("#area_static").val()
             }
+
+            const data_pay = {
+                fullname:`${$("#u_FullName").val()} ${$("#u_Last").val()}`,
+                tra_code:"<?=$user["u_CardNumber"]?>",
+                phone:"<?=$user["u_Phone"]?>",
+                product:"<?=$user["u_ProductName"]?>",
+                img:"https://db2.kkmuni.go.th/<?=$host_path?>/src/img/upload/<?=$user['u_Img']?>",
+                lock_name:`${$("#a_Name-reserve-modal").val()}`,
+                wa_date:"-",
+                wa_code:"-"
+            }
+
             $.ajax({
                 url: "<?= $host_path ?>/backend/Service/confirmOrder.php",
                 type: "POST",
@@ -553,7 +565,8 @@ $active_index = "active";
                             title: 'สำเร็จ',
                             text: res.message,
                             didClose: () => {
-                                window.open("https://db2.kkmuni.go.th/kkmuni_market/tra.php");
+                                //window.open("https://db2.kkmuni.go.th/kkmuni_market/tra.php");
+                                window.open(`https://db2.kkmuni.go.th/kkmuni_market/tra_pay_wa.php?fullname=${data_pay.fullname}&tra_code=${data_pay.tra_code}&phone=${data_pay.phone}&product=${data_pay.product}&img=${data_pay.img}&lock_name=${data_pay.lock_name}&wa_date=${moment().format('YYYY-MM-DD')}&wa_code=${res.data}`);
                                 window.location.reload();
                             }
                         });

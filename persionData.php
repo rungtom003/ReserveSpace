@@ -380,7 +380,7 @@ $active_persionData = "active";
             formData.append('u_Province',u_Province);
             formData.append('z_Id',z_Id);
             formData.append('u_ShopName',u_ShopName);
-            formData.append('u_ProductName',u_ProductName);
+            formData.append('u_ProductName',u_ProductName.trim());
             formData.append('u_IdWalkin',u_IdWalkin);
             formData.append('u_Img',u_Img);
             formData.append('deleteImg',"<?=$user["u_Img"]?>");
