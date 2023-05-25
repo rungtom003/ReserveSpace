@@ -378,7 +378,7 @@ $active_index = "active";
                 },
                 success: function(res) {
                     const data = res.data;
-                    console.log(data)
+                    //console.log(data)
                     let txt_content = "";
                     $.each(data, function(key, val) {
                         if (val.a_ReserveStatus === "0") {

@@ -22,7 +22,9 @@ Body :
 ================================= BEGIN Signup ======================================
 
 ================================= BEGIN Pay ======================================
+
 URL TEST : http://45.144.164.52//ReserveSpace/backend/Service/api_pay_confirm.php
+
 Method : POST
 Data : 
 {
